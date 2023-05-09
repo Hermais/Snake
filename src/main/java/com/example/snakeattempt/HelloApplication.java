@@ -1,22 +1,17 @@
 package com.example.snakeattempt;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.Random;
-import java.util.Timer;
 
 public class HelloApplication extends Application {
     private static final int HEIGHT = 800;
@@ -137,7 +132,7 @@ public class HelloApplication extends Application {
         food[foodType].setFitHeight(TILE_SIZE);
         food[foodType].setFitWidth(TILE_SIZE);
         food[foodType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
-        food[foodType].setY(new Random().nextInt((int)(Math.ceil(PANEL_REALSTATE) / TILE_SIZE), TILE_COUNT ) * TILE_SIZE);
+        food[foodType].setY(new Random().nextInt(PANEL_REALSTATE, TILE_COUNT ) * TILE_SIZE);
         pane.getChildren().add(food[foodType]);
 
 
