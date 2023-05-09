@@ -1,5 +1,8 @@
 package com.example.snakeattempt;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -9,6 +12,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -33,23 +37,25 @@ public class HelloApplication extends Application {
             "/images/grapes.png",
             "/images/mushroom.png",
             "/images/grass1.jpg",
-            "/images/fabric0.jpg"
+            "/images/fabric0.jpg",
+
+            "/images/snakeHead.png"
             };
 
-
-
+    private static final double snakeSpeed = 6;
+    private static int snakeHeadX = TILE_SIZE * 5;
+    private static int snakeHeadY = TILE_SIZE * 10;
 
 
     @Override
     public void start(Stage stage) throws IOException {
         StackPane mainPane = new StackPane(pane);
-        // mainPane.setPrefHeight(HEIGHT);
-        // mainPane.setPrefWidth(WIDTH);
 
 
         setBackground();
         placeFood(new Random().nextInt(0, 5));
         createTiles(false);
+        snakeHead();
 
         Scene mainScene = new Scene(mainPane,  HEIGHT,WIDTH );
         stage.setResizable(false);
@@ -101,37 +107,30 @@ public class HelloApplication extends Application {
 
     }
 
-    public void snakeStatus(){
+    // ################################################
 
+    public void snakeHead(){
+        ImageView snakeHead = new ImageView(new Image(
+                Objects.requireNonNull(getClass().getResource(imagesDirectories[7])).toExternalForm()
+        ));
+
+
+            snakeHead.setX(snakeHeadX);
+            snakeHead.setY(snakeHeadY);
+
+
+
+        snakeHead.setFitHeight(TILE_SIZE);
+        snakeHead.setFitWidth(TILE_SIZE);
+        pane.getChildren().add(snakeHead);
     }
 
     public void placeFood(int foodType){
-        //apple
-        Image appleImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[0])).toExternalForm());
-        food[0] = new ImageView(appleImage);
+        //food
+        Image foodImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[foodType])).toExternalForm());
+        food[foodType] = new ImageView(foodImage);
 
-        //banana
-        Image bananaImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[1])).toExternalForm());
-        food[1] = new ImageView(bananaImage);
-
-        //peach
-        Image peachImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[2])).toExternalForm());
-        food[2] = new ImageView(peachImage);
-
-        //grapes
-        Image grapesImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[3])).toExternalForm());
-        food[3] = new ImageView(grapesImage);
-
-        //mushroom
-        Image mushroomImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[4])).toExternalForm());
-        food[4] = new ImageView(mushroomImage);
-
-
-
-
-
-
-
+        //food adjusting
         food[foodType].setFitHeight(TILE_SIZE);
         food[foodType].setFitWidth(TILE_SIZE);
         food[foodType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
@@ -142,7 +141,5 @@ public class HelloApplication extends Application {
 
     }
 
-    public void initializeImages(){
 
-    }
 }
