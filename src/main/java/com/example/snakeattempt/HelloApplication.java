@@ -30,7 +30,9 @@ public class HelloApplication extends Application {
             "/images/banana.png",
             "/images/peach.png",
             "/images/grapes.png",
-            "/images/mushroom.png"
+            "/images/mushroom.png",
+            "/images/grass1.jpg",
+            "/images/fabric0.jpg"
             };
 
 
@@ -74,7 +76,7 @@ public class HelloApplication extends Application {
     }
 
     public void setBackground(){
-        Image grassImage = new Image("file:D:\\Java\\SnakeAttempt\\src\\images\\grass1.jpg");
+        Image grassImage = new Image(getClass().getResource(imagesDirectories[5]).toExternalForm());
         mainBackground = new ImageView(grassImage);
         mainBackground.setFitHeight(HEIGHT);
         mainBackground.setFitWidth(WIDTH);
@@ -82,7 +84,7 @@ public class HelloApplication extends Application {
 
 
         //Status Panel
-        Image fabricImage = new Image("file:D:\\Java\\SnakeAttempt\\src\\images\\fabric0.jpg");
+        Image fabricImage = new Image(getClass().getResource(imagesDirectories[6]).toExternalForm());
         Rectangle mask = new Rectangle(HEIGHT, WIDTH);
         mask.setArcHeight(TILE_SIZE);
         mask.setArcWidth(TILE_SIZE);
@@ -132,7 +134,7 @@ public class HelloApplication extends Application {
         food[foodType].setFitHeight(TILE_SIZE);
         food[foodType].setFitWidth(TILE_SIZE);
         food[foodType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
-        food[foodType].setY(new Random().nextInt(PANEL_REALSTATE, TILE_COUNT ) * TILE_SIZE);
+        food[foodType].setY(new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT ) * TILE_SIZE);
         pane.getChildren().add(food[foodType]);
 
 
