@@ -11,6 +11,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Random;
 
 public class HelloApplication extends Application {
@@ -76,7 +77,7 @@ public class HelloApplication extends Application {
     }
 
     public void setBackground(){
-        Image grassImage = new Image(getClass().getResource(imagesDirectories[5]).toExternalForm());
+        Image grassImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[5])).toExternalForm());
         mainBackground = new ImageView(grassImage);
         mainBackground.setFitHeight(HEIGHT);
         mainBackground.setFitWidth(WIDTH);
@@ -84,7 +85,7 @@ public class HelloApplication extends Application {
 
 
         //Status Panel
-        Image fabricImage = new Image(getClass().getResource(imagesDirectories[6]).toExternalForm());
+        Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[6])).toExternalForm());
         Rectangle mask = new Rectangle(HEIGHT, WIDTH);
         mask.setArcHeight(TILE_SIZE);
         mask.setArcWidth(TILE_SIZE);
@@ -106,23 +107,23 @@ public class HelloApplication extends Application {
 
     public void placeFood(int foodType){
         //apple
-        Image appleImage = new Image(getClass().getResource(imagesDirectories[0]).toExternalForm());
+        Image appleImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[0])).toExternalForm());
         food[0] = new ImageView(appleImage);
 
         //banana
-        Image bananaImage = new Image(getClass().getResource(imagesDirectories[1]).toExternalForm());
+        Image bananaImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[1])).toExternalForm());
         food[1] = new ImageView(bananaImage);
 
         //peach
-        Image peachImage = new Image(getClass().getResource(imagesDirectories[2]).toExternalForm());
+        Image peachImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[2])).toExternalForm());
         food[2] = new ImageView(peachImage);
 
         //grapes
-        Image grapesImage = new Image(getClass().getResource(imagesDirectories[3]).toExternalForm());
+        Image grapesImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[3])).toExternalForm());
         food[3] = new ImageView(grapesImage);
 
         //mushroom
-        Image mushroomImage = new Image(getClass().getResource(imagesDirectories[4]).toExternalForm());
+        Image mushroomImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[4])).toExternalForm());
         food[4] = new ImageView(mushroomImage);
 
 
