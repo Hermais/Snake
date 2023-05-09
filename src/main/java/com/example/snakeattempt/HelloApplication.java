@@ -25,8 +25,8 @@ public class HelloApplication extends Application {
 
     private static  ImageView mainBackground;
     private static ImageView upperPanel;
-    private static ImageView[] food = new ImageView[5];
-    private static String[] imagesDirectories = {"/images/apple.png",
+    private static final ImageView[] food = new ImageView[5];
+    private static final String[] imagesDirectories = {"/images/apple.png",
             "/images/banana.png",
             "/images/peach.png",
             "/images/grapes.png",
