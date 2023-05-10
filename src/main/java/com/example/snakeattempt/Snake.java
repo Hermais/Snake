@@ -33,8 +33,10 @@ public class Snake extends Application {
 
     private static  ImageView mainBackground;
     private static ImageView upperPanel;
-    private static final ImageView[] food = new ImageView[5];
-    private static final ImageView[] poison = new ImageView[3];
+    private static final int foodCount = 5;
+    private static final int poisonCount = 3;
+    private static final ImageView[] food = new ImageView[foodCount];
+    private static final ImageView[] poison = new ImageView[poisonCount];
     private static final String[] imagesDirectories = {"/images/apple.png",
             "/images/banana.png",
             "/images/peach.png",
@@ -53,37 +55,60 @@ public class Snake extends Application {
 
             };
 
-//    private static final int UP = 0;
-//    private static final int DOWN = 1;
-//    private static final int RIGHT =2;
-//    private static final int LEFT = 3;
-//    private static int currentDirection = RIGHT;
+    private static final int UP = 0;
+    private static final int DOWN = 1;
+    private static final int RIGHT =2;
+    private static final int LEFT = 3;
+    public static ImageView snakeHead;
+    public static final int snakeSpeed = 250;
+    private static int currentDirection = RIGHT;
     private static int snakeHeadX = TILE_SIZE * 5;
     private static int snakeHeadY = TILE_SIZE * 10;
+    private static int foodType ;
+    private static int poisonType ;
 
 
     @Override
     public void start(Stage stage) throws IOException {
         StackPane mainPane = new StackPane(pane);
 
-        mainScene = new Scene(mainPane,  HEIGHT,WIDTH );
+        mainScene = new Scene(mainPane, HEIGHT, WIDTH);
         stage.setResizable(false);
         stage.setScene(mainScene);
 
         setBackground();
-        placeFood(new Random().nextInt(0, 5));
-        placePoison(new Random().nextInt(0, 2));
+        foodType = randInt(foodCount);
+        poisonType = randInt(poisonCount);
+        placeFood(foodType);
+        placePoison(poisonType);
         createTiles(true);
 
         snakeHead();
 
+        // Set up key press event handling
+        mainScene.setOnKeyPressed(keyEvent -> {
+            KeyCode keyCode = keyEvent.getCode();
+            if (keyCode == KeyCode.UP || keyCode == KeyCode.W) {
+                if (currentDirection != DOWN)
+                    currentDirection = UP;
+            } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S) {
+                if (currentDirection != UP)
+                    currentDirection = DOWN;
+            } else if (keyCode == KeyCode.RIGHT || keyCode == KeyCode.D) {
+                if (currentDirection != LEFT)
+                    currentDirection = RIGHT;
+            } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
+                if (currentDirection != RIGHT)
+                    currentDirection = LEFT;
+            }
+        });
+
         stage.setTitle("Hello!");
         stage.show();
 
-
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(130), e -> runSnake()));
-//        timeline.setCycleCount(Animation.INDEFINITE);
-//        timeline.play();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(snakeSpeed), e -> runSnake()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
     public static void main(String[] args) {
@@ -132,32 +157,14 @@ public class Snake extends Application {
     // ################################################
 
     public void snakeHead() {
-        ImageView snakeHead = new ImageView(new Image(
+        snakeHead = new ImageView(new Image(
                 Objects.requireNonNull(getClass().getResource(imagesDirectories[7])).toExternalForm()
         ));
 
         snakeHead.setX(snakeHeadX);
         snakeHead.setY(snakeHeadY);
 
-        // On Key Pressed
-//        mainScene.setOnKeyPressed(keyEvent -> {
-//            KeyCode keyCode = keyEvent.getCode();
-//            if(keyCode == KeyCode.UP || keyCode == KeyCode.W)
-//                if(currentDirection != DOWN)
-//                    currentDirection = UP;
-//
-//            else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S)
-//                if (currentDirection != UP)
-//                    currentDirection = DOWN;
-//
-//            else if(keyCode == KeyCode.RIGHT || keyCode == KeyCode.D)
-//                if(currentDirection != LEFT)
-//                    currentDirection = RIGHT;
-//
-//            else if(keyCode == KeyCode.LEFT|| keyCode == KeyCode.A)
-//                if(currentDirection != RIGHT)
-//                    currentDirection = LEFT;
-//        });
+
 
         snakeHead.setFitHeight(TILE_SIZE);
         snakeHead.setFitWidth(TILE_SIZE);
@@ -235,5 +242,42 @@ public class Snake extends Application {
 
 
 
+    public void runSnake() {
+        // Update snake direction
+        switch (currentDirection) {
+            case UP -> {
+                snakeHead.setRotate(0);
+                snakeHeadY -= TILE_SIZE;
+            }
+            case DOWN -> {
+                snakeHead.setRotate(180);
+                snakeHeadY += TILE_SIZE;
+            }
+            case RIGHT -> {
+                snakeHead.setRotate(90);
+                snakeHeadX += TILE_SIZE;
+            }
+            case LEFT -> {
+                snakeHead.setRotate(-90);
+                snakeHeadX -= TILE_SIZE;
+            }
+            default -> {
+            }
+        }
+
+        // Update snake head position
+        snakeHead.setX(snakeHeadX);
+        snakeHead.setY(snakeHeadY);
+        pane.requestFocus();
+
+        if(snakeHeadX == food[foodType].getX() && snakeHeadY == food[foodType].getY() ){
+            food[foodType].setImage(null);
+            placeFood(randInt(foodCount));
+        }
+
+    }
+    public int randInt(int max){
+        return new Random().nextInt(0, max);
+    }
 
 }
