@@ -1,12 +1,12 @@
 package com.example.snakeattempt;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.shape.Line;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 
-public class HelloApplication extends Application {
+public class Snake extends Application {
     private static final int HEIGHT = 800;
     private static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
@@ -26,6 +26,7 @@ public class HelloApplication extends Application {
     private static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     private static final int PANEL_REALSTATE = TILE_SIZE * 2;
     private static final Pane pane = new Pane();
+    private static Scene mainScene;
 
 
     private static  ImageView mainBackground;
@@ -43,6 +44,7 @@ public class HelloApplication extends Application {
             };
 
     private static final double snakeSpeed = 6;
+    private static KeyCode currentDirection = KeyCode.RIGHT;
     private static int snakeHeadX = TILE_SIZE * 5;
     private static int snakeHeadY = TILE_SIZE * 10;
 
@@ -51,15 +53,20 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         StackPane mainPane = new StackPane(pane);
 
+        mainScene = new Scene(mainPane,  HEIGHT,WIDTH );
+        stage.setResizable(false);
+        stage.setScene(mainScene);
 
         setBackground();
         placeFood(new Random().nextInt(0, 5));
-        createTiles(false);
+        createTiles(true);
+
         snakeHead();
 
-        Scene mainScene = new Scene(mainPane,  HEIGHT,WIDTH );
-        stage.setResizable(false);
-        stage.setScene(mainScene);
+
+
+
+
         stage.setTitle("Hello!");
         stage.show();
     }
@@ -109,14 +116,23 @@ public class HelloApplication extends Application {
 
     // ################################################
 
-    public void snakeHead(){
+    public void snakeHead() {
         ImageView snakeHead = new ImageView(new Image(
                 Objects.requireNonNull(getClass().getResource(imagesDirectories[7])).toExternalForm()
         ));
 
+        snakeHead.setX(snakeHeadX);
+        snakeHead.setY(snakeHeadY);
 
-            snakeHead.setX(snakeHeadX);
-            snakeHead.setY(snakeHeadY);
+        // init ?????????????????????
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(snakeHead);
+        translateTransition.setToY(50);
+        translateTransition.setDuration(Duration.millis(1000));
+        translateTransition.setCycleCount(Timeline.INDEFINITE);
+        translateTransition.setAutoReverse(false);
+        translateTransition.play();
+
 
 
 
@@ -124,6 +140,7 @@ public class HelloApplication extends Application {
         snakeHead.setFitWidth(TILE_SIZE);
         pane.getChildren().add(snakeHead);
     }
+
 
     public void placeFood(int foodType){
         //food
@@ -134,7 +151,21 @@ public class HelloApplication extends Application {
         food[foodType].setFitHeight(TILE_SIZE);
         food[foodType].setFitWidth(TILE_SIZE);
         food[foodType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
-        food[foodType].setY(new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT ) * TILE_SIZE);
+        food[foodType].setY(
+                (new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT ) * TILE_SIZE)
+                - (double)TILE_SIZE / 1.1);
+
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(food[foodType]);
+        translateTransition.setToY((double) TILE_SIZE / 1.1);
+        translateTransition.setDuration(Duration.millis(700));
+        translateTransition.setCycleCount(1);
+        translateTransition.setAutoReverse(false);
+        translateTransition.play();
+
+
+
+
         pane.getChildren().add(food[foodType]);
 
 
