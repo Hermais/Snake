@@ -1,5 +1,7 @@
 package com.example.snakeattempt;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
@@ -32,6 +34,7 @@ public class Snake extends Application {
     private static  ImageView mainBackground;
     private static ImageView upperPanel;
     private static final ImageView[] food = new ImageView[5];
+    private static final ImageView[] poison = new ImageView[3];
     private static final String[] imagesDirectories = {"/images/apple.png",
             "/images/banana.png",
             "/images/peach.png",
@@ -40,11 +43,21 @@ public class Snake extends Application {
             "/images/grass1.jpg",
             "/images/fabric0.jpg",
 
-            "/images/snakeHead.png"
+            "/images/snakeHead.png",
+            "",
+            "",
+
+            "/images/poison1.png",
+            "/images/poison2.png",
+            "/images/poison3.png",
+
             };
 
-    private static final double snakeSpeed = 6;
-    private static KeyCode currentDirection = KeyCode.RIGHT;
+//    private static final int UP = 0;
+//    private static final int DOWN = 1;
+//    private static final int RIGHT =2;
+//    private static final int LEFT = 3;
+//    private static int currentDirection = RIGHT;
     private static int snakeHeadX = TILE_SIZE * 5;
     private static int snakeHeadY = TILE_SIZE * 10;
 
@@ -59,16 +72,18 @@ public class Snake extends Application {
 
         setBackground();
         placeFood(new Random().nextInt(0, 5));
+        placePoison(new Random().nextInt(0, 2));
         createTiles(true);
 
         snakeHead();
 
-
-
-
-
         stage.setTitle("Hello!");
         stage.show();
+
+
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(130), e -> runSnake()));
+//        timeline.setCycleCount(Animation.INDEFINITE);
+//        timeline.play();
     }
 
     public static void main(String[] args) {
@@ -124,22 +139,32 @@ public class Snake extends Application {
         snakeHead.setX(snakeHeadX);
         snakeHead.setY(snakeHeadY);
 
-        // init ?????????????????????
-        TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setNode(snakeHead);
-        translateTransition.setToY(50);
-        translateTransition.setDuration(Duration.millis(1000));
-        translateTransition.setCycleCount(Timeline.INDEFINITE);
-        translateTransition.setAutoReverse(false);
-        translateTransition.play();
-
-
-
+        // On Key Pressed
+//        mainScene.setOnKeyPressed(keyEvent -> {
+//            KeyCode keyCode = keyEvent.getCode();
+//            if(keyCode == KeyCode.UP || keyCode == KeyCode.W)
+//                if(currentDirection != DOWN)
+//                    currentDirection = UP;
+//
+//            else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S)
+//                if (currentDirection != UP)
+//                    currentDirection = DOWN;
+//
+//            else if(keyCode == KeyCode.RIGHT || keyCode == KeyCode.D)
+//                if(currentDirection != LEFT)
+//                    currentDirection = RIGHT;
+//
+//            else if(keyCode == KeyCode.LEFT|| keyCode == KeyCode.A)
+//                if(currentDirection != RIGHT)
+//                    currentDirection = LEFT;
+//        });
 
         snakeHead.setFitHeight(TILE_SIZE);
         snakeHead.setFitWidth(TILE_SIZE);
         pane.getChildren().add(snakeHead);
     }
+
+
 
 
     public void placeFood(int foodType){
@@ -171,6 +196,44 @@ public class Snake extends Application {
 
 
     }
+
+    // poisonType indices are from 0 to 2
+    // images for poison indices are from 10 to 12
+    public void placePoison(int poisonType){
+        // init image of poison
+        Image poisonImage = new Image(Objects.requireNonNull(
+                getClass().getResource(imagesDirectories[poisonType + 10])).toExternalForm());
+        poison[poisonType] = new ImageView(poisonImage);
+
+        // fitting poison
+        poison[poisonType].setFitHeight(TILE_SIZE );
+        poison[poisonType].setFitWidth(TILE_SIZE );
+        poison[poisonType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
+        poison[poisonType].setY(
+                (new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT ) * TILE_SIZE)
+                        - (double)TILE_SIZE / 1.1);
+
+        TranslateTransition translateTransition = new TranslateTransition();
+        translateTransition.setNode(poison[poisonType]);
+        translateTransition.setToY((double) TILE_SIZE / 1.1);
+        translateTransition.setDuration(Duration.millis(700));
+        translateTransition.setCycleCount(1);
+        translateTransition.setAutoReverse(false);
+        translateTransition.play();
+
+
+
+
+        pane.getChildren().add(poison[poisonType]);
+
+
+
+
+
+
+    }
+
+
 
 
 }
