@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -21,6 +22,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Snake extends Application {
+    public static int GAME_THEME = 1;
     private static final int HEIGHT = 800;
     private static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
@@ -53,6 +55,15 @@ public class Snake extends Application {
             "/images/poison2.png",
             "/images/poison3.png",
 
+            "/images/appleG.png",
+            "/images/bananaG.png",
+            "/images/peachG.png",
+            "/images/grapesG.png",
+            "/images/mushroomG.png",
+
+            "/images/poison1G.png",
+            "/images/poison2G.png",
+            "/images/poison3G.png"
             };
 
     private static final int UP = 0;
@@ -83,7 +94,7 @@ public class Snake extends Application {
         poisonType = randInt(poisonCount);
         placeFood(foodType);
         placePoison(poisonType);
-        createTiles(true);
+        createTiles(false);
 
         snakeHead();
 
@@ -132,25 +143,48 @@ public class Snake extends Application {
     }
 
     public void setBackground(){
-        Image grassImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[5])).toExternalForm());
-        mainBackground = new ImageView(grassImage);
-        mainBackground.setFitHeight(HEIGHT);
-        mainBackground.setFitWidth(WIDTH);
-        pane.getChildren().add(mainBackground);
+        if(GAME_THEME == 0) {
+            //Grass
+            Image grassImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[5])).toExternalForm());
+            mainBackground = new ImageView(grassImage);
+            mainBackground.setFitHeight(HEIGHT);
+            mainBackground.setFitWidth(WIDTH);
+            pane.getChildren().add(mainBackground);
 
 
-        //Status Panel
-        Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[6])).toExternalForm());
-        Rectangle mask = new Rectangle(HEIGHT, WIDTH);
-        mask.setArcHeight(TILE_SIZE);
-        mask.setArcWidth(TILE_SIZE);
-        upperPanel = new ImageView(fabricImage);
-        upperPanel.setFitHeight(HEIGHT);
-        upperPanel.setFitWidth(WIDTH);
-        upperPanel.setY(PANEL_REALSTATE - HEIGHT);
-        mask.setY(upperPanel.getY());
-        upperPanel.setClip(mask);
-        pane.getChildren().add(upperPanel);
+            //Status Panel
+            Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[6])).toExternalForm());
+            Rectangle mask = new Rectangle(HEIGHT, WIDTH);
+            mask.setArcHeight(TILE_SIZE);
+            mask.setArcWidth(TILE_SIZE);
+            upperPanel = new ImageView(fabricImage);
+            upperPanel.setFitHeight(HEIGHT);
+            upperPanel.setFitWidth(WIDTH);
+            upperPanel.setY(PANEL_REALSTATE - HEIGHT);
+            mask.setY(upperPanel.getY());
+            upperPanel.setClip(mask);
+            pane.getChildren().add(upperPanel);
+        }else if(GAME_THEME == 1){
+            Rectangle rec = new Rectangle();
+            rec.setFill(Color.web("#568203"));
+            rec.setHeight(HEIGHT);
+            rec.setWidth(WIDTH);
+            pane.getChildren().add(rec);
+            // Flat Grass
+            for(int i = 0; i<= TILE_COUNT; i++){
+                for(int j =0; j <= TILE_COUNT; j++){
+
+                    ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
+                            getClass().getResource((i + j) % 2 == 0 ? "/images/grassTile1.png":"/images/grassTile2.png")).toExternalForm()));
+                    imageView.setX(TILE_SIZE * i);
+                    imageView.setY(TILE_SIZE * j);
+                    imageView.setFitWidth(TILE_SIZE);
+                    imageView.setFitHeight(TILE_SIZE);
+                    pane.getChildren().add(imageView);
+                }
+
+            }
+        }
 
 
 
@@ -160,7 +194,8 @@ public class Snake extends Application {
 
     public void snakeHead() {
         snakeHead = new ImageView(new Image(
-                Objects.requireNonNull(getClass().getResource(imagesDirectories[7])).toExternalForm()
+                Objects.requireNonNull(getClass().getResource(
+                        GAME_THEME == 0 ? imagesDirectories[7]:"/images/snakeHeadG.png")).toExternalForm()
         ));
 
         snakeHead.setX(snakeHeadX);
@@ -178,7 +213,8 @@ public class Snake extends Application {
 
     public void placeFood(int foodType){
         //food
-        Image foodImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[foodType])).toExternalForm());
+        Image foodImage = new Image(Objects.requireNonNull(getClass().getResource(
+                GAME_THEME == 0 ? imagesDirectories[foodType]:imagesDirectories[foodType + 13])).toExternalForm());
         food[foodType] = new ImageView(foodImage);
 
         //food adjusting
@@ -211,7 +247,8 @@ public class Snake extends Application {
     public void placePoison(int poisonType){
         // init image of poison
         Image poisonImage = new Image(Objects.requireNonNull(
-                getClass().getResource(imagesDirectories[poisonType + 10])).toExternalForm());
+                getClass().getResource(GAME_THEME == 0 ? imagesDirectories[poisonType + 10]:imagesDirectories[poisonType
+                         + 18])).toExternalForm());
         poison[poisonType] = new ImageView(poisonImage);
 
         // fitting poison
