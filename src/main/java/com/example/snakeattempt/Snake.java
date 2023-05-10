@@ -60,12 +60,14 @@ public class Snake extends Application {
     private static final int RIGHT =2;
     private static final int LEFT = 3;
     public static ImageView snakeHead;
-    public static final int snakeSpeed = 250;
+    public static final double snakeSpeedTilesPerIncrement =TILE_SIZE / 50.0 ;
+    public static final int gameSpeed =5;
     private static int currentDirection = RIGHT;
-    private static int snakeHeadX = TILE_SIZE * 5;
-    private static int snakeHeadY = TILE_SIZE * 10;
+    private static double snakeHeadX = TILE_SIZE * 5;
+    private static double snakeHeadY = TILE_SIZE * 10;
     private static int foodType ;
     private static int poisonType ;
+    private static int borderForSnake = 50;
 
 
     @Override
@@ -106,7 +108,7 @@ public class Snake extends Application {
         stage.setTitle("Hello!");
         stage.show();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(snakeSpeed), e -> runSnake()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(gameSpeed), e -> runSnake()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
@@ -185,12 +187,12 @@ public class Snake extends Application {
         food[foodType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
         food[foodType].setY(
                 (new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT ) * TILE_SIZE)
-                - (double)TILE_SIZE / 1.1);
+                );
 
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(food[foodType]);
-        translateTransition.setToY((double) TILE_SIZE / 1.1);
-        translateTransition.setDuration(Duration.millis(700));
+        translateTransition.setToY( TILE_SIZE / 1.0 );
+        translateTransition.setDuration(Duration.millis(300));
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
         translateTransition.play();
@@ -223,7 +225,7 @@ public class Snake extends Application {
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(poison[poisonType]);
         translateTransition.setToY((double) TILE_SIZE / 1.1);
-        translateTransition.setDuration(Duration.millis(700));
+        translateTransition.setDuration(Duration.millis(300));
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
         translateTransition.play();
@@ -247,34 +249,71 @@ public class Snake extends Application {
         switch (currentDirection) {
             case UP -> {
                 snakeHead.setRotate(0);
-                snakeHeadY -= TILE_SIZE;
+                snakeHeadY -= snakeSpeedTilesPerIncrement;
             }
             case DOWN -> {
                 snakeHead.setRotate(180);
-                snakeHeadY += TILE_SIZE;
+                snakeHeadY += snakeSpeedTilesPerIncrement;
             }
             case RIGHT -> {
                 snakeHead.setRotate(90);
-                snakeHeadX += TILE_SIZE;
+                snakeHeadX += snakeSpeedTilesPerIncrement;
             }
             case LEFT -> {
                 snakeHead.setRotate(-90);
-                snakeHeadX -= TILE_SIZE;
+                snakeHeadX -= snakeSpeedTilesPerIncrement;
+
             }
             default -> {
+
             }
         }
 
         // Update snake head position
         snakeHead.setX(snakeHeadX);
         snakeHead.setY(snakeHeadY);
-        pane.requestFocus();
 
-        if(snakeHeadX == food[foodType].getX() && snakeHeadY == food[foodType].getY() ){
+        // Boundaries adjustment - We can either make it deadly, or make the snake come out the other way.
+        if(snakeHeadX > WIDTH - borderForSnake && currentDirection == RIGHT)
+            snakeHeadX = -TILE_SIZE;
+        if(snakeHeadX < borderForSnake/2.0 && currentDirection == LEFT)
+            snakeHeadX = WIDTH;
+        if(snakeHeadY > HEIGHT - borderForSnake && currentDirection == DOWN)
+            snakeHeadY = -TILE_SIZE;
+        if(snakeHeadY < borderForSnake/2.0 && currentDirection == UP)
+            snakeHeadY = HEIGHT;
+
+        System.out.println("snakeX: " + snakeHeadX);
+        System.out.println("snakeY: " + snakeHeadY);
+        System.out.println();
+        System.out.println("foodX: "+ food[foodType].getX());
+        System.out.println("foodY: "+ food[foodType].getY());
+
+        if (Math.abs(snakeHeadX - food[foodType].getX()) <= TILE_SIZE/1.5 &&
+                Math.abs(snakeHeadY - food[foodType].getY()) <= TILE_SIZE/1.5) {
+            // Collision with food detected
             food[foodType].setImage(null);
-            placeFood(randInt(foodCount));
+            foodType = randInt(foodCount);
+            System.out.println(imagesDirectories[foodType]);
+            placeFood(foodType);
+
+
+
+//        if((Math.abs(snakeHeadX )-Math.abs( food[foodType].getX()) < Math.abs(TILE_SIZE)) &&
+//                ( Math.abs( snakeHeadY )-Math.abs( food[foodType].getY()) < Math.abs(TILE_SIZE))){
+//            food[foodType].setImage(null);
+//            foodType = randInt(foodCount);
+//            System.out.println(imagesDirectories[foodType]);
+//            placeFood(foodType);
+//            boolean isDup=true;
+//            while(isDup){
+//                placeFood(foodType);
+//                isDup = (Math.abs( food[foodType].getX() ) - Math.abs( poison[poisonType].getX()) < Math.abs(TILE_SIZE))&&
+//                        (Math.abs( food[foodType].getY() ) - Math.abs( poison[poisonType].getY()) < Math.abs(TILE_SIZE));
+//            }
         }
 
+        pane.requestFocus();
     }
     public int randInt(int max){
         return new Random().nextInt(0, max);
