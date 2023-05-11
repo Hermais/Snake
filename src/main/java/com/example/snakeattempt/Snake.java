@@ -22,23 +22,23 @@ import java.util.Objects;
 import java.util.Random;
 
 public class Snake extends Application {
-    public static int GAME_THEME = 1;
-    private static final int HEIGHT = 800;
+    public static final int GAME_THEME = 1;
+    private static final int HEIGHT = 400;
     private static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    private static final int TILE_COUNT =16; // 20 But 16 is recommended.
+    private static final int TILE_COUNT = 20; // 20 But 16 is recommended.
     private static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     private static final int PANEL_REALSTATE = TILE_SIZE * 2;
-    private static final Pane pane = new Pane();
+    private static final Pane PANE = new Pane();
     private static Scene mainScene;
 
 
-    private static  ImageView mainBackground;
+    private static ImageView mainBackground;
     private static ImageView upperPanel;
-    private static final int foodCount = 5;
-    private static final int poisonCount = 3;
-    private static final ImageView[] food = new ImageView[foodCount];
-    private static final ImageView[] poison = new ImageView[poisonCount];
+    private static final int FOOD_COUNT = 5;
+    private static final int POISON_COUNT = 3;
+    private static final ImageView[] FOOD = new ImageView[FOOD_COUNT];
+    private static final ImageView[] POISON = new ImageView[POISON_COUNT];
     private static final String[] imagesDirectories = {"/images/apple.png",
             "/images/banana.png",
             "/images/peach.png",
@@ -64,36 +64,36 @@ public class Snake extends Application {
             "/images/poison1G.png",
             "/images/poison2G.png",
             "/images/poison3G.png"
-            };
+    };
 
+    public static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
+    public static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
     private static final int UP = 0;
     private static final int DOWN = 1;
-    private static final int RIGHT =2;
+    private static final int RIGHT = 2;
     private static final int LEFT = 3;
     public static ImageView snakeHead;
-    public static final double snakeSpeedTilesPerIncrement =TILE_SIZE / 50.0 ;
-    public static final int gameSpeed =5;
     private static int currentDirection = RIGHT;
-    private static double snakeHeadX = TILE_SIZE * 5;
-    private static double snakeHeadY = TILE_SIZE * 10;
-    private static int foodType ;
-    private static int poisonType ;
+    private static double snakeHeadX = TILE_SIZE * (TILE_COUNT / 2);
+    private static double snakeHeadY = TILE_SIZE * (TILE_COUNT / 2);
+    private static int foodType;
+    private static int poisonType;
     private static int borderForSnake = 50;
 
 
     @Override
     public void start(Stage stage) throws IOException {
-        StackPane mainPane = new StackPane(pane);
+        StackPane mainPane = new StackPane(PANE);
 
         mainScene = new Scene(mainPane, HEIGHT, WIDTH);
         stage.setResizable(false);
         stage.setScene(mainScene);
 
         setBackground();
-        foodType = randInt(foodCount);
-        poisonType = randInt(poisonCount);
-        placeFood(foodType);
+        foodType = randInt(FOOD_COUNT);
+        poisonType = randInt(POISON_COUNT);
         placePoison(poisonType);
+        placeFood(foodType);
         createTiles(false);
 
         snakeHead();
@@ -119,7 +119,7 @@ public class Snake extends Application {
         stage.setTitle("Hello!");
         stage.show();
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(gameSpeed), e -> runSnake()));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> runSnake()));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
@@ -129,27 +129,27 @@ public class Snake extends Application {
     }
 
     //This function is only for visualization. For now.
-    public void createTiles(boolean c){
-        if(c){
-            for(int i = 0; i < HEIGHT/TILE_SIZE; i++){
+    public void createTiles(boolean c) {
+        if (c) {
+            for (int i = 0; i < HEIGHT / TILE_SIZE; i++) {
                 Line lY = new Line(i * TILE_SIZE, 0, i * TILE_SIZE, HEIGHT);
-                Line lX = new Line(0,i * TILE_SIZE , WIDTH,i * TILE_SIZE);
-                pane.getChildren().add(lY);
-                pane.getChildren().add(lX);
+                Line lX = new Line(0, i * TILE_SIZE, WIDTH, i * TILE_SIZE);
+                PANE.getChildren().add(lY);
+                PANE.getChildren().add(lX);
             }
         }
 
-        
+
     }
 
-    public void setBackground(){
-        if(GAME_THEME == 0) {
+    public void setBackground() {
+        if (GAME_THEME == 0) {
             //Grass
             Image grassImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[5])).toExternalForm());
             mainBackground = new ImageView(grassImage);
             mainBackground.setFitHeight(HEIGHT);
             mainBackground.setFitWidth(WIDTH);
-            pane.getChildren().add(mainBackground);
+            PANE.getChildren().add(mainBackground);
 
 
             //Status Panel
@@ -163,29 +163,28 @@ public class Snake extends Application {
             upperPanel.setY(PANEL_REALSTATE - HEIGHT);
             mask.setY(upperPanel.getY());
             upperPanel.setClip(mask);
-            pane.getChildren().add(upperPanel);
-        }else if(GAME_THEME == 1){
+            PANE.getChildren().add(upperPanel);
+        } else if (GAME_THEME == 1) {
             Rectangle rec = new Rectangle();
             rec.setFill(Color.web("#568203"));
             rec.setHeight(HEIGHT);
             rec.setWidth(WIDTH);
-            pane.getChildren().add(rec);
+            PANE.getChildren().add(rec);
             // Flat Grass
-            for(int i = 0; i<= TILE_COUNT; i++){
-                for(int j =0; j <= TILE_COUNT; j++){
+            for (int i = 0; i <= TILE_COUNT; i++) {
+                for (int j = 0; j <= TILE_COUNT; j++) {
 
                     ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
-                            getClass().getResource((i + j) % 2 == 0 ? "/images/grassTile1.png":"/images/grassTile2.png")).toExternalForm()));
+                            getClass().getResource((i + j) % 2 == 0 ? "/images/grassTile1.png" : "/images/grassTile2.png")).toExternalForm()));
                     imageView.setX(TILE_SIZE * i);
                     imageView.setY(TILE_SIZE * j);
                     imageView.setFitWidth(TILE_SIZE);
                     imageView.setFitHeight(TILE_SIZE);
-                    pane.getChildren().add(imageView);
+                    PANE.getChildren().add(imageView);
                 }
 
             }
         }
-
 
 
     }
@@ -195,90 +194,79 @@ public class Snake extends Application {
     public void snakeHead() {
         snakeHead = new ImageView(new Image(
                 Objects.requireNonNull(getClass().getResource(
-                        GAME_THEME == 0 ? imagesDirectories[7]:"/images/snakeHeadG.png")).toExternalForm()
+                        GAME_THEME == 0 ? imagesDirectories[7] : "/images/snakeHeadG.png")).toExternalForm()
         ));
 
         snakeHead.setX(snakeHeadX);
         snakeHead.setY(snakeHeadY);
 
 
-
         snakeHead.setFitHeight(TILE_SIZE);
         snakeHead.setFitWidth(TILE_SIZE);
-        pane.getChildren().add(snakeHead);
+        PANE.getChildren().add(snakeHead);
     }
 
 
-
-
-    public void placeFood(int foodType){
-        //food
+    public void placeFood(int foodType) {
+        //FOOD
         Image foodImage = new Image(Objects.requireNonNull(getClass().getResource(
-                GAME_THEME == 0 ? imagesDirectories[foodType]:imagesDirectories[foodType + 13])).toExternalForm());
-        food[foodType] = new ImageView(foodImage);
+                GAME_THEME == 0 ? imagesDirectories[foodType] : imagesDirectories[foodType + 13])).toExternalForm());
+        FOOD[foodType] = new ImageView(foodImage);
 
-        //food adjusting
-        food[foodType].setFitHeight(TILE_SIZE);
-        food[foodType].setFitWidth(TILE_SIZE);
-        food[foodType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
-        food[foodType].setY(
-                (new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT ) * TILE_SIZE)
-                );
+        //FOOD adjusting
+        FOOD[foodType].setFitHeight(TILE_SIZE);
+        FOOD[foodType].setFitWidth(TILE_SIZE);
+        FOOD[foodType].setX(new Random().nextInt(1, TILE_COUNT - 1) * TILE_SIZE);
+        FOOD[foodType].setY(
+                (new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT - 2) * TILE_SIZE)
+        );
 
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setNode(food[foodType]);
-        translateTransition.setToY( TILE_SIZE / 1.0 );
+        translateTransition.setNode(FOOD[foodType]);
+        translateTransition.setToY(TILE_SIZE / 1.0);
         translateTransition.setDuration(Duration.millis(300));
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
         translateTransition.play();
 
+        checkFood_PoisonOverlapping();
 
 
-
-        pane.getChildren().add(food[foodType]);
-
+        PANE.getChildren().add(FOOD[foodType]);
 
 
     }
 
     // poisonType indices are from 0 to 2
-    // images for poison indices are from 10 to 12
-    public void placePoison(int poisonType){
-        // init image of poison
+    // images for POISON indices are from 10 to 12
+    public void placePoison(int poisonType) {
+        // init image of POISON
         Image poisonImage = new Image(Objects.requireNonNull(
-                getClass().getResource(GAME_THEME == 0 ? imagesDirectories[poisonType + 10]:imagesDirectories[poisonType
-                         + 18])).toExternalForm());
-        poison[poisonType] = new ImageView(poisonImage);
-
-        // fitting poison
-        poison[poisonType].setFitHeight(TILE_SIZE );
-        poison[poisonType].setFitWidth(TILE_SIZE );
-        poison[poisonType].setX(new Random().nextInt(0, TILE_COUNT ) * TILE_SIZE);
-        poison[poisonType].setY(
-                (new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT ) * TILE_SIZE)
-                        - (double)TILE_SIZE / 1.1);
+                getClass().getResource(GAME_THEME == 0 ? imagesDirectories[poisonType + 10] : imagesDirectories[poisonType
+                        + 18])).toExternalForm());
+        POISON[poisonType] = new ImageView(poisonImage);
 
         TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setNode(poison[poisonType]);
-        translateTransition.setToY((double) TILE_SIZE / 1.1);
+        translateTransition.setNode(POISON[poisonType]);
+        translateTransition.setToY( TILE_SIZE / 1.0);
         translateTransition.setDuration(Duration.millis(300));
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
         translateTransition.play();
+        // fitting POISON
+        POISON[poisonType].setFitHeight(TILE_SIZE);
+        POISON[poisonType].setFitWidth(TILE_SIZE);
+        POISON[poisonType].setX(new Random().nextInt(1, TILE_COUNT - 1) * TILE_SIZE);
+        POISON[poisonType].setY(
+                (new Random().nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT - 2) * TILE_SIZE)
+                        - (double) TILE_SIZE / 1.1);
 
 
 
-
-        pane.getChildren().add(poison[poisonType]);
-
-
-
-
+        PANE.getChildren().add(POISON[poisonType]);
 
 
     }
-
 
 
     public void runSnake() {
@@ -311,49 +299,51 @@ public class Snake extends Application {
         snakeHead.setY(snakeHeadY);
 
         // Boundaries adjustment - We can either make it deadly, or make the snake come out the other way.
-        if(snakeHeadX > WIDTH - borderForSnake && currentDirection == RIGHT)
+        if (snakeHeadX > WIDTH - borderForSnake && currentDirection == RIGHT)
             snakeHeadX = -TILE_SIZE;
-        if(snakeHeadX < borderForSnake/2.0 && currentDirection == LEFT)
+        if (snakeHeadX < borderForSnake / 2.0 && currentDirection == LEFT)
             snakeHeadX = WIDTH;
-        if(snakeHeadY > HEIGHT - borderForSnake && currentDirection == DOWN)
+        if (snakeHeadY > HEIGHT - borderForSnake && currentDirection == DOWN)
             snakeHeadY = -TILE_SIZE;
-        if(snakeHeadY < borderForSnake/2.0 && currentDirection == UP)
+        if (snakeHeadY < borderForSnake / 2.0 && currentDirection == UP)
             snakeHeadY = HEIGHT;
 
         System.out.println("snakeX: " + snakeHeadX);
         System.out.println("snakeY: " + snakeHeadY);
         System.out.println();
-        System.out.println("foodX: "+ food[foodType].getX());
-        System.out.println("foodY: "+ food[foodType].getY());
+        System.out.println("foodX: " + FOOD[foodType].getX());
+        System.out.println("foodY: " + FOOD[foodType].getY());
 
-        if (Math.abs(snakeHeadX - food[foodType].getX()) <= TILE_SIZE/1.5 &&
-                Math.abs(snakeHeadY - food[foodType].getY()) <= TILE_SIZE/1.5) {
-            // Collision with food detected
-            food[foodType].setImage(null);
-            foodType = randInt(foodCount);
+        if (snakeHeadX == FOOD[foodType].getX() && snakeHeadY - TILE_SIZE == FOOD[foodType].getY()) {
+            // Collision with FOOD detected
+            System.out.println("Food is eaten.");
+            FOOD[foodType].setImage(null);
+            foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
             placeFood(foodType);
 
 
-
-//        if((Math.abs(snakeHeadX )-Math.abs( food[foodType].getX()) < Math.abs(TILE_SIZE)) &&
-//                ( Math.abs( snakeHeadY )-Math.abs( food[foodType].getY()) < Math.abs(TILE_SIZE))){
-//            food[foodType].setImage(null);
-//            foodType = randInt(foodCount);
-//            System.out.println(imagesDirectories[foodType]);
-//            placeFood(foodType);
-//            boolean isDup=true;
-//            while(isDup){
-//                placeFood(foodType);
-//                isDup = (Math.abs( food[foodType].getX() ) - Math.abs( poison[poisonType].getX()) < Math.abs(TILE_SIZE))&&
-//                        (Math.abs( food[foodType].getY() ) - Math.abs( poison[poisonType].getY()) < Math.abs(TILE_SIZE));
-//            }
         }
 
-        pane.requestFocus();
+        PANE.requestFocus();
     }
-    public int randInt(int max){
+
+    public int randInt(int max) {
         return new Random().nextInt(0, max);
+    }
+
+    public void checkFood_PoisonOverlapping() {
+        while (true) {
+            if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
+                    FOOD[foodType].getY() == POISON[poisonType].getY()) {
+                FOOD[foodType].setImage(null);
+                foodType = randInt(FOOD_COUNT);
+                placeFood(foodType);
+            } else {
+                System.out.println("Overlapping Fixed!");
+                break;
+            }
+        }
     }
 
 }
