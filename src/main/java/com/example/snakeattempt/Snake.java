@@ -21,6 +21,8 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 
+// OBJECTIVE: Clean the code by making multiple classes.
+
 public class Snake extends Application {
     public static final int GAME_THEME = 1;
     private static final int HEIGHT = 1080;
