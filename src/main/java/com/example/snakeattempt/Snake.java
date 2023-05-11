@@ -26,7 +26,7 @@ public class Snake extends Application {
     private static final int HEIGHT = 400;
     private static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    private static final int TILE_COUNT = 20; // 20 But 16 is recommended.
+    private static final int TILE_COUNT = 16; // 20 But 16 is recommended.
     private static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     private static final int PANEL_REALSTATE = TILE_SIZE * 2;
     private static final Pane PANE = new Pane();
@@ -66,8 +66,18 @@ public class Snake extends Application {
             "/images/poison3G.png"
     };
 
-    public static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    public static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
+    private static final String[] SOUND_DIRECTORIES = {
+            "/sounds/eat1.mp3",
+            "/sounds/eat2.mp3",
+            "/sounds/eat3.mp3"
+
+    };
+    private static final Duration SOUND_DURATION = Duration.seconds(1); // Adjust the duration as needed
+
+
+    private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
+    private static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
+    private static final int borderForSnake = TILE_SIZE ;
     private static final int UP = 0;
     private static final int DOWN = 1;
     private static final int RIGHT = 2;
@@ -78,7 +88,6 @@ public class Snake extends Application {
     private static double snakeHeadY = TILE_SIZE * (TILE_COUNT / 2);
     private static int foodType;
     private static int poisonType;
-    private static int borderForSnake = 50;
 
 
     @Override
@@ -153,7 +162,8 @@ public class Snake extends Application {
 
 
             //Status Panel
-            Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[6])).toExternalForm());
+            Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(
+                    GAME_THEME == 0 ? imagesDirectories[6]:"/images/panelG.png")).toExternalForm());
             Rectangle mask = new Rectangle(HEIGHT, WIDTH);
             mask.setArcHeight(TILE_SIZE);
             mask.setArcWidth(TILE_SIZE);
@@ -299,13 +309,13 @@ public class Snake extends Application {
         snakeHead.setY(snakeHeadY);
 
         // Boundaries adjustment - We can either make it deadly, or make the snake come out the other way.
-        if (snakeHeadX > WIDTH - borderForSnake && currentDirection == RIGHT)
+        if (snakeHeadX > WIDTH  && currentDirection == RIGHT)
             snakeHeadX = -TILE_SIZE;
-        if (snakeHeadX < borderForSnake / 2.0 && currentDirection == LEFT)
+        if (snakeHeadX < borderForSnake && currentDirection == LEFT)
             snakeHeadX = WIDTH;
-        if (snakeHeadY > HEIGHT - borderForSnake && currentDirection == DOWN)
+        if (snakeHeadY > HEIGHT  && currentDirection == DOWN)
             snakeHeadY = -TILE_SIZE;
-        if (snakeHeadY < borderForSnake / 2.0 && currentDirection == UP)
+        if (snakeHeadY < borderForSnake && currentDirection == UP)
             snakeHeadY = HEIGHT;
 
         System.out.println("snakeX: " + snakeHeadX);
@@ -317,6 +327,7 @@ public class Snake extends Application {
         if (snakeHeadX == FOOD[foodType].getX() && snakeHeadY - TILE_SIZE == FOOD[foodType].getY()) {
             // Collision with FOOD detected
             System.out.println("Food is eaten.");
+            // playEatSound(); to be implemented.
             FOOD[foodType].setImage(null);
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
