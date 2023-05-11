@@ -23,10 +23,10 @@ import java.util.Random;
 
 public class Snake extends Application {
     public static final int GAME_THEME = 1;
-    private static final int HEIGHT = 400;
+    private static final int HEIGHT = 1080;
     private static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    private static final int TILE_COUNT = 16; // 20 But 16 is recommended.
+    private static final int TILE_COUNT = 10; // 20 But 16 is recommended.
     private static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     private static final int PANEL_REALSTATE = TILE_SIZE * 2;
     private static final Pane PANE = new Pane();
@@ -89,6 +89,7 @@ public class Snake extends Application {
     private static int foodType;
     private static int poisonType;
 
+    // Notes: Overlapping method does not work.
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -161,19 +162,7 @@ public class Snake extends Application {
             PANE.getChildren().add(mainBackground);
 
 
-            //Status Panel
-            Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(
-                    GAME_THEME == 0 ? imagesDirectories[6]:"/images/panelG.png")).toExternalForm());
-            Rectangle mask = new Rectangle(HEIGHT, WIDTH);
-            mask.setArcHeight(TILE_SIZE);
-            mask.setArcWidth(TILE_SIZE);
-            upperPanel = new ImageView(fabricImage);
-            upperPanel.setFitHeight(HEIGHT);
-            upperPanel.setFitWidth(WIDTH);
-            upperPanel.setY(PANEL_REALSTATE - HEIGHT);
-            mask.setY(upperPanel.getY());
-            upperPanel.setClip(mask);
-            PANE.getChildren().add(upperPanel);
+
         } else if (GAME_THEME == 1) {
             Rectangle rec = new Rectangle();
             rec.setFill(Color.web("#568203"));
@@ -195,6 +184,20 @@ public class Snake extends Application {
 
             }
         }
+
+        //Status Panel
+        Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(
+                GAME_THEME == 0 ? imagesDirectories[6]:"/images/panelG.png")).toExternalForm());
+        Rectangle mask = new Rectangle(HEIGHT, WIDTH);
+        mask.setArcHeight(TILE_SIZE);
+        mask.setArcWidth(TILE_SIZE);
+        upperPanel = new ImageView(fabricImage);
+        upperPanel.setFitHeight(HEIGHT);
+        upperPanel.setFitWidth(WIDTH);
+        upperPanel.setY(PANEL_REALSTATE - HEIGHT);
+        mask.setY(upperPanel.getY());
+        upperPanel.setClip(mask);
+        PANE.getChildren().add(upperPanel);
 
 
     }
@@ -238,8 +241,6 @@ public class Snake extends Application {
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
         translateTransition.play();
-
-        checkFood_PoisonOverlapping();
 
 
         PANE.getChildren().add(FOOD[foodType]);
@@ -309,14 +310,32 @@ public class Snake extends Application {
         snakeHead.setY(snakeHeadY);
 
         // Boundaries adjustment - We can either make it deadly, or make the snake come out the other way.
-        if (snakeHeadX > WIDTH  && currentDirection == RIGHT)
-            snakeHeadX = -TILE_SIZE;
+        if (snakeHeadX > WIDTH && currentDirection == RIGHT)
+            snakeHeadX = 0;
         if (snakeHeadX < borderForSnake && currentDirection == LEFT)
             snakeHeadX = WIDTH;
         if (snakeHeadY > HEIGHT  && currentDirection == DOWN)
-            snakeHeadY = -TILE_SIZE;
-        if (snakeHeadY < borderForSnake && currentDirection == UP)
+            snakeHeadY = 0;
+        if (snakeHeadY < borderForSnake - TILE_SIZE && currentDirection == UP)
             snakeHeadY = HEIGHT;
+        if(snakeHeadX == WIDTH && (currentDirection == UP || currentDirection == DOWN))
+            snakeHeadX = WIDTH - 2 * TILE_SIZE;
+        if(snakeHeadY == HEIGHT && (currentDirection == RIGHT || currentDirection == LEFT))
+            snakeHeadY = HEIGHT - 2 * TILE_SIZE ;
+
+        //Check if food item overlaps poison item.
+        while (true) {
+            if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
+                    FOOD[foodType].getY() == POISON[poisonType].getY()) {
+                FOOD[foodType].setImage(null);
+                foodType = randInt(FOOD_COUNT);
+                placeFood(foodType);
+                System.out.println("Overlapping detected!");
+            } else {
+                System.out.println("No overlapping.");
+                break;
+            }
+        }
 
         System.out.println("snakeX: " + snakeHeadX);
         System.out.println("snakeY: " + snakeHeadY);
@@ -333,7 +352,6 @@ public class Snake extends Application {
             System.out.println(imagesDirectories[foodType]);
             placeFood(foodType);
 
-
         }
 
         PANE.requestFocus();
@@ -343,18 +361,6 @@ public class Snake extends Application {
         return new Random().nextInt(0, max);
     }
 
-    public void checkFood_PoisonOverlapping() {
-        while (true) {
-            if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
-                    FOOD[foodType].getY() == POISON[poisonType].getY()) {
-                FOOD[foodType].setImage(null);
-                foodType = randInt(FOOD_COUNT);
-                placeFood(foodType);
-            } else {
-                System.out.println("Overlapping Fixed!");
-                break;
-            }
-        }
-    }
+
 
 }
