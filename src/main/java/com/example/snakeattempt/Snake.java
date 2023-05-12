@@ -5,6 +5,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -338,32 +340,43 @@ public class Snake extends Application {
         // Update snake direction
         switch (currentDirection) {
             case UP -> {
-                for (int i = 0; i <= snakeBodyPartsCount; i++) {
-                    moveY(true, i);
-                    bodyParts[i].setRotate(0);
 
-                }
+               for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                     move(i);
+                   bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
+
+                   bodyParts[i].setRotate(0);
+                   bodyParts[i].setX(bodyParts[i-1].getX());
+                    bodyParts[i].setY(bodyParts[i-1].getY());
+//
+               }
             }
             case DOWN -> {
-                for (int i = 0; i <= snakeBodyPartsCount; i++) {
-                    moveY(false, i);
+                for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                    move(i);
                     bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
                     bodyParts[i].setRotate(180);
-
+                    bodyParts[i].setX(bodyParts[i-1].getX());
+                    bodyParts[i].setY(bodyParts[i-1].getY());
                 }
             }
             case RIGHT -> {
-                for (int i = 0; i <= snakeBodyPartsCount; i++) {
-                    moveX(true, i);
-                    bodyParts[0].setRotate(90);
-                    bodyParts[1].setRotate(90);
+                for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                    move( i);
+                    bodyParts[i].setRotate(90);
+                    bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);
+                    bodyParts[i].setX(bodyParts[i-1].getX());
+                    bodyParts[i].setY(bodyParts[i-1].getY());
 
                 }
             }
             case LEFT -> {
-                for (int i = 0; i <= snakeBodyPartsCount; i++) {
-                    moveX(false, i);
+                for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                    move( i);
                     bodyParts[i].setRotate(-90);
+                    bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
+                    bodyParts[i].setX(bodyParts[i-1].getX());
+                    bodyParts[i].setY(bodyParts[i-1].getY());
 
                 }
 
@@ -428,23 +441,30 @@ public class Snake extends Application {
     }
 
 
-    public void moveY(boolean up, int i) {
-        if (up)
-            bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
-        else
-            bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
 
+    public void move(int i) {
+        bodyParts[i].setOnKeyTyped(keyEvent -> {
+            switch (currentDirection) {
+                case UP:
+                    bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
+                      break;
+                case DOWN:
+                    bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
+                    break;
 
+                case RIGHT:
+                    bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);
+                    break;
+
+                case LEFT:
+                    bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
+                    break;
+
+            }
+
+        });
     }
 
-    public void moveX(boolean right, int i) {
-        if (right)
-            bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);
-        else
-            bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
-
-
-    }
 
     public void gameOver(){
         // Peter:
