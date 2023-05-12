@@ -137,7 +137,7 @@ public class Snake extends Application {
             }
         });
 
-        stage.setTitle("Hello!");
+        stage.setTitle("Snake");
         stage.show();
 
         Timeline timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> runSnake()));
@@ -243,6 +243,9 @@ public class Snake extends Application {
                 }
 
             }
+
+            // Peter: Complete the fence.
+
         }
 
     }
@@ -250,6 +253,9 @@ public class Snake extends Application {
     public void initSnakeBody() {
         double temp = TILE_SIZE;
 
+
+        // If we failed to make the code work as a snake with a head, we will remove the head and
+        // replace it with body.
         for (int i = 0; i <= snakeBodyPartsCount; i++) {
             bodyParts[i] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                     i == 0 ? "/images/snakeHeadG.png" : "/images/snakeBodySegments.png")).toExternalForm())
@@ -278,6 +284,7 @@ public class Snake extends Application {
                 (new Random(System.currentTimeMillis()).nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT - 2) * TILE_SIZE)
         );
 
+        // Just an animation
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(FOOD[foodType]);
         translateTransition.setToY(TILE_SIZE / 1.0);
@@ -325,10 +332,9 @@ public class Snake extends Application {
 
     public void runSnake() {
 
-//        // Update snake head position
-//        bodyParts[0].setX(initialSnakeHeadX);
-//        bodyParts[0].setY(initialSnakeHeadY);
 
+
+        // Anton:
         // Update snake direction
         switch (currentDirection) {
             case UP -> {
@@ -376,13 +382,9 @@ public class Snake extends Application {
         )
             gameOver();
 
-            // !!!!!!!!!!!!!!These two lines might cause problems with body segments.
-//        if(initialSnakeHeadX == WIDTH && (currentDirection == UP || currentDirection == DOWN))
-//            initialSnakeHeadX = WIDTH - 2 * TILE_SIZE;
-//        if(initialSnakeHeadY == HEIGHT && (currentDirection == RIGHT || currentDirection == LEFT))
-//            initialSnakeHeadY = HEIGHT - 2 * TILE_SIZE ;
 
-            //Check if food item overlaps poison item.
+            // Ahmed Salem:
+            // Check if food item overlaps poison item.
             while (true) {
                 if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
                         FOOD[foodType].getY() == POISON[poisonType].getY()) {
@@ -402,6 +404,7 @@ public class Snake extends Application {
         System.out.println("foodX: " + FOOD[foodType].getX());
         System.out.println("foodY: " + FOOD[foodType].getY());
 
+        // Food detection
         if (bodyParts[0].getX() == FOOD[foodType].getX() && bodyParts[0].getY() - TILE_SIZE == FOOD[foodType].getY()) {
             // Collision with FOOD detected
             System.out.println("Food is eaten.");
@@ -412,6 +415,9 @@ public class Snake extends Application {
             placeFood(foodType);
 
         }
+
+        // Mohamed: Poison Detection
+
 
 
         PANE.requestFocus();
@@ -426,7 +432,7 @@ public class Snake extends Application {
         if (up)
             bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
         else
-            bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
+            bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
 
 
     }
@@ -441,6 +447,7 @@ public class Snake extends Application {
     }
 
     public void gameOver(){
+        // Peter:
         System.exit(0);
     }
 
