@@ -82,7 +82,7 @@ public class Snake extends Application {
 
 
     private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    private static final int GAME_SPEED = 1028;// Actually lower values give higher speeds.
+    private static final int GAME_SPEED = 100;// Actually lower values give higher speeds.
     private static final int borderForSnake = TILE_SIZE;
     private static final int UP = 0;
     private static final int DOWN = 1;
@@ -546,7 +546,7 @@ public class Snake extends Application {
 
     public void gameOver() {
         // Peter:
-        System.exit(0);
+        // System.exit(0);
     }
 
 }
