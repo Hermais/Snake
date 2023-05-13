@@ -95,7 +95,7 @@ public class Snake extends Application {
     private static double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2);
     private static int foodType;
     private static int poisonType;
-    private static int snakeBodyPartsCount = 3;
+    private  int snakeBodyPartsCount = 3;
     private static ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     private static ImageView[] fence = new ImageView[TILE_COUNT];
 
@@ -426,6 +426,11 @@ public class Snake extends Application {
 
             // Anton:
             // Add snake body segment
+bodyParts[snakeBodyPartsCount+1]= new ImageView(new Image(Objects.requireNonNull(getClass().getResource( "/images/snakeBodySegments.png")).toExternalForm()));
+            bodyParts[snakeBodyPartsCount+1].setFitHeight(TILE_SIZE);
+            bodyParts[snakeBodyPartsCount+1].setFitWidth(TILE_SIZE);
+            PANE.getChildren().add(bodyParts[snakeBodyPartsCount+1]);
+            snakeBodyPartsCount++;
 
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
