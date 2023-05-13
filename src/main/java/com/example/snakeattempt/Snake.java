@@ -431,9 +431,9 @@ public class Snake extends Application {
                 FOOD[foodType].setImage(null);
                 foodType = randInt(FOOD_COUNT);
                 placeFood(foodType);
-                System.out.println("Overlapping detected!");
+                // System.out.println("Overlapping detected!");
             } else {
-                System.out.println("No overlapping.");
+                // System.out.println("No overlapping.");
                 break;
             }
         }
