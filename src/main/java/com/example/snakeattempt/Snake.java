@@ -82,7 +82,7 @@ public class Snake extends Application {
 
 
     private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    private static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
+    private static final int GAME_SPEED = 1028;// Actually lower values give higher speeds.
     private static final int borderForSnake = TILE_SIZE;
     private static final int UP = 0;
     private static final int DOWN = 1;
@@ -218,28 +218,72 @@ public class Snake extends Application {
         for (int i = PANEL_REALSTATE / TILE_SIZE; i < TILE_COUNT; i++) {
             // Draw the upper fence
             if (i == PANEL_REALSTATE / TILE_SIZE) {
-                for (int k = 1; k < TILE_COUNT-1; k++) {
-                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                for (int k = 0; k < TILE_COUNT; k++) {
+                    if(k==0){
+                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k].setFitHeight(TILE_SIZE);
+                        fence[k].setFitWidth(TILE_SIZE);
+                        fence[k].setX(TILE_SIZE * k);
+                        fence[k].setY(PANEL_REALSTATE);
+                        fence[k].setRotate(-45);
+                        PANE.getChildren().add(fence[k]);}
+                    else if(k==19){
+                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k].setFitHeight(TILE_SIZE);
+                        fence[k].setFitWidth(TILE_SIZE);
+                        fence[k].setX(TILE_SIZE * k);
+                        fence[k].setY(PANEL_REALSTATE);
+                        fence[k].setRotate(45);
+                        PANE.getChildren().add(fence[k]);
+                    }
+                    else{
+                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                             "/images/fenceX.png")).toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(PANEL_REALSTATE);
-                    PANE.getChildren().add(fence[k]);
+                        fence[k].setFitHeight(TILE_SIZE);
+                        fence[k].setFitWidth(TILE_SIZE);
+                        fence[k].setX(TILE_SIZE * k);
+                        fence[k].setY(PANEL_REALSTATE);
+                        PANE.getChildren().add(fence[k]);}
 
                 }
 
             }
             // Draw the lower fence
             if (i == TILE_COUNT - 1) {
-                for (int k = 1; k < TILE_COUNT-1; k++) {
-                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                            "/images/fenceX.png")).toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(HEIGHT - TILE_SIZE);
-                    PANE.getChildren().add(fence[k]);
+                for (int k = 0; k < TILE_COUNT; k++) {
+                    if(k==19) {
+                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k].setFitHeight(TILE_SIZE);
+                        fence[k].setFitWidth(TILE_SIZE);
+                        fence[k].setX(TILE_SIZE * k);
+                        fence[k].setY(HEIGHT - TILE_SIZE);
+                        fence[k].setRotate(135);
+                        PANE.getChildren().add(fence[k]);
+                    }
+                    else if(k==0){
+                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k].setFitHeight(TILE_SIZE);
+                        fence[k].setFitWidth(TILE_SIZE);
+                        fence[k].setX(TILE_SIZE * k);
+                        fence[k].setY(HEIGHT - TILE_SIZE);
+                        fence[k].setRotate(-135);
+                        PANE.getChildren().add(fence[k]);
+
+                    }
+                    else{
+                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k].setFitHeight(TILE_SIZE);
+                        fence[k].setFitWidth(TILE_SIZE);
+                        fence[k].setX(TILE_SIZE * k);
+                        fence[k].setY(HEIGHT - TILE_SIZE);
+                        fence[k].setRotate(180);
+                        PANE.getChildren().add(fence[k]);
+                    }
 
 
                 }
@@ -273,8 +317,6 @@ public class Snake extends Application {
                 }
 
             }
-
-
 
 
         }
