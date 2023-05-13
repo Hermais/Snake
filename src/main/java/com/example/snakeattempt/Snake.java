@@ -100,7 +100,7 @@ public class Snake extends Application {
     private static ImageView[] fence = new ImageView[TILE_COUNT];
 
     private static int testChange = 0;
-    public int Score=0;
+
     // Notes: Overlapping method does not work.
 
     @Override
@@ -247,6 +247,33 @@ public class Snake extends Application {
             }
 
             // Peter: Complete the fence.
+            if (i > PANEL_REALSTATE / TILE_SIZE) {
+                for (int k = PANEL_REALSTATE / TILE_SIZE ; k < TILE_COUNT; k++) {
+                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                            "/images/fenceX.png")).toExternalForm()));
+                    fence[k].setFitHeight(TILE_SIZE);
+                    fence[k].setFitWidth(TILE_SIZE);
+                    fence[k].setX(TILE_SIZE - TILE_SIZE );
+                    fence[k].setY(TILE_SIZE * k);
+                    PANE.getChildren().add(fence[k]);
+
+                }
+
+                for (int k = PANEL_REALSTATE / TILE_SIZE ; k < TILE_COUNT; k++) {
+                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                            "/images/fenceX.png")).toExternalForm()));
+                    fence[k].setFitHeight(TILE_SIZE);
+                    fence[k].setFitWidth(TILE_SIZE);
+                    fence[k].setX(19*TILE_SIZE);
+                    fence[k].setY(TILE_SIZE * k);
+                    PANE.getChildren().add(fence[k]);
+
+                }
+
+            }
+
+
+
 
         }
 
@@ -426,13 +453,19 @@ public class Snake extends Application {
 
             // Anton:
             // Add snake body segment
-bodyParts[snakeBodyPartsCount+1]= new ImageView(new Image(Objects.requireNonNull(getClass().getResource( "/images/snakeBodySegments.png")).toExternalForm()));
-            bodyParts[snakeBodyPartsCount+1].setFitHeight(TILE_SIZE);
-            bodyParts[snakeBodyPartsCount+1].setFitWidth(TILE_SIZE);
-            PANE.getChildren().add(bodyParts[snakeBodyPartsCount+1]);
             snakeBodyPartsCount++;
-            Score=snakeBodyPartsCount-3;
-            System.out.println("/////////////score"+Score);
+            bodyParts[snakeBodyPartsCount]= new ImageView(new Image(
+                    Objects.requireNonNull(getClass().getResource(
+                            "/images/snakeBodySegments.png")).toExternalForm()));
+            bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
+            bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
+            bodyParts[snakeBodyPartsCount].setX(-WIDTH);
+            PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
+
+
+            // Anton:
+            // Add random sound when food is eaten.
+
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
             placeFood(foodType);
