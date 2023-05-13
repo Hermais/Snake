@@ -426,11 +426,18 @@ public class Snake extends Application {
 
             // Anton:
             // Add snake body segment
-bodyParts[snakeBodyPartsCount+1]= new ImageView(new Image(Objects.requireNonNull(getClass().getResource( "/images/snakeBodySegments.png")).toExternalForm()));
-            bodyParts[snakeBodyPartsCount+1].setFitHeight(TILE_SIZE);
-            bodyParts[snakeBodyPartsCount+1].setFitWidth(TILE_SIZE);
-            PANE.getChildren().add(bodyParts[snakeBodyPartsCount+1]);
             snakeBodyPartsCount++;
+            bodyParts[snakeBodyPartsCount]= new ImageView(new Image(
+                    Objects.requireNonNull(getClass().getResource(
+                            "/images/snakeBodySegments.png")).toExternalForm()));
+            bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
+            bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
+            bodyParts[snakeBodyPartsCount].setX(-WIDTH);
+            PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
+
+
+            // Anton:
+            // Add random sound when food is eaten.
 
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
@@ -473,7 +480,7 @@ bodyParts[snakeBodyPartsCount+1]= new ImageView(new Image(Objects.requireNonNull
 
     public void gameOver() {
         // Peter:
-        System.exit(0);
+        //System.exit(0);
     }
 
 }
