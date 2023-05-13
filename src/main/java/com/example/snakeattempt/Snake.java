@@ -82,7 +82,7 @@ public class Snake extends Application {
 
 
     private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    private static final int GAME_SPEED = 1024;// Actually lower values give higher speeds.
+    private static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
     private static final int borderForSnake = TILE_SIZE;
     private static final int UP = 0;
     private static final int DOWN = 1;
@@ -214,11 +214,11 @@ public class Snake extends Application {
 
     }
 
-    public void drawFence(){
-        for(int i = PANEL_REALSTATE / TILE_SIZE; i < TILE_COUNT; i++ ){
+    public void drawFence() {
+        for (int i = PANEL_REALSTATE / TILE_SIZE; i < TILE_COUNT; i++) {
             // Draw the upper fence
-            if(i == PANEL_REALSTATE / TILE_SIZE){
-                for(int k = 0; k < TILE_COUNT ; k++){
+            if (i == PANEL_REALSTATE / TILE_SIZE) {
+                for (int k = 0; k < TILE_COUNT; k++) {
                     fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                             "/images/fenceX.png")).toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
@@ -231,8 +231,8 @@ public class Snake extends Application {
 
             }
             // Draw the lower fence
-            if(i == TILE_COUNT - 1){
-                for(int k = 0; k < TILE_COUNT ; k++){
+            if (i == TILE_COUNT - 1) {
+                for (int k = 0; k < TILE_COUNT; k++) {
                     fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                             "/images/fenceX.png")).toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
@@ -335,39 +335,46 @@ public class Snake extends Application {
     public void runSnake() {
 
 
-
         // Anton:
         // Update snake direction
         switch (currentDirection) {
             case UP -> {
 
-               for (int i =snakeBodyPartsCount ; i >= 0; i--) {
-                     moveY(true,i);
-                   bodyParts[i].setX(bodyParts[i-1].getX());
-                    bodyParts[i].setY(bodyParts[i-1].getY());
-//
-               }
+                for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                    moveY(true, i);
+                    if (i != 0) {
+                        bodyParts[i].setX(bodyParts[i - 1].getX());
+                        bodyParts[i].setY(bodyParts[i - 1].getY());
+                    }
+
+                }
             }
             case DOWN -> {
                 for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    moveY(false,i);
-                    bodyParts[i].setX(bodyParts[i-1].getX());
-                    bodyParts[i].setY(bodyParts[i-1].getY());
+                    moveY(false, i);
+                    if (i !=0) {
+                        bodyParts[i].setX(bodyParts[i - 1].getX());
+                        bodyParts[i].setY(bodyParts[i - 1].getY());
+                    }
                 }
             }
             case RIGHT -> {
                 for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    moveX( true,i);
-                    bodyParts[i].setX(bodyParts[i-1].getX());
-                    bodyParts[i].setY(bodyParts[i-1].getY());
+                    moveX(true, i);
+                    if (i !=0) {
+                        bodyParts[i].setX(bodyParts[i - 1].getX());
+                        bodyParts[i].setY(bodyParts[i - 1].getY());
+                    }
 
                 }
             }
             case LEFT -> {
                 for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    moveX(false,i);
-                    bodyParts[i].setX(bodyParts[i-1].getX());
-                    bodyParts[i].setY(bodyParts[i-1].getY());
+                    moveX(false, i);
+                    if (i != 0) {
+                        bodyParts[i].setX(bodyParts[i - 1].getX());
+                        bodyParts[i].setY(bodyParts[i - 1].getY());
+                    }
 
                 }
 
@@ -379,28 +386,28 @@ public class Snake extends Application {
 
 
         // Boundaries adjustment - We can either make it deadly, or make the snake come out the other way.
-        if ((bodyParts[0].getX() > WIDTH && currentDirection == RIGHT)
+        if ((bodyParts[0].getX() > WIDTH-borderForSnake*2 && currentDirection == RIGHT)
                 || (bodyParts[0].getX() < borderForSnake && currentDirection == LEFT)
-                || (bodyParts[0].getY() > HEIGHT && currentDirection == DOWN)
-                || (bodyParts[0].getY() < borderForSnake - TILE_SIZE && currentDirection == UP)
+                || (bodyParts[0].getY() > HEIGHT - borderForSnake*2 && currentDirection == DOWN)
+                || (bodyParts[0].getY() < PANEL_REALSTATE+borderForSnake*2 - TILE_SIZE && currentDirection == UP)
         )
             gameOver();
 
 
-            // Ahmed Salem:
-            // Check if food item overlaps poison item.
-            while (true) {
-                if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
-                        FOOD[foodType].getY() == POISON[poisonType].getY()) {
-                    FOOD[foodType].setImage(null);
-                    foodType = randInt(FOOD_COUNT);
-                    placeFood(foodType);
-                    System.out.println("Overlapping detected!");
-                } else {
-                    System.out.println("No overlapping.");
-                    break;
-                }
+        // Ahmed Salem:
+        // Check if food item overlaps poison item.
+        while (true) {
+            if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
+                    FOOD[foodType].getY() == POISON[poisonType].getY()) {
+                FOOD[foodType].setImage(null);
+                foodType = randInt(FOOD_COUNT);
+                placeFood(foodType);
+                System.out.println("Overlapping detected!");
+            } else {
+                System.out.println("No overlapping.");
+                break;
             }
+        }
 
         System.out.println("snakeX: " + initialSnakeHeadX);
         System.out.println("snakeY: " + initialSnakeHeadY);
@@ -414,6 +421,10 @@ public class Snake extends Application {
             System.out.println("Food is eaten.");
             // playEatSound(); to be implemented.
             FOOD[foodType].setImage(null);
+
+            // Anton:
+            // Add snake body segment
+
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
             placeFood(foodType);
@@ -421,7 +432,6 @@ public class Snake extends Application {
         }
 
         // Mohamed: Poison Detection
-
 
 
         PANE.requestFocus();
@@ -432,31 +442,29 @@ public class Snake extends Application {
     }
 
 
-public void moveY(boolean up,int i){
+    public void moveY(boolean up, int i) {
         if (up) {
             bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
             bodyParts[i].setRotate(0);
+        } else {
+            bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
+            bodyParts[i].setRotate(180);
         }
-        else{
-        bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
-        bodyParts[i].setRotate(180);
+
     }
 
-}
-    public void moveX(boolean right,int i){
-        if (right){
+    public void moveX(boolean right, int i) {
+        if (right) {
             bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);
-        bodyParts[i].setRotate(90);
-        }
-        else {
+            bodyParts[i].setRotate(90);
+        } else {
             bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
             bodyParts[i].setRotate(-90);
         }
     }
 
 
-
-    public void gameOver(){
+    public void gameOver() {
         // Peter:
         System.exit(0);
     }
