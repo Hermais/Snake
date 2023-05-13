@@ -82,7 +82,7 @@ public class Snake extends Application {
 
 
     private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    private static final int GAME_SPEED = 1028;// Actually lower values give higher speeds.
+    private static final int GAME_SPEED = 150;// Actually lower values give higher speeds.
     private static final int borderForSnake = TILE_SIZE;
     private static final int UP = 0;
     private static final int DOWN = 1;
@@ -505,6 +505,7 @@ bodyParts[snakeBodyPartsCount+1]= new ImageView(new Image(Objects.requireNonNull
             Score=snakeBodyPartsCount-3;
             System.out.println("/////////////score"+Score);
             foodType = randInt(FOOD_COUNT);
+            bodyParts[snakeBodyPartsCount+1].setX(-WIDTH);
             System.out.println(imagesDirectories[foodType]);
             placeFood(foodType);
 
