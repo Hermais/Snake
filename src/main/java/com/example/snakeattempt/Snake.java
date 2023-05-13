@@ -81,7 +81,7 @@ public class Snake extends Application {
     private static final Duration SOUND_DURATION = Duration.seconds(1); // Adjust the duration as needed
 
 
-    private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
+    private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;// DO NOT MODIFY THIS
     private static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
     private static final int borderForSnake = TILE_SIZE;
     private static final int UP = 0;
@@ -507,7 +507,7 @@ public class Snake extends Application {
 
     public void gameOver() {
         // Peter:
-        //System.exit(0);
+        System.exit(0);
     }
 
 }
