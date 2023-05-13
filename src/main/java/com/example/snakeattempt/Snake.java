@@ -1,17 +1,17 @@
 package com.example.snakeattempt;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.animation.TranslateTransition;
+import javafx.animation.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventType;
 import javafx.scene.Scene;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -27,13 +27,16 @@ import java.util.Random;
 
 public class Snake extends Application {
     public static final int GAME_THEME = 1;
-    private static final int HEIGHT = 800;
+    public static final int HEIGHT = 800;
     private static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
     private static final int TILE_COUNT = 20; // 20 But 16 is recommended.
     private static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     private static final int PANEL_REALSTATE = TILE_SIZE * 2;
     private static final Pane PANE = new Pane();
+    private static final Pane PANE_2 = new Pane(PANE);
+
+
     private static Scene mainScene;
 
 
@@ -98,55 +101,93 @@ public class Snake extends Application {
     private int snakeBodyPartsCount = 3;
     private static ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     private static ImageView[] fence = new ImageView[TILE_COUNT];
+    private static ImageView menu;
+    private static double menuSizeX = TILE_SIZE * 16;
+    private static double menuSizeY = TILE_SIZE * 8;
+    private static double FADE_DURATION = 25;
+    private static int blurValue = 20;
 
-    private static int testChange = 0;
+
     public int Score = 0;
     // Notes: Overlapping method does not work.
 
     @Override
     public void start(Stage stage) throws IOException {
-        StackPane mainPane = new StackPane(PANE);
+        initStart();
 
-        mainScene = new Scene(mainPane, HEIGHT, WIDTH);
         stage.setResizable(false);
         stage.setScene(mainScene);
+        stage.setTitle("Snake");
+        stage.show();
+
+        menu.setOnMouseClicked(event -> {
+            PANE_2.getChildren().remove(menu);
+
+
+
+
+
+            //PANE.setEffect(null);
+            int temp = blurValue;
+            Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e ->
+
+                PANE.setEffect(new GaussianBlur(blurValue--))
+            ));
+            fadingTimeline.setCycleCount(temp);
+            fadingTimeline.play();
+
+
+
+
+
+
+
+            placePoison(poisonType);
+            placeFood(foodType);
+            initSnakeBody();
+
+            // Set up key press event handling
+            mainScene.setOnKeyPressed(keyEvent -> {
+                KeyCode keyCode = keyEvent.getCode();
+                if (keyCode == KeyCode.UP || keyCode == KeyCode.W) {
+                    if (currentDirection != DOWN)
+                        currentDirection = UP;
+                } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S) {
+                    if (currentDirection != UP)
+                        currentDirection = DOWN;
+                } else if (keyCode == KeyCode.RIGHT || keyCode == KeyCode.D) {
+                    if (currentDirection != LEFT)
+                        currentDirection = RIGHT;
+                } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
+                    if (currentDirection != RIGHT)
+                        currentDirection = LEFT;
+                }
+            });
+
+
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> runSnake()));
+            timeline.setCycleCount(Animation.INDEFINITE);
+            timeline.play();
+        });
+    }
+
+    public void initStart(){
+        mainScene = new Scene(PANE_2, HEIGHT, WIDTH);
+
 
         setBackground();
         foodType = randInt(FOOD_COUNT);
         poisonType = randInt(POISON_COUNT);
-        placePoison(poisonType);
-        placeFood(foodType);
         drawFence();
         createTiles(false);
 
-        initSnakeBody();
 
-        // Set up key press event handling
-        mainScene.setOnKeyPressed(keyEvent -> {
-            KeyCode keyCode = keyEvent.getCode();
-            if (keyCode == KeyCode.UP || keyCode == KeyCode.W) {
-                if (currentDirection != DOWN)
-                    currentDirection = UP;
-            } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S) {
-                if (currentDirection != UP)
-                    currentDirection = DOWN;
-            } else if (keyCode == KeyCode.RIGHT || keyCode == KeyCode.D) {
-                if (currentDirection != LEFT)
-                    currentDirection = RIGHT;
-            } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
-                if (currentDirection != RIGHT)
-                    currentDirection = LEFT;
-            }
-        });
 
-        stage.setTitle("Snake");
-        stage.show();
+        PANE.setEffect(new GaussianBlur(blurValue));
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> runSnake()));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+        drawMainMenu();
     }
-
     public static void main(String[] args) {
         launch();
     }
@@ -549,4 +590,17 @@ public class Snake extends Application {
         // System.exit(0);
     }
 
+    public void drawMainMenu(){
+        menu = new ImageView(
+                new Image(Objects.requireNonNull(getClass().getResource(
+                        "/images/mainMenu.png")).toExternalForm()));
+        menu.setX(HEIGHT/2.0 -menuSizeX/2);
+        menu.setY(WIDTH/2.0 - menuSizeY/2);
+        menu.setFitWidth(menuSizeX);
+        menu.setFitHeight(menuSizeY);
+        PANE_2.getChildren().add(menu);
+
+    }
+
 }
+
