@@ -12,13 +12,13 @@ import java.util.Random;
 import static com.example.snakeattempt.Snake.*;
 
 public class FoodManager {
-    private String[] foodImages = {"/images/appleG.png",
+    private final String[] foodImages = {"/images/appleG.png",
             "/images/bananaG.png",
             "/images/peachG.png",
             "/images/grapesG.png",
             "/images/mushroomG.png"};
 
-    FoodManager(ImageView[] FOOD, int TILE_SIZE, int foodType){
+    FoodManager(){
         prepFoodImg();
 
         animateFood();
