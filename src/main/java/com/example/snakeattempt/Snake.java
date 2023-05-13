@@ -247,6 +247,33 @@ public class Snake extends Application {
             }
 
             // Peter: Complete the fence.
+            if (i > PANEL_REALSTATE / TILE_SIZE) {
+                for (int k = PANEL_REALSTATE / TILE_SIZE ; k < TILE_COUNT; k++) {
+                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                            "/images/fenceX.png")).toExternalForm()));
+                    fence[k].setFitHeight(TILE_SIZE);
+                    fence[k].setFitWidth(TILE_SIZE);
+                    fence[k].setX(TILE_SIZE - TILE_SIZE );
+                    fence[k].setY(TILE_SIZE * k);
+                    PANE.getChildren().add(fence[k]);
+
+                }
+
+                for (int k = PANEL_REALSTATE / TILE_SIZE ; k < TILE_COUNT; k++) {
+                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
+                            "/images/fenceX.png")).toExternalForm()));
+                    fence[k].setFitHeight(TILE_SIZE);
+                    fence[k].setFitWidth(TILE_SIZE);
+                    fence[k].setX(19*TILE_SIZE);
+                    fence[k].setY(TILE_SIZE * k);
+                    PANE.getChildren().add(fence[k]);
+
+                }
+
+            }
+
+
+
 
         }
 
