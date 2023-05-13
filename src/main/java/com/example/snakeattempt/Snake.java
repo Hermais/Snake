@@ -104,6 +104,9 @@ public class Snake extends Application {
     private static ImageView menu;
     private static double menuSizeX = TILE_SIZE * 16;
     private static double menuSizeY = TILE_SIZE * 8;
+    private static ImageView logo;
+    private static double logoSizeX = TILE_SIZE * 16;
+    private static double logoSizeY = TILE_SIZE * 6;
     private static double FADE_DURATION = 25;
     private static int blurValue = 20;
 
@@ -121,14 +124,25 @@ public class Snake extends Application {
         stage.show();
 
         menu.setOnMouseClicked(event -> {
-            PANE_2.getChildren().remove(menu);
             //PANE.setEffect(null);
             int temp = blurValue;
-            Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e ->
+            Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
+                PANE.setEffect(new GaussianBlur(blurValue--));
+                menu.setOpacity(((double) (blurValue) / temp));
+                logo.setOpacity(((double) (blurValue) / temp));
+            }));
 
-                PANE.setEffect(new GaussianBlur(blurValue--))
-            ));
             fadingTimeline.setCycleCount(temp);
+
+            fadingTimeline.setOnFinished(finishEvent -> {
+                PauseTransition delay = new PauseTransition(Duration.seconds(1)); // Adjust the delay duration as needed
+                delay.setOnFinished(delayEvent -> {
+                    PANE_2.getChildren().remove(menu);
+                    PANE_2.getChildren().remove(logo);
+                });
+                delay.play();
+            });
+
             fadingTimeline.play();
 
 
@@ -177,6 +191,7 @@ public class Snake extends Application {
         PANE.setEffect(new GaussianBlur(blurValue));
 
         drawMainMenu();
+        drawLogo();
     }
     public static void main(String[] args) {
         launch();
@@ -584,11 +599,24 @@ public class Snake extends Application {
         menu = new ImageView(
                 new Image(Objects.requireNonNull(getClass().getResource(
                         "/images/mainMenu.png")).toExternalForm()));
-        menu.setX(HEIGHT/2.0 -menuSizeX/2);
-        menu.setY(WIDTH/2.0 - menuSizeY/2);
+        menu.setX(WIDTH/2.0 -menuSizeX/2);
+        menu.setY(HEIGHT/1.5 - menuSizeY/2);
         menu.setFitWidth(menuSizeX);
         menu.setFitHeight(menuSizeY);
         PANE_2.getChildren().add(menu);
+
+    }
+
+    public void drawLogo(){
+        logo =  new ImageView(
+                new Image(Objects.requireNonNull(getClass().getResource(
+                        "/images/Logo.png")).toExternalForm()));
+        logo.setX(WIDTH/2.0 - logoSizeX/2);
+        // logo.setY(HEIGHT/2.0 - logoSizeY/2);
+        logo.setY(0);
+        logo.setFitWidth(logoSizeX);
+        logo.setFitHeight(logoSizeY);
+        PANE_2.getChildren().add(logo);
 
     }
 

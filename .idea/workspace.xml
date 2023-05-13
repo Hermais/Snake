@@ -5,16 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ee20099-bae5-42f5-9b95-d827e8ea227a" name="Changes" comment="modification">
-      <change afterPath="$PROJECT_DIR$/src/images/Logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/UI_Elements.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/Vecteezy-License-Information.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/mainMenu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/playBtn.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/vecteezy_realistic-set-of-wooden-signboards-on-white-background_23203712.eps" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/vecteezy_realistic-set-of-wooden-signboards-on-white-background_23203712.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/images/vecteezy_realistic-set-of-wooden-signboards-on-white-background_23203712_944.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/Logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/images/Logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/Snake.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -263,7 +255,35 @@
       <option name="project" value="LOCAL" />
       <updated>1683985219288</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="modification">
+      <created>1683985465088</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1683985465088</updated>
+    </task>
+    <task id="LOCAL-00024" summary="modification">
+      <created>1683986812596</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1683986812597</updated>
+    </task>
+    <task id="LOCAL-00025" summary="modification">
+      <created>1683986818444</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1683986818444</updated>
+    </task>
+    <task id="LOCAL-00026" summary="modification">
+      <created>1683986840033</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1683986840033</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
