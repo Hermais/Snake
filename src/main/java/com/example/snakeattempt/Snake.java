@@ -122,11 +122,6 @@ public class Snake extends Application {
 
         menu.setOnMouseClicked(event -> {
             PANE_2.getChildren().remove(menu);
-
-
-
-
-
             //PANE.setEffect(null);
             int temp = blurValue;
             Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e ->
@@ -135,11 +130,6 @@ public class Snake extends Application {
             ));
             fadingTimeline.setCycleCount(temp);
             fadingTimeline.play();
-
-
-
-
-
 
 
             placePoison(poisonType);
