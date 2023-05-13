@@ -2,24 +2,18 @@ package com.example.snakeattempt;
 
 import javafx.animation.*;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventType;
 import javafx.scene.Scene;
-import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 
@@ -40,8 +34,6 @@ public class Snake extends Application {
     private static Scene mainScene;
 
 
-    private static ImageView mainBackground;
-    private static ImageView upperPanel;
     private static final int FOOD_COUNT = 5;
     private static final int POISON_COUNT = 3;
     private static final ImageView[] FOOD = new ImageView[FOOD_COUNT];
@@ -94,20 +86,20 @@ public class Snake extends Application {
 
     // public static ImageView snakeHead;
     private static int currentDirection = UP;
-    private static double initialSnakeHeadX = TILE_SIZE * (TILE_COUNT / 2);
-    private static double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2);
+    private static final double initialSnakeHeadX = TILE_SIZE * (TILE_COUNT / 2.0);
+    private static final double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2.0);
     private static int foodType;
     private static int poisonType;
     private int snakeBodyPartsCount = 3;
-    private static ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
-    private static ImageView[] fence = new ImageView[TILE_COUNT];
+    private static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
+    private static final ImageView[] fence = new ImageView[TILE_COUNT];
     private static ImageView menu;
-    private static double menuSizeX = TILE_SIZE * 16;
-    private static double menuSizeY = TILE_SIZE * 8;
+    private static final double menuSizeX = TILE_SIZE * 16;
+    private static final double menuSizeY = TILE_SIZE * 8;
     private static ImageView logo;
-    private static double logoSizeX = TILE_SIZE * 16;
-    private static double logoSizeY = TILE_SIZE * 6;
-    private static double FADE_DURATION = 25;
+    private static final double logoSizeX = TILE_SIZE * 16;
+    private static final double logoSizeY = TILE_SIZE * 6;
+    private static final double FADE_DURATION = 25;
     private static int blurValue = 20;
 
 
@@ -115,7 +107,7 @@ public class Snake extends Application {
     // Notes: Overlapping method does not work.
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         initStart();
 
         stage.setResizable(false);
@@ -215,7 +207,7 @@ public class Snake extends Application {
         if (GAME_THEME == 0) {
             //Grass
             Image grassImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[5])).toExternalForm());
-            mainBackground = new ImageView(grassImage);
+            ImageView mainBackground = new ImageView(grassImage);
             mainBackground.setFitHeight(HEIGHT);
             mainBackground.setFitWidth(WIDTH);
             PANE.getChildren().add(mainBackground);
@@ -244,12 +236,12 @@ public class Snake extends Application {
         }
 
         //Status Panel
-        Image fabricImage = new Image(Objects.requireNonNull(getClass().getResource(
+        Image panelImage = new Image(Objects.requireNonNull(getClass().getResource(
                 GAME_THEME == 0 ? imagesDirectories[6] : "/images/panelG.png")).toExternalForm());
         Rectangle mask = new Rectangle(HEIGHT, WIDTH);
         mask.setArcHeight(TILE_SIZE);
         mask.setArcWidth(TILE_SIZE);
-        upperPanel = new ImageView(fabricImage);
+        ImageView upperPanel = new ImageView(panelImage);
         upperPanel.setFitHeight(HEIGHT);
         upperPanel.setFitWidth(WIDTH);
         upperPanel.setY(PANEL_REALSTATE - HEIGHT);
@@ -341,7 +333,7 @@ public class Snake extends Application {
                             "/images/fenceX.png")).toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
                     fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE - TILE_SIZE);
+                    fence[k].setX(0);
                     fence[k].setY(TILE_SIZE * k);
                     fence[k].setRotate(-90);
                     PANE.getChildren().add(fence[k]);
@@ -404,7 +396,7 @@ public class Snake extends Application {
         // Just an animation
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(FOOD[foodType]);
-        translateTransition.setToY(TILE_SIZE / 1.0);
+        translateTransition.setToY(TILE_SIZE);
         translateTransition.setDuration(Duration.millis(300));
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
@@ -427,7 +419,7 @@ public class Snake extends Application {
 
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(POISON[poisonType]);
-        translateTransition.setToY(TILE_SIZE / 1.0);
+        translateTransition.setToY(TILE_SIZE);
         translateTransition.setDuration(Duration.millis(300));
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
