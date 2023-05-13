@@ -30,7 +30,7 @@ public class Snake extends Application {
     private static final int HEIGHT = 800;
     private static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    private static final int TILE_COUNT = 14; // 20 But 16 is recommended.
+    private static final int TILE_COUNT = 20; // 20 But 16 is recommended.
     private static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     private static final int PANEL_REALSTATE = TILE_SIZE * 2;
     private static final Pane PANE = new Pane();
@@ -341,11 +341,8 @@ public class Snake extends Application {
         switch (currentDirection) {
             case UP -> {
 
-               for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                     move(i);
-                   bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
-
-                   bodyParts[i].setRotate(0);
+               for (int i =snakeBodyPartsCount ; i >= 0; i--) {
+                     moveY(true,i);
                    bodyParts[i].setX(bodyParts[i-1].getX());
                     bodyParts[i].setY(bodyParts[i-1].getY());
 //
@@ -353,18 +350,14 @@ public class Snake extends Application {
             }
             case DOWN -> {
                 for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    move(i);
-                    bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
-                    bodyParts[i].setRotate(180);
+                    moveY(false,i);
                     bodyParts[i].setX(bodyParts[i-1].getX());
                     bodyParts[i].setY(bodyParts[i-1].getY());
                 }
             }
             case RIGHT -> {
                 for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    move( i);
-                    bodyParts[i].setRotate(90);
-                    bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);
+                    moveX( true,i);
                     bodyParts[i].setX(bodyParts[i-1].getX());
                     bodyParts[i].setY(bodyParts[i-1].getY());
 
@@ -372,9 +365,7 @@ public class Snake extends Application {
             }
             case LEFT -> {
                 for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    move( i);
-                    bodyParts[i].setRotate(-90);
-                    bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
+                    moveX(false,i);
                     bodyParts[i].setX(bodyParts[i-1].getX());
                     bodyParts[i].setY(bodyParts[i-1].getY());
 
@@ -441,29 +432,28 @@ public class Snake extends Application {
     }
 
 
-
-    public void move(int i) {
-        bodyParts[i].setOnKeyTyped(keyEvent -> {
-            switch (currentDirection) {
-                case UP:
-                    bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
-                      break;
-                case DOWN:
-                    bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
-                    break;
-
-                case RIGHT:
-                    bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);
-                    break;
-
-                case LEFT:
-                    bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
-                    break;
-
-            }
-
-        });
+public void moveY(boolean up,int i){
+        if (up) {
+            bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
+            bodyParts[i].setRotate(0);
+        }
+        else{
+        bodyParts[i].setY(bodyParts[i].getY() + snakeSpeedTilesPerIncrement);
+        bodyParts[i].setRotate(180);
     }
+
+}
+    public void moveX(boolean right,int i){
+        if (right){
+            bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);
+        bodyParts[i].setRotate(90);
+        }
+        else {
+            bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
+            bodyParts[i].setRotate(-90);
+        }
+    }
+
 
 
     public void gameOver(){
