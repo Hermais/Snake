@@ -100,6 +100,7 @@ public class Snake extends Application {
     private static ImageView[] fence = new ImageView[TILE_COUNT];
 
     private static int testChange = 0;
+    public int Score=0;
 
     // Notes: Overlapping method does not work.
 
@@ -431,6 +432,8 @@ bodyParts[snakeBodyPartsCount+1]= new ImageView(new Image(Objects.requireNonNull
             bodyParts[snakeBodyPartsCount+1].setFitWidth(TILE_SIZE);
             PANE.getChildren().add(bodyParts[snakeBodyPartsCount+1]);
             snakeBodyPartsCount++;
+            Score=snakeBodyPartsCount-3;
+            System.out.println("///////////////////Score"+Score);
 
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
