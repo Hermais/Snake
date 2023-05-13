@@ -396,6 +396,8 @@ public class Snake extends Application {
 
         // Ahmed Salem:
         // Check if food item overlaps poison item.
+        // To debug this, set TILES_COUNT to 10, and play for sometime to test whether food will be on
+        // poison or not.
         while (true) {
             if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
                     FOOD[foodType].getY() == POISON[poisonType].getY()) {
