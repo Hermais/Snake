@@ -77,7 +77,7 @@ public class Snake extends Application {
 
 
     public static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    public static final int GAME_SPEED = 100;// Actually lower values give higher speeds.
+    public static final int GAME_SPEED = 120;// Actually lower values give higher speeds.
     public static final int borderForSnake = TILE_SIZE;
     public static final int UP = 0;
     public static final int DOWN = 1;
@@ -112,7 +112,8 @@ public class Snake extends Application {
 
         stage.setResizable(false);
         stage.setScene(mainScene);
-        stage.setTitle("Snake");
+        stage.setTitle("Go: Snake!");
+        stage.getIcons().add(new Image(getClass().getResource("/images/stageIcon.png").toExternalForm()));
         stage.show();
 
         menu.setOnMouseClicked(event -> {
@@ -206,7 +207,7 @@ public class Snake extends Application {
     public void setBackground() {
         if (GAME_THEME == 0) {
             //Grass
-            Image grassImage = new Image(Objects.requireNonNull(getClass().getResource(imagesDirectories[5])).toExternalForm());
+            Image grassImage = new Image(getClass().getResource(imagesDirectories[5]).toExternalForm());
             ImageView mainBackground = new ImageView(grassImage);
             mainBackground.setFitHeight(HEIGHT);
             mainBackground.setFitWidth(WIDTH);
@@ -223,8 +224,8 @@ public class Snake extends Application {
             for (int i = 0; i <= TILE_COUNT; i++) {
                 for (int j = 0; j <= TILE_COUNT; j++) {
 
-                    ImageView imageView = new ImageView(new Image(Objects.requireNonNull(
-                            getClass().getResource((i + j) % 2 == 0 ? "/images/grassTile1.png" : "/images/grassTile2.png")).toExternalForm()));
+                    ImageView imageView = new ImageView(new Image(
+                            getClass().getResource((i + j) % 2 == 0 ? "/images/grassTile1.png" : "/images/grassTile2.png").toExternalForm()));
                     imageView.setX(TILE_SIZE * i);
                     imageView.setY(TILE_SIZE * j);
                     imageView.setFitWidth(TILE_SIZE);
@@ -236,8 +237,8 @@ public class Snake extends Application {
         }
 
         //Status Panel
-        Image panelImage = new Image(Objects.requireNonNull(getClass().getResource(
-                GAME_THEME == 0 ? imagesDirectories[6] : "/images/panelG.png")).toExternalForm());
+        Image panelImage = new Image(getClass().getResource(
+                GAME_THEME == 0 ? imagesDirectories[6] : "/images/panelG.png").toExternalForm());
         Rectangle mask = new Rectangle(HEIGHT, WIDTH);
         mask.setArcHeight(TILE_SIZE);
         mask.setArcWidth(TILE_SIZE);
@@ -258,8 +259,8 @@ public class Snake extends Application {
             if (i == PANEL_REALSTATE / TILE_SIZE) {
                 for (int k = 0; k < TILE_COUNT; k++) {
                     if (k == 0) {
-                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k] = new ImageView(new Image(getClass().getResource(
+                                "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
                         fence[k].setFitWidth(TILE_SIZE);
                         fence[k].setX(TILE_SIZE * k);
@@ -267,8 +268,8 @@ public class Snake extends Application {
                         fence[k].setRotate(-45);
                         PANE.getChildren().add(fence[k]);
                     } else if (k == 19) {
-                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k] = new ImageView(new Image(getClass().getResource(
+                                "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
                         fence[k].setFitWidth(TILE_SIZE);
                         fence[k].setX(TILE_SIZE * k);
@@ -276,8 +277,8 @@ public class Snake extends Application {
                         fence[k].setRotate(45);
                         PANE.getChildren().add(fence[k]);
                     } else {
-                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k] = new ImageView(new Image(getClass().getResource(
+                                "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
                         fence[k].setFitWidth(TILE_SIZE);
                         fence[k].setX(TILE_SIZE * k);
@@ -292,8 +293,8 @@ public class Snake extends Application {
             if (i == TILE_COUNT - 1) {
                 for (int k = 0; k < TILE_COUNT; k++) {
                     if (k == 19) {
-                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k] = new ImageView(new Image(getClass().getResource(
+                                "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
                         fence[k].setFitWidth(TILE_SIZE);
                         fence[k].setX(TILE_SIZE * k);
@@ -301,8 +302,8 @@ public class Snake extends Application {
                         fence[k].setRotate(135);
                         PANE.getChildren().add(fence[k]);
                     } else if (k == 0) {
-                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k] = new ImageView(new Image(getClass().getResource(
+                                "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
                         fence[k].setFitWidth(TILE_SIZE);
                         fence[k].setX(TILE_SIZE * k);
@@ -311,8 +312,8 @@ public class Snake extends Application {
                         PANE.getChildren().add(fence[k]);
 
                     } else {
-                        fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                                "/images/fenceX.png")).toExternalForm()));
+                        fence[k] = new ImageView(new Image(getClass().getResource(
+                                "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
                         fence[k].setFitWidth(TILE_SIZE);
                         fence[k].setX(TILE_SIZE * k);
@@ -329,8 +330,8 @@ public class Snake extends Application {
             // Peter: Complete the fence.
             if (i > (PANEL_REALSTATE / TILE_SIZE)) {
                 for (int k = (PANEL_REALSTATE / TILE_SIZE) + 1; k < TILE_COUNT - 1; k++) {
-                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                            "/images/fenceX.png")).toExternalForm()));
+                    fence[k] = new ImageView(new Image(getClass().getResource(
+                            "/images/fenceX.png").toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
                     fence[k].setFitWidth(TILE_SIZE);
                     fence[k].setX(0);
@@ -341,8 +342,8 @@ public class Snake extends Application {
                 }
 
                 for (int k = PANEL_REALSTATE / TILE_SIZE + 1; k < TILE_COUNT - 1; k++) {
-                    fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                            "/images/fenceX.png")).toExternalForm()));
+                    fence[k] = new ImageView(new Image(getClass().getResource(
+                            "/images/fenceX.png").toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
                     fence[k].setFitWidth(TILE_SIZE);
                     fence[k].setX(19 * TILE_SIZE);
@@ -366,8 +367,8 @@ public class Snake extends Application {
         // If we failed to make the code work as a snake with a head, we will remove the head and
         // replace it with body.
         for (int i = 0; i <= snakeBodyPartsCount; i++) {
-            bodyParts[i] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
-                    i == 0 ? "/images/snakeHeadG.png" : "/images/snakeBodySegments.png")).toExternalForm())
+            bodyParts[i] = new ImageView(new Image(getClass().getResource(
+                    i == 0 ? "/images/snakeHeadG.png" : "/images/snakeBodySegments.png").toExternalForm())
             );
             bodyParts[i].setFitHeight(TILE_SIZE);
             bodyParts[i].setFitWidth(TILE_SIZE);
@@ -383,9 +384,9 @@ public class Snake extends Application {
     // images for POISON indices are from 10 to 12
     public void placePoison(int poisonType) {
         // init image of POISON
-        Image poisonImage = new Image(Objects.requireNonNull(
+        Image poisonImage = new Image(
                 getClass().getResource(GAME_THEME == 0 ? imagesDirectories[poisonType + 10] : imagesDirectories[poisonType
-                        + 18])).toExternalForm());
+                        + 18]).toExternalForm());
         POISON[poisonType] = new ImageView(poisonImage);
 
         TranslateTransition translateTransition = new TranslateTransition();
@@ -559,8 +560,8 @@ public class Snake extends Application {
 
     public void drawMainMenu() {
         menu = new ImageView(
-                new Image(Objects.requireNonNull(getClass().getResource(
-                        "/images/mainMenu.png")).toExternalForm()));
+                new Image(getClass().getResource(
+                        "/images/mainMenu.png").toExternalForm()));
         menu.setX(WIDTH / 2.0 - menuSizeX / 2);
         menu.setY(HEIGHT / 1.5 - menuSizeY / 2);
         menu.setFitWidth(menuSizeX);
@@ -571,8 +572,8 @@ public class Snake extends Application {
 
     public void drawLogo() {
         logo = new ImageView(
-                new Image(Objects.requireNonNull(getClass().getResource(
-                        "/images/Logo.png")).toExternalForm()));
+                new Image(getClass().getResource(
+                        "/images/Logo.png").toExternalForm()));
         logo.setX(WIDTH / 2.0 - logoSizeX / 2);
         // logo.setY(HEIGHT/2.0 - logoSizeY/2);
         logo.setY(0);

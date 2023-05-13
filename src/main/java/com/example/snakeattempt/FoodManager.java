@@ -29,8 +29,8 @@ public class FoodManager {
 
     public void prepFoodImg(){
         //FOOD Image
-        Image foodImage = new Image(Objects.requireNonNull(getClass().getResource(foodImages[foodType]
-        ).toExternalForm()));
+        Image foodImage = new Image(getClass().getResource(foodImages[foodType]
+        ).toExternalForm());
         FOOD[foodType] = new ImageView(foodImage);
 
         //FOOD adjusting
