@@ -139,7 +139,7 @@ public class Snake extends Application {
 
 
             placePoison(poisonType);
-            new Food(FOOD, TILE_SIZE, foodType);
+            new FoodManager(FOOD, TILE_SIZE, foodType);
 
             initSnakeBody();
 
@@ -481,7 +481,7 @@ public class Snake extends Application {
                     FOOD[foodType].getY() == POISON[poisonType].getY()) {
                 FOOD[foodType].setImage(null);
                 foodType = randInt(FOOD_COUNT);
-                new Food(FOOD, TILE_SIZE, foodType);
+                new FoodManager(FOOD, TILE_SIZE, foodType);
                 System.out.println("Overlapping detected!");
             } else {
                 System.out.println("No overlapping.");
@@ -516,7 +516,7 @@ public class Snake extends Application {
             System.out.println("/////////////score" + Score);
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
-            new Food(FOOD, TILE_SIZE, foodType);
+            new FoodManager(FOOD, TILE_SIZE, foodType);
         }
 
         // Mohamed: Poison Detection

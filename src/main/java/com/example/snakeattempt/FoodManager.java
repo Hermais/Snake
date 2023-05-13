@@ -11,17 +11,26 @@ import java.util.Random;
 
 import static com.example.snakeattempt.Snake.*;
 
-public class Food {
+public class FoodManager {
     private String[] foodImages = {"/images/appleG.png",
             "/images/bananaG.png",
             "/images/peachG.png",
             "/images/grapesG.png",
             "/images/mushroomG.png"};
 
-    Food(ImageView[] FOOD, int TILE_SIZE, int foodType){
-        //FOOD
+    FoodManager(ImageView[] FOOD, int TILE_SIZE, int foodType){
+        prepFoodImg();
+
+        animateFood();
+
+        PANE.getChildren().add(FOOD[foodType]);
+
+    }
+
+    public void prepFoodImg(){
+        //FOOD Image
         Image foodImage = new Image(Objects.requireNonNull(getClass().getResource(foodImages[foodType]
-                 ).toExternalForm()));
+        ).toExternalForm()));
         FOOD[foodType] = new ImageView(foodImage);
 
         //FOOD adjusting
@@ -32,6 +41,9 @@ public class Food {
                 (new Random(System.currentTimeMillis()).nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT - 2) * TILE_SIZE)
         );
 
+    }
+
+    public void animateFood(){
         // Just an animation
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(FOOD[foodType]);
@@ -41,9 +53,7 @@ public class Food {
         translateTransition.setAutoReverse(false);
         translateTransition.play();
 
-
-        PANE.getChildren().add(FOOD[foodType]);
-
     }
+
 
 }
