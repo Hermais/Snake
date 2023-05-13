@@ -81,7 +81,7 @@ public class Snake extends Application {
     private static final Duration SOUND_DURATION = Duration.seconds(1); // Adjust the duration as needed
 
 
-    private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;// DO NOT MODIFY THIS
+    private static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
     private static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
     private static final int borderForSnake = TILE_SIZE;
     private static final int UP = 0;
@@ -100,7 +100,7 @@ public class Snake extends Application {
     private static ImageView[] fence = new ImageView[TILE_COUNT];
 
     private static int testChange = 0;
-
+    public int Score=0;
     // Notes: Overlapping method does not work.
 
     @Override
@@ -218,7 +218,7 @@ public class Snake extends Application {
         for (int i = PANEL_REALSTATE / TILE_SIZE; i < TILE_COUNT; i++) {
             // Draw the upper fence
             if (i == PANEL_REALSTATE / TILE_SIZE) {
-                for (int k = 0; k < TILE_COUNT; k++) {
+                for (int k = 1; k < TILE_COUNT-1; k++) {
                     fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                             "/images/fenceX.png")).toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
@@ -232,7 +232,7 @@ public class Snake extends Application {
             }
             // Draw the lower fence
             if (i == TILE_COUNT - 1) {
-                for (int k = 0; k < TILE_COUNT; k++) {
+                for (int k = 1; k < TILE_COUNT-1; k++) {
                     fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                             "/images/fenceX.png")).toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
@@ -247,25 +247,27 @@ public class Snake extends Application {
             }
 
             // Peter: Complete the fence.
-            if (i > PANEL_REALSTATE / TILE_SIZE) {
-                for (int k = PANEL_REALSTATE / TILE_SIZE ; k < TILE_COUNT; k++) {
+            if (i > (PANEL_REALSTATE / TILE_SIZE)) {
+                for (int k = (PANEL_REALSTATE / TILE_SIZE) + 1 ; k < TILE_COUNT-1; k++) {
                     fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                             "/images/fenceX.png")).toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
                     fence[k].setFitWidth(TILE_SIZE);
                     fence[k].setX(TILE_SIZE - TILE_SIZE );
                     fence[k].setY(TILE_SIZE * k);
+                    fence[k].setRotate(-90);
                     PANE.getChildren().add(fence[k]);
 
                 }
 
-                for (int k = PANEL_REALSTATE / TILE_SIZE ; k < TILE_COUNT; k++) {
+                for (int k = PANEL_REALSTATE / TILE_SIZE + 1 ; k < TILE_COUNT-1; k++) {
                     fence[k] = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(
                             "/images/fenceX.png")).toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
                     fence[k].setFitWidth(TILE_SIZE);
                     fence[k].setX(19*TILE_SIZE);
                     fence[k].setY(TILE_SIZE * k);
+                    fence[k].setRotate(90);
                     PANE.getChildren().add(fence[k]);
 
                 }
@@ -431,18 +433,18 @@ public class Snake extends Application {
                 FOOD[foodType].setImage(null);
                 foodType = randInt(FOOD_COUNT);
                 placeFood(foodType);
-                // System.out.println("Overlapping detected!");
+                System.out.println("Overlapping detected!");
             } else {
-                // System.out.println("No overlapping.");
+                System.out.println("No overlapping.");
                 break;
             }
         }
 
-//        System.out.println("snakeX: " + initialSnakeHeadX);
-//        System.out.println("snakeY: " + initialSnakeHeadY);
-//        System.out.println();
-//        System.out.println("foodX: " + FOOD[foodType].getX());
-//        System.out.println("foodY: " + FOOD[foodType].getY());
+        System.out.println("snakeX: " + initialSnakeHeadX);
+        System.out.println("snakeY: " + initialSnakeHeadY);
+        System.out.println();
+        System.out.println("foodX: " + FOOD[foodType].getX());
+        System.out.println("foodY: " + FOOD[foodType].getY());
 
         // Food detection
         if (bodyParts[0].getX() == FOOD[foodType].getX() && bodyParts[0].getY() - TILE_SIZE == FOOD[foodType].getY()) {
@@ -453,19 +455,13 @@ public class Snake extends Application {
 
             // Anton:
             // Add snake body segment
+bodyParts[snakeBodyPartsCount+1]= new ImageView(new Image(Objects.requireNonNull(getClass().getResource( "/images/snakeBodySegments.png")).toExternalForm()));
+            bodyParts[snakeBodyPartsCount+1].setFitHeight(TILE_SIZE);
+            bodyParts[snakeBodyPartsCount+1].setFitWidth(TILE_SIZE);
+            PANE.getChildren().add(bodyParts[snakeBodyPartsCount+1]);
             snakeBodyPartsCount++;
-            bodyParts[snakeBodyPartsCount]= new ImageView(new Image(
-                    Objects.requireNonNull(getClass().getResource(
-                            "/images/snakeBodySegments.png")).toExternalForm()));
-            bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
-            bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
-            bodyParts[snakeBodyPartsCount].setX(-WIDTH);
-            PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
-
-
-            // Anton:
-            // Add random sound when food is eaten.
-
+            Score=snakeBodyPartsCount-3;
+            System.out.println("/////////////score"+Score);
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
             placeFood(foodType);
@@ -507,7 +503,7 @@ public class Snake extends Application {
 
     public void gameOver() {
         // Peter:
-        //System.exit(0);
+        System.exit(0);
     }
 
 }
