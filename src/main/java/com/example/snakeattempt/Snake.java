@@ -438,11 +438,11 @@ public class Snake extends Application {
             }
         }
 
-        System.out.println("snakeX: " + initialSnakeHeadX);
-        System.out.println("snakeY: " + initialSnakeHeadY);
-        System.out.println();
-        System.out.println("foodX: " + FOOD[foodType].getX());
-        System.out.println("foodY: " + FOOD[foodType].getY());
+//        System.out.println("snakeX: " + initialSnakeHeadX);
+//        System.out.println("snakeY: " + initialSnakeHeadY);
+//        System.out.println();
+//        System.out.println("foodX: " + FOOD[foodType].getX());
+//        System.out.println("foodY: " + FOOD[foodType].getY());
 
         // Food detection
         if (bodyParts[0].getX() == FOOD[foodType].getX() && bodyParts[0].getY() - TILE_SIZE == FOOD[foodType].getY()) {
@@ -507,7 +507,7 @@ public class Snake extends Application {
 
     public void gameOver() {
         // Peter:
-        System.exit(0);
+        //System.exit(0);
     }
 
 }
