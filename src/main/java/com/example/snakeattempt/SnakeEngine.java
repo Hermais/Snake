@@ -322,7 +322,20 @@ public class SnakeEngine extends Application {
             new FoodManager();
         }
 
-        // Mohamed: Poison Detection
+        //Peter: Poison Detection
+        if (bodyParts[0].getX() == POISON[poisonType].getX() && bodyParts[0].getY() - TILE_SIZE == POISON[poisonType].getY()){
+            System.out.println("Poison is consumed.");
+            POISON[poisonType].setImage(null);
+            for(int i=0; i<3; i++){
+                bodyParts[snakeBodyPartsCount - i].setImage(null);
+            }
+            snakeBodyPartsCount -= 3;
+            poisonType = randInt(POISON_COUNT);
+            new PoisonManager();
+
+
+
+        }
 
 
         PANE.requestFocus();

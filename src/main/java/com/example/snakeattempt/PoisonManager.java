@@ -14,7 +14,8 @@ public class PoisonManager {
     // This is a gradient of use:
     // PANE, POISON[], TILE_SIZE, TILE_COUNT and poisonType - Very High
 
-    private final String[] poisonImages = {"/images/poison1G.png",
+    private final String[] poisonImages = {
+            "/images/poison1G.png",
             "/images/poison2G.png",
             "/images/poison3G.png"
     };
