@@ -8,6 +8,11 @@ import static com.example.snakeattempt.SnakeEngine.*;
 public class MainMenu {
 
     public MainMenu() {
+        drawMainMenuPanel();
+
+    }
+
+    public void drawMainMenuPanel(){
         menu = new ImageView(
                 new Image(getClass().getResource(
                         "/images/mainMenu.png").toExternalForm()));
@@ -16,5 +21,7 @@ public class MainMenu {
         menu.setFitWidth(menuSizeX);
         menu.setFitHeight(menuSizeY);
         PANE_2.getChildren().add(menu);
+
     }
+
 }
