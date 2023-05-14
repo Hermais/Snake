@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0ee20099-bae5-42f5-9b95-d827e8ea227a" name="Changes" comment="modification">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/Buttons.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawFences.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/MainMenu.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawPanelBackground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawPanelBackground.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeBody.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeBody.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -320,49 +316,7 @@
       <option name="project" value="LOCAL" />
       <updated>1684015540752</updated>
     </task>
-    <task id="LOCAL-00032" summary="modification">
-      <created>1684016657089</created>
-      <option name="number" value="00032" />
-      <option name="presentableId" value="LOCAL-00032" />
-      <option name="project" value="LOCAL" />
-      <updated>1684016657089</updated>
-    </task>
-    <task id="LOCAL-00033" summary="modification">
-      <created>1684016714292</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1684016714292</updated>
-    </task>
-    <task id="LOCAL-00034" summary="modification">
-      <created>1684022240016</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1684022240016</updated>
-    </task>
-    <task id="LOCAL-00035" summary="modification">
-      <created>1684056848788</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1684056848788</updated>
-    </task>
-    <task id="LOCAL-00036" summary="modification">
-      <created>1684058580335</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1684058580335</updated>
-    </task>
-    <task id="LOCAL-00037" summary="modification">
-      <created>1684059772728</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1684059772728</updated>
-    </task>
-    <option name="localTasksCounter" value="38" />
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -381,16 +335,5 @@
     <MESSAGE value="Small modification" />
     <MESSAGE value="modification" />
     <option name="LAST_COMMIT_MESSAGE" value="modification" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawFences.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
