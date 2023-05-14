@@ -93,13 +93,22 @@ public class SnakeEngine extends Application {
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
     public static ImageView menu;
+    public static ImageView logo;
+    public static ImageView gameOverPanel;
     public static final double menuSizeX = TILE_SIZE * 16;
     public static final double menuSizeY = TILE_SIZE * 8;
-    public static ImageView logo;
     public static final double logoSizeX = TILE_SIZE * 16;
     public static final double logoSizeY = TILE_SIZE * 6;
+    public static final double gameOverSizeX = TILE_SIZE * 16;
+    public static final double gameOverSizeY = TILE_SIZE * 3;
+    public static final double gameOverPanelSizeX = TILE_SIZE * 15;
+    public static final double gameOverPanelSizeY = TILE_SIZE * 5;
     public static final double FADE_DURATION = 25;
     public static int blurValue = 20;
+    public static Timeline timeline;
+    public static Stage mainStage;
+
+
 
 
     public int Score = 0;
@@ -107,16 +116,16 @@ public class SnakeEngine extends Application {
 
     @Override
     public void start(Stage stage) {
+        SnakeEngine.mainStage = stage;
         initStart();
 
-        stage.setResizable(false);
-        stage.setScene(mainScene);
-        stage.setTitle("Go: Snake!");
-        stage.getIcons().add(new Image(getClass().getResource("/images/stageIcon.png").toExternalForm()));
-        stage.show();
+        mainStage.setResizable(false);
+        mainStage.setScene(mainScene);
+        mainStage.setTitle("Go: Snake!");
+        mainStage.getIcons().add(new Image(getClass().getResource("/images/stageIcon.png").toExternalForm()));
+        mainStage.show();
 
         menu.setOnMouseClicked(event -> {
-            //PANE.setEffect(null);
             int temp = blurValue;
             Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
                 PANE.setEffect(new GaussianBlur(blurValue--));
@@ -162,7 +171,7 @@ public class SnakeEngine extends Application {
             });
 
 
-            Timeline timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> runSnake()));
+            timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> runSnake()));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
         });
@@ -272,7 +281,7 @@ public class SnakeEngine extends Application {
                 || (bodyParts[0].getY() > HEIGHT - borderForSnake * 2 && currentDirection == DOWN)
                 || (bodyParts[0].getY() < PANEL_REALSTATE + borderForSnake * 2 - TILE_SIZE && currentDirection == UP)
         )
-            gameOver();
+            new GameOver();
 
 
         // Ahmed Salem:
@@ -309,8 +318,8 @@ public class SnakeEngine extends Application {
             // Add snake body segment
             snakeBodyPartsCount++;
             bodyParts[snakeBodyPartsCount] = new ImageView(
-                    new Image(Objects.requireNonNull(getClass().getResource(
-                            "/images/snakeBodySegments.png")).toExternalForm()));
+                    new Image(getClass().getResource(
+                            "/images/snakeBodySegments.png").toExternalForm()));
             bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
             bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
             bodyParts[snakeBodyPartsCount].setX(-WIDTH);
@@ -330,6 +339,9 @@ public class SnakeEngine extends Application {
                 bodyParts[snakeBodyPartsCount - i].setImage(null);
             }
             snakeBodyPartsCount -= 3;
+            // Snake dies if it's only a head.
+            if(snakeBodyPartsCount < 1)
+                new GameOver();
             poisonType = randInt(POISON_COUNT);
             new PoisonManager();
 
@@ -368,10 +380,7 @@ public class SnakeEngine extends Application {
     }
 
 
-    public void gameOver() {
-        // Peter:
-        // System.exit(0);
-    }
+
 
 
 

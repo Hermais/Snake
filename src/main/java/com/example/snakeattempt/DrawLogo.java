@@ -6,6 +6,8 @@ import javafx.scene.image.ImageView;
 import static com.example.snakeattempt.SnakeEngine.*;
 
 public class DrawLogo {
+
+
     public DrawLogo() {
         logo = new ImageView(
                 new Image(getClass().getResource(
