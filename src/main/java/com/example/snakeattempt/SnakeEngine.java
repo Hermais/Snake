@@ -172,7 +172,7 @@ public class SnakeEngine extends Application {
         mainScene = new Scene(PANE_2, HEIGHT, WIDTH);
 
 
-        setBackground();
+        new DrawPanelBackground();
         foodType = randInt(FOOD_COUNT);
         poisonType = randInt(POISON_COUNT);
         drawFence();
@@ -203,44 +203,7 @@ public class SnakeEngine extends Application {
 
     }
 
-    public void setBackground() {
-            Rectangle rec = new Rectangle();
-            rec.setFill(Color.web("#568203"));
-            rec.setHeight(HEIGHT);
-            rec.setWidth(WIDTH);
-            PANE.getChildren().add(rec);
-            // Flat Grass
-            for (int i = 0; i <= TILE_COUNT; i++) {
-                for (int j = 0; j <= TILE_COUNT; j++) {
 
-                    ImageView imageView = new ImageView(new Image(
-                            getClass().getResource((i + j) % 2 == 0 ? "/images/grassTile1.png" : "/images/grassTile2.png").toExternalForm()));
-                    imageView.setX(TILE_SIZE * i);
-                    imageView.setY(TILE_SIZE * j);
-                    imageView.setFitWidth(TILE_SIZE);
-                    imageView.setFitHeight(TILE_SIZE);
-                    PANE.getChildren().add(imageView);
-                }
-
-            }
-
-
-        //Status Panel
-        Image panelImage = new Image(getClass().getResource(
-                "/images/panelG.png").toExternalForm());
-        Rectangle mask = new Rectangle(HEIGHT, WIDTH);
-        mask.setArcHeight(TILE_SIZE);
-        mask.setArcWidth(TILE_SIZE);
-        ImageView upperPanel = new ImageView(panelImage);
-        upperPanel.setFitHeight(HEIGHT);
-        upperPanel.setFitWidth(WIDTH);
-        upperPanel.setY(PANEL_REALSTATE - HEIGHT);
-        mask.setY(upperPanel.getY());
-        upperPanel.setClip(mask);
-        PANE.getChildren().add(upperPanel);
-
-
-    }
 
     public void drawFence() {
         for (int i = PANEL_REALSTATE / TILE_SIZE; i < TILE_COUNT; i++) {
