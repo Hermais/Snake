@@ -20,7 +20,6 @@ import java.util.Random;
 // OBJECTIVE: Clean the code by making multiple classes.
 
 public class Snake extends Application {
-    public static final int GAME_THEME = 1;
     public static final int HEIGHT = 800;
     public static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
@@ -205,16 +204,6 @@ public class Snake extends Application {
     }
 
     public void setBackground() {
-        if (GAME_THEME == 0) {
-            //Grass
-            Image grassImage = new Image(getClass().getResource(imagesDirectories[5]).toExternalForm());
-            ImageView mainBackground = new ImageView(grassImage);
-            mainBackground.setFitHeight(HEIGHT);
-            mainBackground.setFitWidth(WIDTH);
-            PANE.getChildren().add(mainBackground);
-
-
-        } else if (GAME_THEME == 1) {
             Rectangle rec = new Rectangle();
             rec.setFill(Color.web("#568203"));
             rec.setHeight(HEIGHT);
@@ -234,11 +223,11 @@ public class Snake extends Application {
                 }
 
             }
-        }
+
 
         //Status Panel
         Image panelImage = new Image(getClass().getResource(
-                GAME_THEME == 0 ? imagesDirectories[6] : "/images/panelG.png").toExternalForm());
+                "/images/panelG.png").toExternalForm());
         Rectangle mask = new Rectangle(HEIGHT, WIDTH);
         mask.setArcHeight(TILE_SIZE);
         mask.setArcWidth(TILE_SIZE);
@@ -385,7 +374,7 @@ public class Snake extends Application {
     public void placePoison(int poisonType) {
         // init image of POISON
         Image poisonImage = new Image(
-                getClass().getResource(GAME_THEME == 0 ? imagesDirectories[poisonType + 10] : imagesDirectories[poisonType
+                getClass().getResource(imagesDirectories[poisonType
                         + 18]).toExternalForm());
         POISON[poisonType] = new ImageView(poisonImage);
 
