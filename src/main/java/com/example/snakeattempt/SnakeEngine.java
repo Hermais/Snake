@@ -19,11 +19,11 @@ import java.util.Random;
 
 // OBJECTIVE: Clean the code by making multiple classes.
 
-public class Snake extends Application {
+public class SnakeEngine extends Application {
     public static final int HEIGHT = 800;
     public static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    public static final int TILE_COUNT = 20; // 20 But 16 is recommended.
+    public static final int TILE_COUNT = 16; // 20 But 16 is recommended.
     public static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     public static final int PANEL_REALSTATE = TILE_SIZE * 2;
     public static final Pane PANE = new Pane();
@@ -42,8 +42,8 @@ public class Snake extends Application {
             "",
             "",
             "",
-            "/images/grass1.jpg",
-            "/images/fabric0.jpg",
+            "",
+            "",
 
             "/images/snakeHead.png",
             "",
@@ -59,9 +59,9 @@ public class Snake extends Application {
             "/images/grapesG.png",
             "/images/mushroomG.png",
 
-            "/images/poison1G.png",
-            "/images/poison2G.png",
-            "/images/poison3G.png",
+            "",
+            "",
+            "",
 
             "images/snakeBodySegments.png"
     };
@@ -89,7 +89,7 @@ public class Snake extends Application {
     public static final double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2.0);
     public static int foodType;
     public static int poisonType;
-    public int snakeBodyPartsCount = 3;
+    public static int snakeBodyPartsCount = 3;
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
     public static ImageView menu;
@@ -138,10 +138,10 @@ public class Snake extends Application {
             fadingTimeline.play();
 
 
-            placePoison(poisonType);
+            new PoisonManager();
             new FoodManager();
 
-            initSnakeBody();
+            new SnakeBody();
 
             // Set up key press event handling
             mainScene.setOnKeyPressed(keyEvent -> {
@@ -256,7 +256,7 @@ public class Snake extends Application {
                         fence[k].setY(PANEL_REALSTATE);
                         fence[k].setRotate(-45);
                         PANE.getChildren().add(fence[k]);
-                    } else if (k == 19) {
+                    } else if (k == TILE_COUNT-1) {
                         fence[k] = new ImageView(new Image(getClass().getResource(
                                 "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
@@ -281,7 +281,7 @@ public class Snake extends Application {
             // Draw the lower fence
             if (i == TILE_COUNT - 1) {
                 for (int k = 0; k < TILE_COUNT; k++) {
-                    if (k == 19) {
+                    if (k == TILE_COUNT-1) {
                         fence[k] = new ImageView(new Image(getClass().getResource(
                                 "/images/fenceX.png").toExternalForm()));
                         fence[k].setFitHeight(TILE_SIZE);
@@ -335,7 +335,7 @@ public class Snake extends Application {
                             "/images/fenceX.png").toExternalForm()));
                     fence[k].setFitHeight(TILE_SIZE);
                     fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(19 * TILE_SIZE);
+                    fence[k].setX((TILE_COUNT - 1) * TILE_SIZE);
                     fence[k].setY(TILE_SIZE * k);
                     fence[k].setRotate(90);
                     PANE.getChildren().add(fence[k]);
@@ -349,55 +349,10 @@ public class Snake extends Application {
 
     }
 
-    public void initSnakeBody() {
-        double temp = TILE_SIZE;
-
-
-        // If we failed to make the code work as a snake with a head, we will remove the head and
-        // replace it with body.
-        for (int i = 0; i <= snakeBodyPartsCount; i++) {
-            bodyParts[i] = new ImageView(new Image(getClass().getResource(
-                    i == 0 ? "/images/snakeHeadG.png" : "/images/snakeBodySegments.png").toExternalForm())
-            );
-            bodyParts[i].setFitHeight(TILE_SIZE);
-            bodyParts[i].setFitWidth(TILE_SIZE);
-            bodyParts[i].setX(initialSnakeHeadX);
-            bodyParts[i].setY(initialSnakeHeadY + temp);
-            PANE.getChildren().add(bodyParts[i]);
-            temp += TILE_SIZE;
-        }
-    }
-
 
     // poisonType indices are from 0 to 2
     // images for POISON indices are from 10 to 12
-    public void placePoison(int poisonType) {
-        // init image of POISON
-        Image poisonImage = new Image(
-                getClass().getResource(imagesDirectories[poisonType
-                        + 18]).toExternalForm());
-        POISON[poisonType] = new ImageView(poisonImage);
 
-        TranslateTransition translateTransition = new TranslateTransition();
-        translateTransition.setNode(POISON[poisonType]);
-        translateTransition.setToY(TILE_SIZE);
-        translateTransition.setDuration(Duration.millis(300));
-        translateTransition.setCycleCount(1);
-        translateTransition.setAutoReverse(false);
-        translateTransition.play();
-        // fitting POISON
-        POISON[poisonType].setFitHeight(TILE_SIZE);
-        POISON[poisonType].setFitWidth(TILE_SIZE);
-        POISON[poisonType].setX(new Random(System.currentTimeMillis()).nextInt(1, TILE_COUNT - 1) * TILE_SIZE);
-        POISON[poisonType].setY(
-                (new Random(System.currentTimeMillis()).nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT - 2) * TILE_SIZE)
-                        );
-
-
-        PANE.getChildren().add(POISON[poisonType]);
-
-
-    }
 
 
     public void runSnake() {

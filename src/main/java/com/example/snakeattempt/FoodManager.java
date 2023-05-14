@@ -7,7 +7,7 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
-import static com.example.snakeattempt.Snake.*;
+import static com.example.snakeattempt.SnakeEngine.*;
 
 public class FoodManager {
     // Why no setters and getters? This game's constants are needed everywhere and shared between all classes.
