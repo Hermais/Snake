@@ -23,7 +23,7 @@ public class SnakeEngine extends Application {
     public static final int HEIGHT = 800;
     public static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    public static final int TILE_COUNT = 16; // 20 But 16 is recommended.
+    public static final int TILE_COUNT = 20; // 20 But 16 is recommended.
     public static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     public static final int PANEL_REALSTATE = TILE_SIZE * 2;
     public static final Pane PANE = new Pane();
@@ -175,14 +175,14 @@ public class SnakeEngine extends Application {
         new DrawPanelBackground();
         foodType = randInt(FOOD_COUNT);
         poisonType = randInt(POISON_COUNT);
-        drawFence();
+        new DrawFences();
         createTiles(false);
 
 
         PANE.setEffect(new GaussianBlur(blurValue));
 
-        drawMainMenu();
-        drawLogo();
+        new MainMenu();
+        new DrawLogo();
     }
 
     public static void main(String[] args) {
@@ -205,112 +205,7 @@ public class SnakeEngine extends Application {
 
 
 
-    public void drawFence() {
-        for (int i = PANEL_REALSTATE / TILE_SIZE; i < TILE_COUNT; i++) {
-            // Draw the upper fence
-            if (i == PANEL_REALSTATE / TILE_SIZE) {
-                for (int k = 0; k < TILE_COUNT; k++) {
-                    if (k == 0) {
-                        fence[k] = new ImageView(new Image(getClass().getResource(
-                                "/images/fenceX.png").toExternalForm()));
-                        fence[k].setFitHeight(TILE_SIZE);
-                        fence[k].setFitWidth(TILE_SIZE);
-                        fence[k].setX(TILE_SIZE * k);
-                        fence[k].setY(PANEL_REALSTATE);
-                        fence[k].setRotate(-45);
-                        PANE.getChildren().add(fence[k]);
-                    } else if (k == TILE_COUNT-1) {
-                        fence[k] = new ImageView(new Image(getClass().getResource(
-                                "/images/fenceX.png").toExternalForm()));
-                        fence[k].setFitHeight(TILE_SIZE);
-                        fence[k].setFitWidth(TILE_SIZE);
-                        fence[k].setX(TILE_SIZE * k);
-                        fence[k].setY(PANEL_REALSTATE);
-                        fence[k].setRotate(45);
-                        PANE.getChildren().add(fence[k]);
-                    } else {
-                        fence[k] = new ImageView(new Image(getClass().getResource(
-                                "/images/fenceX.png").toExternalForm()));
-                        fence[k].setFitHeight(TILE_SIZE);
-                        fence[k].setFitWidth(TILE_SIZE);
-                        fence[k].setX(TILE_SIZE * k);
-                        fence[k].setY(PANEL_REALSTATE);
-                        PANE.getChildren().add(fence[k]);
-                    }
 
-                }
-
-            }
-            // Draw the lower fence
-            if (i == TILE_COUNT - 1) {
-                for (int k = 0; k < TILE_COUNT; k++) {
-                    if (k == TILE_COUNT-1) {
-                        fence[k] = new ImageView(new Image(getClass().getResource(
-                                "/images/fenceX.png").toExternalForm()));
-                        fence[k].setFitHeight(TILE_SIZE);
-                        fence[k].setFitWidth(TILE_SIZE);
-                        fence[k].setX(TILE_SIZE * k);
-                        fence[k].setY(HEIGHT - TILE_SIZE);
-                        fence[k].setRotate(135);
-                        PANE.getChildren().add(fence[k]);
-                    } else if (k == 0) {
-                        fence[k] = new ImageView(new Image(getClass().getResource(
-                                "/images/fenceX.png").toExternalForm()));
-                        fence[k].setFitHeight(TILE_SIZE);
-                        fence[k].setFitWidth(TILE_SIZE);
-                        fence[k].setX(TILE_SIZE * k);
-                        fence[k].setY(HEIGHT - TILE_SIZE);
-                        fence[k].setRotate(-135);
-                        PANE.getChildren().add(fence[k]);
-
-                    } else {
-                        fence[k] = new ImageView(new Image(getClass().getResource(
-                                "/images/fenceX.png").toExternalForm()));
-                        fence[k].setFitHeight(TILE_SIZE);
-                        fence[k].setFitWidth(TILE_SIZE);
-                        fence[k].setX(TILE_SIZE * k);
-                        fence[k].setY(HEIGHT - TILE_SIZE);
-                        fence[k].setRotate(180);
-                        PANE.getChildren().add(fence[k]);
-                    }
-
-
-                }
-
-            }
-
-            // Peter: Complete the fence.
-            if (i > (PANEL_REALSTATE / TILE_SIZE)) {
-                for (int k = (PANEL_REALSTATE / TILE_SIZE) + 1; k < TILE_COUNT - 1; k++) {
-                    fence[k] = new ImageView(new Image(getClass().getResource(
-                            "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(0);
-                    fence[k].setY(TILE_SIZE * k);
-                    fence[k].setRotate(-90);
-                    PANE.getChildren().add(fence[k]);
-
-                }
-
-                for (int k = PANEL_REALSTATE / TILE_SIZE + 1; k < TILE_COUNT - 1; k++) {
-                    fence[k] = new ImageView(new Image(getClass().getResource(
-                            "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX((TILE_COUNT - 1) * TILE_SIZE);
-                    fence[k].setY(TILE_SIZE * k);
-                    fence[k].setRotate(90);
-                    PANE.getChildren().add(fence[k]);
-
-                }
-
-            }
-
-
-        }
-
-    }
 
 
     // poisonType indices are from 0 to 2
@@ -465,30 +360,9 @@ public class SnakeEngine extends Application {
         // System.exit(0);
     }
 
-    public void drawMainMenu() {
-        menu = new ImageView(
-                new Image(getClass().getResource(
-                        "/images/mainMenu.png").toExternalForm()));
-        menu.setX(WIDTH / 2.0 - menuSizeX / 2);
-        menu.setY(HEIGHT / 1.5 - menuSizeY / 2);
-        menu.setFitWidth(menuSizeX);
-        menu.setFitHeight(menuSizeY);
-        PANE_2.getChildren().add(menu);
 
-    }
 
-    public void drawLogo() {
-        logo = new ImageView(
-                new Image(getClass().getResource(
-                        "/images/Logo.png").toExternalForm()));
-        logo.setX(WIDTH / 2.0 - logoSizeX / 2);
-        // logo.setY(HEIGHT/2.0 - logoSizeY/2);
-        logo.setY(0);
-        logo.setFitWidth(logoSizeX);
-        logo.setFitHeight(logoSizeY);
-        PANE_2.getChildren().add(logo);
 
-    }
 
 }
 

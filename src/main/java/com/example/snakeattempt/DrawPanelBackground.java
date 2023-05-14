@@ -12,6 +12,8 @@ public class DrawPanelBackground {
     private  Image panelImage;
     private   ImageView grassTiles;
     private    ImageView upperPanel;
+    private Rectangle mask;
+    private Rectangle rec;
 
     public DrawPanelBackground() {
         drawBackground();
@@ -24,11 +26,13 @@ public class DrawPanelBackground {
     }
 
     public void drawBackground(){
-        Rectangle rec = new Rectangle();
+        // Cover Background for spacings between grass images.
+        rec = new Rectangle();
         rec.setFill(Color.web("#568203"));
         rec.setHeight(HEIGHT);
         rec.setWidth(WIDTH);
         PANE.getChildren().add(rec);
+
         // Flat Grass
         for (int i = 0; i <= TILE_COUNT; i++) {
             for (int j = 0; j <= TILE_COUNT; j++) {
@@ -47,12 +51,14 @@ public class DrawPanelBackground {
     }
 
     public void drawStatusPanel(){
-        //Status Panel
-        panelImage = new Image(getClass().getResource(
-                "/images/panelG.png").toExternalForm());
-        Rectangle mask = new Rectangle(HEIGHT, WIDTH);
+        // Optional mask
+        mask = new Rectangle(HEIGHT, WIDTH);
         mask.setArcHeight(TILE_SIZE);
         mask.setArcWidth(TILE_SIZE);
+
+        // Status Panel
+        panelImage = new Image(getClass().getResource(
+                "/images/panelG.png").toExternalForm());
         upperPanel = new ImageView(panelImage);
         upperPanel.setFitHeight(HEIGHT);
         upperPanel.setFitWidth(WIDTH);
