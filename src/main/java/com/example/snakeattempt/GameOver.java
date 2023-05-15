@@ -1,8 +1,11 @@
 package com.example.snakeattempt;
 
+import javafx.animation.*;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.effect.Bloom;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,17 +18,19 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.util.Objects;
 
 import static com.example.snakeattempt.SnakeEngine.*;
 
 public class GameOver {
-
+    private Pane pane;
 
     private ImageView gameOverText;
+    private final double gameOverButtonsFit = 3*TILE_SIZE;
 
-    GameOver(){
+    GameOver(Pane pane){
         timeline.pause();
 
 
@@ -64,85 +69,107 @@ public class GameOver {
         gameOverPanel.setFitWidth(gameOverPanelSizeX);
         gameOverPanel.setFitHeight(gameOverPanelSizeY);
 
-        Button b1 = new Button("Restart");
-        b1.setPrefWidth(150);
-        b1.setPrefHeight(30);
-        b1.setWrapText(false);
-
-        b1.setStyle("-fx-background-color:ORANGE;");
 
 
-        Button b2 = new Button("Exit");
-        b1.setPrefWidth(150);
-        b1.setPrefHeight(30);
-        b2.setStyle("-fx-background-color:ORANGE;");
-        HBox hB = new HBox(b1, b2);
-        hB.setAlignment(Pos.CENTER);
-        hB.setLayoutX(PANE_2.getWidth() / 2 - 270);
-        hB.setLayoutY(PANE_2.getHeight() / 2 - 140);
-        hB.setSpacing(100);
-        hB.setFillHeight(true);
-        hB.setPrefSize(500, 500);
+        // GAME OVER BUTTONS
+        double gameOverButtonsY = gameOverPanel.getY() + gameOverPanelSizeY*0.5 - 0.5* gameOverButtonsFit;
+
+        Buttons exitBtn = new Buttons("/images/exitBtn.png", gameOverButtonsFit);
+        exitBtn.setX(gameOverPanel.getX() + (1/5.0) * gameOverPanelSizeX - gameOverButtonsFit / 2.0);
+        exitBtn.setY(gameOverButtonsY);
 
 
-//        t1.setY(PANE_2.getHeight()/2+70);
-//        restart=new ImageView(new Image(
-//                getClass().getResource("/images/restart.png").toExternalForm()));
-//
-//        restart.setX(gameOverPanel.getX()/2);
-//        restart.setY(gameOverPanel.getY()/2);
-//        restart.setFitHeight(gameOverPanel.getFitHeight());
-//        restart.setFitWidth(gameOverPanel.getFitWidth());
+        exitBtn.setOnMouseClicked(exitEvent -> {
+            wobbleAnimation(exitBtn);
+
+            // Because JVM immediately closes, even if an animation is playing.
+            PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
+            delay.setOnFinished(delayEvent -> System.exit(0));
+            delay.play();
 
 
-//        Text t1=new Text("please press enter for restart game ");
-//        t1.setFill(Color.DARKGREEN);
-//        t1.setFont(new Font(28));
-//        t1.setX(PANE_2.getWidth()/2-220);
-//        t1.setY(PANE_2.getHeight()/2+70);
-//       Text t2=new Text("please press Esc for end game ");
-//        t2.setFill(Color.RED);
-//        t2.setFont(new Font(28));
-//        t2.setX(PANE_2.getWidth()/2-200);
-//        t2.setY(PANE_2.getHeight()/2+130);
-
-
-        PANE_2.getChildren().addAll(gameOverPanel, hB);
-
-
-        //When Panel is pressed game restarts
-        b1.setOnMouseClicked(restartEvent -> {
-            Platform.runLater(() -> {
-                try {
-
-                    Stage newStage = new Stage();
-                    new SnakeEngine().start(newStage);
-                    mainStage.close();
-                    newStage.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
         });
 
-        b2.setOnMouseClicked(ExitEvent -> {
-            Platform.runLater(() -> {
-                try {
 
-                  mainStage.close();
-                }
+        Buttons replayBtn = new Buttons("/images/replayBtn.png", gameOverButtonsFit);
+        replayBtn.setX(gameOverPanel.getX() + (4/5.0) * gameOverPanelSizeX - gameOverButtonsFit/2.0);
+        replayBtn.setY(gameOverButtonsY);
 
 
 
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
+        // REPLAY@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        replayBtn.setOnMouseClicked(replayEvent -> {
+            wobbleAnimation(replayBtn);
+
+
+
+
+            PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
+            delay.setOnFinished(removeUIsEvent ->{
+                PANE_2.getChildren().removeAll(gameOverText, gameOverPanel, exitBtn, replayBtn);
+                PANE.setEffect(new GaussianBlur(0));
+                // Entry Point of the game.
+                // timeline.play();
             });
+            delay.play();
+
+
+
+
         });
+
+
+
+
+
+
+        PANE_2.getChildren().addAll(gameOverPanel, exitBtn, replayBtn);
+
+
+
     }
 
+    public void wobbleAnimation(Buttons btn){
+        double originalFitWidth = btn.getFitWidth();
+        double originalFitHeight = btn.getFitHeight();
+        double wobbleSize = 10;
 
+        // Create a timeline for the wobbling animation
+        Timeline wobbleAnimation = new Timeline();
 
+        // Add keyframes to the animation
+        wobbleAnimation.getKeyFrames().addAll(
+                new KeyFrame(Duration.seconds(0), new KeyValue(btn.fitWidthProperty(), originalFitWidth)),
+                new KeyFrame(Duration.seconds(0), new KeyValue(btn.fitHeightProperty(), originalFitHeight)),
+                new KeyFrame(Duration.seconds(0.05), new KeyValue(btn.fitWidthProperty(), originalFitWidth + wobbleSize)),
+                new KeyFrame(Duration.seconds(0.05), new KeyValue(btn.fitHeightProperty(), originalFitHeight + wobbleSize)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(btn.fitWidthProperty(), originalFitWidth)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(btn.fitHeightProperty(), originalFitHeight)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(btn.fitWidthProperty(), originalFitWidth - wobbleSize)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(btn.fitHeightProperty(), originalFitHeight - wobbleSize)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(btn.fitWidthProperty(), originalFitWidth)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(btn.fitHeightProperty(), originalFitHeight))
+        );
+
+        wobbleAnimation.play();
+
+    }
+
+//    public void fadeOutOrInNode(boolean fadeOut, Node fadingNode, final int cycleOfFade){
+//
+//        Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
+//            int temp = cycleOfFade;
+//
+//            temp--;
+////            fadingNode.setEffect(new GaussianBlur(fadeOut ? temp--:temp++));
+//            fadingNode.setOpacity( ( (double) (temp) / cycleOfFade) );
+//
+//        }));
+//
+//        fadingTimeline.setCycleCount(cycleOfFade);
+//        fadingTimeline.play();
+//
+//    }
 
 }
 
