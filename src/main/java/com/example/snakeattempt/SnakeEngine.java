@@ -110,6 +110,12 @@ public class SnakeEngine extends Application {
     public static Timeline timeline;
     public static Stage mainStage;
 
+    public Snake snake = new Snake(snakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
+
+
+
+
+
 
 
 
@@ -152,7 +158,7 @@ public class SnakeEngine extends Application {
             new PoisonManager();
             new FoodManager();
 
-            new SnakeBody();
+            snake.putSnake(PANE);
 
             // Set up key press event handling
             mainScene.setOnKeyPressed(keyEvent -> {
@@ -283,7 +289,7 @@ public class SnakeEngine extends Application {
                 || (bodyParts[0].getY() > HEIGHT - borderForSnake * 2 && currentDirection == DOWN)
                 || (bodyParts[0].getY() < PANEL_REALSTATE + borderForSnake * 2 - TILE_SIZE && currentDirection == UP)
         )
-            new GameOver();
+            new GameOver(PANE);
 
 
         // Ahmed Salem:
@@ -342,8 +348,10 @@ public class SnakeEngine extends Application {
             }
             snakeBodyPartsCount -= 3;
             // Snake dies if it's only a head.
+
             if(snakeBodyPartsCount < 1)
-                new GameOver();
+                new GameOver(PANE);
+
             poisonType = randInt(POISON_COUNT);
             new PoisonManager();
 
