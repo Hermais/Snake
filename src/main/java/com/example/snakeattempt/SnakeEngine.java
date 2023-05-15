@@ -119,6 +119,8 @@ public class SnakeEngine extends Application {
 
 
 
+
+
     public int Score = 0;
     // Notes: Overlapping method does not work.
 
@@ -157,9 +159,9 @@ public class SnakeEngine extends Application {
             fadingTimeline.play();
 
 
-            //new FoodManager();
-            new PoisonManager();
+
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
+            new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
             snake.putSnake(PANE);
 
@@ -192,10 +194,10 @@ public class SnakeEngine extends Application {
         mainScene = new Scene(PANE_2, HEIGHT, WIDTH);
 
 
-        new DrawPanelBackground();
+        new DrawPanelBackground(PANE, HEIGHT, WIDTH, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
         foodType = randInt(FOOD_COUNT);
         poisonType = randInt(POISON_COUNT);
-        new DrawFences();
+        new DrawFences(fence, PANEL_REALSTATE, TILE_SIZE, TILE_COUNT, PANE, HEIGHT);
         createTiles(false);
 
 
@@ -354,7 +356,7 @@ public class SnakeEngine extends Application {
                 new GameOver(PANE);
 
             poisonType = randInt(POISON_COUNT);
-            new PoisonManager();
+            new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
 
 

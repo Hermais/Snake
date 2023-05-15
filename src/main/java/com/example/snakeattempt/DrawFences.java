@@ -2,13 +2,36 @@ package com.example.snakeattempt;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
-import static com.example.snakeattempt.SnakeEngine.*;
 
 public class DrawFences {
+    
+    private ImageView[] fence;
+    private int upperYMargin;
+    private int fitSize;
+    private int squareDivisionNum;
+    private Pane pane;
+    private int height;
+    
 
     public DrawFences() {
-        for (int i = PANEL_REALSTATE / TILE_SIZE; i < TILE_COUNT; i++) {
+
+    }
+
+    public DrawFences(ImageView[] fence, int upperYMargin, int fitSize, int squareDivisionNum, Pane pane, int height) {
+        this.fence = fence;
+        this.upperYMargin = upperYMargin;
+        this.fitSize = fitSize;
+        this.squareDivisionNum = squareDivisionNum;
+        this.pane = pane;
+        this.height = height;
+
+        startDraw();
+    }
+
+    public void startDraw(){
+        for (int i = upperYMargin / fitSize; i < squareDivisionNum; i++) {
 
             drawUpperFence(i);
 
@@ -24,34 +47,34 @@ public class DrawFences {
 
     public void drawUpperFence(int i){
         // Draw the upper fence
-        if (i == PANEL_REALSTATE / TILE_SIZE) {
-            for (int k = 0; k < TILE_COUNT; k++) {
+        if (i == upperYMargin / fitSize) {
+            for (int k = 0; k < squareDivisionNum; k++) {
                 if (k == 0) {
                     fence[k] = new ImageView(new Image(getClass().getResource(
                             "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(PANEL_REALSTATE);
+                    fence[k].setFitHeight(fitSize);
+                    fence[k].setFitWidth(fitSize);
+                    fence[k].setX(fitSize * k);
+                    fence[k].setY(upperYMargin);
                     fence[k].setRotate(-45);
-                    PANE.getChildren().add(fence[k]);
-                } else if (k == TILE_COUNT-1) {
+                    pane.getChildren().add(fence[k]);
+                } else if (k == squareDivisionNum-1) {
                     fence[k] = new ImageView(new Image(getClass().getResource(
                             "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(PANEL_REALSTATE);
+                    fence[k].setFitHeight(fitSize);
+                    fence[k].setFitWidth(fitSize);
+                    fence[k].setX(fitSize * k);
+                    fence[k].setY(upperYMargin);
                     fence[k].setRotate(45);
-                    PANE.getChildren().add(fence[k]);
+                    pane.getChildren().add(fence[k]);
                 } else {
                     fence[k] = new ImageView(new Image(getClass().getResource(
                             "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(PANEL_REALSTATE);
-                    PANE.getChildren().add(fence[k]);
+                    fence[k].setFitHeight(fitSize);
+                    fence[k].setFitWidth(fitSize);
+                    fence[k].setX(fitSize * k);
+                    fence[k].setY(upperYMargin);
+                    pane.getChildren().add(fence[k]);
                 }
 
             }
@@ -61,36 +84,36 @@ public class DrawFences {
 
     public void drawLowerFence(int i){
         // Draw the lower fence
-        if (i == TILE_COUNT - 1) {
-            for (int k = 0; k < TILE_COUNT; k++) {
-                if (k == TILE_COUNT-1) {
+        if (i == squareDivisionNum - 1) {
+            for (int k = 0; k < squareDivisionNum; k++) {
+                if (k == squareDivisionNum-1) {
                     fence[k] = new ImageView(new Image(getClass().getResource(
                             "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(HEIGHT - TILE_SIZE);
+                    fence[k].setFitHeight(fitSize);
+                    fence[k].setFitWidth(fitSize);
+                    fence[k].setX(fitSize * k);
+                    fence[k].setY(height - fitSize);
                     fence[k].setRotate(135);
-                    PANE.getChildren().add(fence[k]);
+                    pane.getChildren().add(fence[k]);
                 } else if (k == 0) {
                     fence[k] = new ImageView(new Image(getClass().getResource(
                             "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(HEIGHT - TILE_SIZE);
+                    fence[k].setFitHeight(fitSize);
+                    fence[k].setFitWidth(fitSize);
+                    fence[k].setX(fitSize * k);
+                    fence[k].setY(height - fitSize);
                     fence[k].setRotate(-135);
-                    PANE.getChildren().add(fence[k]);
+                    pane.getChildren().add(fence[k]);
 
                 } else {
                     fence[k] = new ImageView(new Image(getClass().getResource(
                             "/images/fenceX.png").toExternalForm()));
-                    fence[k].setFitHeight(TILE_SIZE);
-                    fence[k].setFitWidth(TILE_SIZE);
-                    fence[k].setX(TILE_SIZE * k);
-                    fence[k].setY(HEIGHT - TILE_SIZE);
+                    fence[k].setFitHeight(fitSize);
+                    fence[k].setFitWidth(fitSize);
+                    fence[k].setX(fitSize * k);
+                    fence[k].setY(height - fitSize);
                     fence[k].setRotate(180);
-                    PANE.getChildren().add(fence[k]);
+                    pane.getChildren().add(fence[k]);
                 }
 
 
@@ -103,28 +126,28 @@ public class DrawFences {
 
     public void drawSideFence(int i){
         // Peter: Complete the fence.
-        if (i > (PANEL_REALSTATE / TILE_SIZE)) {
-            for (int k = (PANEL_REALSTATE / TILE_SIZE) + 1; k < TILE_COUNT - 1; k++) {
+        if (i > (upperYMargin / fitSize)) {
+            for (int k = (upperYMargin / fitSize) + 1; k < squareDivisionNum - 1; k++) {
                 fence[k] = new ImageView(new Image(getClass().getResource(
                         "/images/fenceX.png").toExternalForm()));
-                fence[k].setFitHeight(TILE_SIZE);
-                fence[k].setFitWidth(TILE_SIZE);
+                fence[k].setFitHeight(fitSize);
+                fence[k].setFitWidth(fitSize);
                 fence[k].setX(0);
-                fence[k].setY(TILE_SIZE * k);
+                fence[k].setY(fitSize * k);
                 fence[k].setRotate(-90);
-                PANE.getChildren().add(fence[k]);
+                pane.getChildren().add(fence[k]);
 
             }
 
-            for (int k = PANEL_REALSTATE / TILE_SIZE + 1; k < TILE_COUNT - 1; k++) {
+            for (int k = upperYMargin / fitSize + 1; k < squareDivisionNum - 1; k++) {
                 fence[k] = new ImageView(new Image(getClass().getResource(
                         "/images/fenceX.png").toExternalForm()));
-                fence[k].setFitHeight(TILE_SIZE);
-                fence[k].setFitWidth(TILE_SIZE);
-                fence[k].setX((TILE_COUNT - 1) * TILE_SIZE);
-                fence[k].setY(TILE_SIZE * k);
+                fence[k].setFitHeight(fitSize);
+                fence[k].setFitWidth(fitSize);
+                fence[k].setX((squareDivisionNum - 1) * fitSize);
+                fence[k].setY(fitSize * k);
                 fence[k].setRotate(90);
-                PANE.getChildren().add(fence[k]);
+                pane.getChildren().add(fence[k]);
 
             }
 

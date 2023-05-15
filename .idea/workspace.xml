@@ -6,7 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="0ee20099-bae5-42f5-9b95-d827e8ea227a" name="Changes" comment="modification">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawFences.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawFences.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawLogo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawPanelBackground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawPanelBackground.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/FoodManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/FoodManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/PoisonManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/PoisonManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -380,7 +384,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684165092307</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="modification">
+      <created>1684166664014</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1684166664014</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -407,11 +418,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="2" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java</url>
-          <line>159</line>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
