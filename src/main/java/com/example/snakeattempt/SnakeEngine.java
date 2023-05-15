@@ -25,53 +25,12 @@ public class SnakeEngine extends Application {
     public static final int PANEL_REALSTATE = TILE_SIZE * 2;
     public static final Pane PANE = new Pane();
     public static final Pane PANE_2 = new Pane(PANE);
-
-
     public static Scene mainScene;
-
-
     public static final int FOOD_COUNT = 5;
     public static final int POISON_COUNT = 3;
     public static final ImageView[] FOOD = new ImageView[FOOD_COUNT];
     public static final ImageView[] POISON = new ImageView[POISON_COUNT];
-    public static final String[] imagesDirectories = {"",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-
-            "/images/snakeHead.png",
-            "",
-            "",
-
-            "/images/poison1.png",
-            "/images/poison2.png",
-            "/images/poison3.png",
-
-            "/images/appleG.png",
-            "/images/bananaG.png",
-            "/images/peachG.png",
-            "/images/grapesG.png",
-            "/images/mushroomG.png",
-
-            "",
-            "",
-            "",
-
-            "images/snakeBodySegments.png"
-    };
-
-    public static final String[] SOUND_DIRECTORIES = {
-            "/sounds/eat1.mp3",
-            "/sounds/eat2.mp3",
-            "/sounds/eat3.mp3"
-
-    };
     public static final Duration SOUND_DURATION = Duration.seconds(1); // Adjust the duration as needed
-
-
     public static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
     public static final int GAME_SPEED = 120;// Actually lower values give higher speeds.
     public static final int borderForSnake = TILE_SIZE;
@@ -79,8 +38,6 @@ public class SnakeEngine extends Application {
     public static final int DOWN = 1;
     public static final int RIGHT = 2;
     public static final int LEFT = 3;
-
-    // public static ImageView snakeHead;
     public static int currentDirection = UP;
     public static final double initialSnakeHeadX = TILE_SIZE * (TILE_COUNT / 2.0);
     public static final double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2.0);
@@ -89,11 +46,7 @@ public class SnakeEngine extends Application {
     public static int snakeBodyPartsCount = 3;
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
-//    public static ImageView mainMenuPanel;
-//    public static ImageView mainMenuLogo;
     public static ImageView gameOverPanel;
-    public static ImageView restart;
-
     public static final double menuSizeX = TILE_SIZE * 16;
     public static final double menuSizeY = TILE_SIZE * 8;
     public static final double logoSizeX = TILE_SIZE * 16;
@@ -107,20 +60,9 @@ public class SnakeEngine extends Application {
     public static int blurValue = 20;
     public static Timeline timeline;
     public static Stage mainStage;
-    public MainMenu mainMenu = new MainMenu( HEIGHT, WIDTH, menuSizeX,
+    public MainMenu mainMenu = new MainMenu(HEIGHT, WIDTH, menuSizeX,
             menuSizeY, PANEL_REALSTATE, logoSizeX, logoSizeY, PANE_2);
-
     public Snake snake = new Snake(snakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
-
-
-
-
-
-
-
-
-
-
     public int Score = 0;
     // Notes: Overlapping method does not work.
 
@@ -134,7 +76,6 @@ public class SnakeEngine extends Application {
         mainStage.setTitle("Go: Snake!");
         mainStage.getIcons().add(new Image(getClass().getResource("/images/stageIcon.png").toExternalForm()));
         mainStage.show();
-
 
 
         mainMenu.getMainPanel().setOnMouseClicked(event -> {
@@ -157,7 +98,6 @@ public class SnakeEngine extends Application {
             });
 
             fadingTimeline.play();
-
 
 
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
@@ -224,13 +164,8 @@ public class SnakeEngine extends Application {
     }
 
 
-
-
-
-
     // poisonType indices are from 0 to 2
     // images for POISON indices are from 10 to 12
-
 
 
     public void runSnake() {
@@ -312,11 +247,6 @@ public class SnakeEngine extends Application {
             }
         }
 
-        System.out.println("snakeX: " + initialSnakeHeadX);
-        System.out.println("snakeY: " + initialSnakeHeadY);
-        System.out.println();
-        System.out.println("foodX: " + FOOD[foodType].getX());
-        System.out.println("foodY: " + FOOD[foodType].getY());
 
         // Food detection
         if (bodyParts[0].getX() == FOOD[foodType].getX() && bodyParts[0].getY() - TILE_SIZE == FOOD[foodType].getY()) {
@@ -338,41 +268,39 @@ public class SnakeEngine extends Application {
             Score = snakeBodyPartsCount - 3;
             System.out.println("/////////////score" + Score);
             foodType = randInt(FOOD_COUNT);
-            System.out.println(imagesDirectories[foodType]);
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
         }
 
         //Peter: Poison Detection
-        if (bodyParts[0].getX() == POISON[poisonType].getX() && bodyParts[0].getY() - TILE_SIZE == POISON[poisonType].getY()){
+        if (bodyParts[0].getX() == POISON[poisonType].getX() && bodyParts[0].getY() - TILE_SIZE == POISON[poisonType].getY()) {
             System.out.println("Poison is consumed.");
             POISON[poisonType].setImage(null);
-            for(int i=0; i<3; i++){
+            for (int i = 0; i < 3; i++) {
                 bodyParts[snakeBodyPartsCount - i].setImage(null);
             }
             snakeBodyPartsCount -= 3;
             // Snake dies if it's only a head.
 
-            if(snakeBodyPartsCount < 1)
+            if (snakeBodyPartsCount < 1)
                 new GameOver(PANE);
 
             poisonType = randInt(POISON_COUNT);
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
 
-
         }
         ///////////////
-        int count=0;
-        for (int i=1;i<=snakeBodyPartsCount;i++){
-        if (bodyParts[0].getX() == bodyParts[i].getX() && bodyParts[0].getY()  == bodyParts[i].getY()) {
-            System.out.println("Snake eat itself");
+        int count = 0;
+        for (int i = 1; i <= snakeBodyPartsCount; i++) {
+            if (bodyParts[0].getX() == bodyParts[i].getX() && bodyParts[0].getY() == bodyParts[i].getY()) {
+                System.out.println("Snake eat itself");
 
-           for (; i <=snakeBodyPartsCount; i++) {
-                bodyParts[i].setImage(null);
-              count++;
+                for (; i <= snakeBodyPartsCount; i++) {
+                    bodyParts[i].setImage(null);
+                    count++;
+                }
+                snakeBodyPartsCount -= count;
             }
-            snakeBodyPartsCount-=count;
-        }
         }
 
 
@@ -404,12 +332,6 @@ public class SnakeEngine extends Application {
             bodyParts[i].setRotate(-90);
         }
     }
-
-
-
-
-
-
 
 
 }
