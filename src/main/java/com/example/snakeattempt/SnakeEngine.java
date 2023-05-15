@@ -157,8 +157,9 @@ public class SnakeEngine extends Application {
             fadingTimeline.play();
 
 
+            //new FoodManager();
             new PoisonManager();
-            new FoodManager();
+            new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
 
             snake.putSnake(PANE);
 
@@ -301,7 +302,7 @@ public class SnakeEngine extends Application {
                     FOOD[foodType].getY() == POISON[poisonType].getY()) {
                 FOOD[foodType].setImage(null);
                 foodType = randInt(FOOD_COUNT);
-                new FoodManager();
+                new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
                 System.out.println("Overlapping detected!");
             } else {
                 System.out.println("No overlapping.");
@@ -336,7 +337,7 @@ public class SnakeEngine extends Application {
             System.out.println("/////////////score" + Score);
             foodType = randInt(FOOD_COUNT);
             System.out.println(imagesDirectories[foodType]);
-            new FoodManager();
+            new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
         }
 
         //Peter: Poison Detection

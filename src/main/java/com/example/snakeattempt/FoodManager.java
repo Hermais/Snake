@@ -3,11 +3,12 @@ package com.example.snakeattempt;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
 import java.util.Random;
 
-import static com.example.snakeattempt.SnakeEngine.*;
+// import static com.example.snakeattempt.SnakeEngine.*;
 
 public class FoodManager {
     // Why no setters and getters? This game's constants are needed everywhere and shared between all classes.
@@ -20,28 +21,94 @@ public class FoodManager {
             "/images/grapesG.png",
             "/images/mushroomG.png"};
 
+    private Pane pane;
+    private int foodType;
+    private ImageView[] FOOD;
+    private int fitSize;
+    private int upperYMargin;
+    private int squareDivisionNum;
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public void setPane(Pane pane) {
+        this.pane = pane;
+    }
+
+    public int getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(int foodType) {
+        this.foodType = foodType;
+    }
+
+    public ImageView[] getFOOD() {
+        return FOOD;
+    }
+
+    public void setFOOD(ImageView[] FOOD) {
+        this.FOOD = FOOD;
+    }
+
+    public int getFitSize() {
+        return fitSize;
+    }
+
+    public void setFitSize(int fitSize) {
+        this.fitSize = fitSize;
+    }
+
+    public int getUpperYMargin() {
+        return upperYMargin;
+    }
+
+    public void setUpperYMargin(int upperYMargin) {
+        this.upperYMargin = upperYMargin;
+    }
+
+    public int getSquareDivisionNum() {
+        return squareDivisionNum;
+    }
+
+    public void setSquareDivisionNum(int squareDivisionNum) {
+        this.squareDivisionNum = squareDivisionNum;
+    }
+
     FoodManager(){
-        prepFoodImg();
 
-        animateFood();
-
-        PANE.getChildren().add(FOOD[foodType]);
 
     }
 
-    public void prepFoodImg(){
+    public FoodManager(Pane pane, int foodType, ImageView[] FOOD, int fitSize, int upperYMargin, int squareDivisionNum) {
+        this.pane = pane;
+        this.foodType = foodType;
+        this.FOOD = FOOD;
+        this.fitSize = fitSize;
+        this.upperYMargin = upperYMargin;
+        this.squareDivisionNum = squareDivisionNum;
+        prepFoodImg(foodType);
+        animateFood();
+
+    }
+
+    public void prepFoodImg(int foodType){
         //FOOD Image
         Image foodImage = new Image(getClass().getResource(foodImages[foodType]
         ).toExternalForm());
         FOOD[foodType] = new ImageView(foodImage);
 
         //FOOD adjusting
-        FOOD[foodType].setFitHeight(TILE_SIZE);
-        FOOD[foodType].setFitWidth(TILE_SIZE);
-        FOOD[foodType].setX(new Random(System.currentTimeMillis()).nextInt(1, TILE_COUNT - 1) * TILE_SIZE);
+        FOOD[foodType].setFitHeight(fitSize);
+        FOOD[foodType].setFitWidth(fitSize);
+        FOOD[foodType].setX(new Random(System.currentTimeMillis()).nextInt(1, squareDivisionNum - 1) * fitSize);
         FOOD[foodType].setY(
-                (new Random(System.currentTimeMillis()).nextInt(PANEL_REALSTATE / TILE_SIZE, TILE_COUNT - 2) * TILE_SIZE)
+                (new Random(System.currentTimeMillis()).nextInt(upperYMargin / fitSize, squareDivisionNum - 2) * fitSize)
         );
+        pane.getChildren().add(FOOD[foodType]);
+
+
 
     }
 
@@ -49,7 +116,7 @@ public class FoodManager {
         // Just an animation
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(FOOD[foodType]);
-        translateTransition.setToY(TILE_SIZE);
+        translateTransition.setToY(fitSize);
         translateTransition.setDuration(Duration.millis(300));
         translateTransition.setCycleCount(1);
         translateTransition.setAutoReverse(false);
