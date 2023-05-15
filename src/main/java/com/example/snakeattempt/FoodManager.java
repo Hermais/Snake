@@ -10,9 +10,7 @@ import java.util.Random;
 
 
 public class FoodManager {
-    // Why no setters and getters? This game's constants are needed everywhere and shared between all classes.
-    // This is a gradient of use:
-    // PANE, FOOD[], TILE_SIZE, TILE_COUNT and foodType - Very High
+
     private final String[] foodImages = {
             "/images/appleG.png",
             "/images/bananaG.png",
