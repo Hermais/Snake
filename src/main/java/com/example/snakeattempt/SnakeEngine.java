@@ -8,13 +8,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.util.Objects;
 import java.util.Random;
 
 // OBJECTIVE: Clean the code by making multiple classes.
@@ -92,8 +89,8 @@ public class SnakeEngine extends Application {
     public static int snakeBodyPartsCount = 3;
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
-    public static ImageView menu;
-    public static ImageView logo;
+//    public static ImageView mainMenuPanel;
+//    public static ImageView mainMenuLogo;
     public static ImageView gameOverPanel;
     public static ImageView restart;
 
@@ -106,9 +103,12 @@ public class SnakeEngine extends Application {
     public static final double gameOverPanelSizeX = TILE_SIZE * 15;
     public static final double gameOverPanelSizeY = TILE_SIZE * 5;
     public static final double FADE_DURATION = 25;
+    public static final double menuBtnFitSize = 3 * TILE_SIZE;
     public static int blurValue = 20;
     public static Timeline timeline;
     public static Stage mainStage;
+    public MainMenu mainMenu = new MainMenu( HEIGHT, WIDTH, menuSizeX,
+            menuSizeY, PANEL_REALSTATE, logoSizeX, logoSizeY, PANE_2);
 
     public Snake snake = new Snake(snakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
 
@@ -133,12 +133,14 @@ public class SnakeEngine extends Application {
         mainStage.getIcons().add(new Image(getClass().getResource("/images/stageIcon.png").toExternalForm()));
         mainStage.show();
 
-        menu.setOnMouseClicked(event -> {
+
+
+        mainMenu.getMainPanel().setOnMouseClicked(event -> {
             int temp = blurValue;
             Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
                 PANE.setEffect(new GaussianBlur(blurValue--));
-                menu.setOpacity(((double) (blurValue) / temp));
-                logo.setOpacity(((double) (blurValue) / temp));
+                mainMenu.getMainPanel().setOpacity(((double) (blurValue) / temp));
+                mainMenu.getLogo().setOpacity(((double) (blurValue) / temp));
             }));
 
             fadingTimeline.setCycleCount(temp);
@@ -146,8 +148,8 @@ public class SnakeEngine extends Application {
             fadingTimeline.setOnFinished(finishEvent -> {
                 PauseTransition delay = new PauseTransition(Duration.seconds(1)); // Adjust the delay duration as needed
                 delay.setOnFinished(delayEvent -> {
-                    PANE_2.getChildren().remove(menu);
-                    PANE_2.getChildren().remove(logo);
+                    PANE_2.getChildren().remove(mainMenu.getMainPanel());
+                    PANE_2.getChildren().remove(mainMenu.getLogo());
                 });
                 delay.play();
             });
@@ -198,8 +200,6 @@ public class SnakeEngine extends Application {
 
         PANE.setEffect(new GaussianBlur(blurValue));
 
-        new MainMenu();
-        new DrawLogo();
     }
 
     public static void main(String[] args) {
