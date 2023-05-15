@@ -95,6 +95,8 @@ public class SnakeEngine extends Application {
     public static ImageView menu;
     public static ImageView logo;
     public static ImageView gameOverPanel;
+    public static ImageView restart;
+
     public static final double menuSizeX = TILE_SIZE * 16;
     public static final double menuSizeY = TILE_SIZE * 8;
     public static final double logoSizeX = TILE_SIZE * 16;
