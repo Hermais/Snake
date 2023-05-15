@@ -350,6 +350,19 @@ public class SnakeEngine extends Application {
 
 
         }
+        ///////////////
+        int count=0;
+        for (int i=1;i<=snakeBodyPartsCount;i++){
+        if (bodyParts[0].getX() == bodyParts[i].getX() && bodyParts[0].getY()  == bodyParts[i].getY()) {
+            System.out.println("Snake eat itself");
+
+           for (; i <=snakeBodyPartsCount; i++) {
+                bodyParts[i].setImage(null);
+              count++;
+            }
+            snakeBodyPartsCount-=count;
+        }
+        }
 
 
         PANE.requestFocus();

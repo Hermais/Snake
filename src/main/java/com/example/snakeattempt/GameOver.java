@@ -118,7 +118,7 @@ public class GameOver {
                     Stage newStage = new Stage();
                     new SnakeEngine().start(newStage);
                     mainStage.close();
-                    mainStage = newStage;
+                    newStage.show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
