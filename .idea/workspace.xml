@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ee20099-bae5-42f5-9b95-d827e8ea227a" name="Changes" comment="modification">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/mainMenu.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawLogo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/DrawLogo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/MainMenu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java" afterDir="false" />
-    </list>
+    <list default="true" id="0ee20099-bae5-42f5-9b95-d827e8ea227a" name="Changes" comment="modification" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -354,7 +348,14 @@
       <option name="project" value="LOCAL" />
       <updated>1684147832106</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="modification">
+      <created>1684151825415</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1684151825415</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -381,11 +382,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="2" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/example/snakeattempt/SnakeEngine.java</url>
-          <line>202</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
