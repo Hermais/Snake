@@ -137,21 +137,31 @@ public class SnakeEngine extends Application {
 
 
 
-        mainMenu.getMainPanel().setOnMouseClicked(event -> {
+        mainMenu.getStartBtn().setOnMouseClicked(event -> {
             int temp = blurValue;
             Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
                 PANE.setEffect(new GaussianBlur(blurValue--));
                 mainMenu.getMainPanel().setOpacity(((double) (blurValue) / temp));
                 mainMenu.getLogo().setOpacity(((double) (blurValue) / temp));
+                mainMenu.getStartBtn().setOpacity(((double) (blurValue) / temp));
+                mainMenu.getOptionBtn().setOpacity(((double) (blurValue) / temp));
+                mainMenu.getExitBtn().setOpacity(((double) (blurValue) / temp));
             }));
 
             fadingTimeline.setCycleCount(temp);
 
             fadingTimeline.setOnFinished(finishEvent -> {
-                PauseTransition delay = new PauseTransition(Duration.seconds(1)); // Adjust the delay duration as needed
+                PauseTransition delay = new PauseTransition(Duration.seconds(0.3)); // Adjust the delay duration as needed
                 delay.setOnFinished(delayEvent -> {
-                    PANE_2.getChildren().remove(mainMenu.getMainPanel());
-                    PANE_2.getChildren().remove(mainMenu.getLogo());
+
+                    PANE_2.getChildren().removeAll(mainMenu.getMainPanel(),mainMenu.getLogo());
+
+                    mainMenu.getStartBtn().removeBtnFromCurrentPane(PANE_2);
+                    mainMenu.getExitBtn().removeBtnFromCurrentPane(PANE_2);
+                    mainMenu.getOptionBtn().removeBtnFromCurrentPane(PANE_2);
+
+
+
                 });
                 delay.play();
             });
@@ -292,7 +302,7 @@ public class SnakeEngine extends Application {
                 || (bodyParts[0].getY() > HEIGHT - borderForSnake * 2 && currentDirection == DOWN)
                 || (bodyParts[0].getY() < PANEL_REALSTATE + borderForSnake * 2 - TILE_SIZE && currentDirection == UP)
         )
-            new GameOver(PANE);
+            new GameOver();
 
 
         // Ahmed Salem:
@@ -353,7 +363,7 @@ public class SnakeEngine extends Application {
             // Snake dies if it's only a head.
 
             if(snakeBodyPartsCount < 1)
-                new GameOver(PANE);
+                new GameOver();
 
             poisonType = randInt(POISON_COUNT);
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);

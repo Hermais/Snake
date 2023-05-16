@@ -5,6 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import static com.example.snakeattempt.SnakeEngine.GAME_SPEED;
 import static com.example.snakeattempt.SnakeEngine.TILE_SIZE;
 
 
@@ -14,19 +15,65 @@ public class MainMenu {
     private int height;
     private int width;
 
-    private double menuSizeX;
+    private double panelSizeX;
     private double menuSizeY;
+
+    public double getPanelSizeX() {
+        return panelSizeX;
+    }
+
+    public void setPanelSizeX(double panelSizeX) {
+        this.panelSizeX = panelSizeX;
+    }
+
+    public Buttons getStartBtn() {
+        return startBtn;
+    }
+
+    public void setStartBtn(Buttons startBtn) {
+        this.startBtn = startBtn;
+    }
+
+    public Buttons getOptionBtn() {
+        return optionBtn;
+    }
+
+    public void setOptionBtn(Buttons optionBtn) {
+        this.optionBtn = optionBtn;
+    }
+
+    public Buttons getExitBtn() {
+        return exitBtn;
+    }
+
+    public void setExitBtn(Buttons exitBtn) {
+        this.exitBtn = exitBtn;
+    }
+
+    public double getCommonYButtons() {
+        return commonYButtons;
+    }
+
+    public void setCommonYButtons(double commonYButtons) {
+        this.commonYButtons = commonYButtons;
+    }
+
+    public double getGameStartButtonsFit() {
+        return gameStartButtonsFit;
+    }
 
     private double yMargin;
 
     private double logoSizeX;
     private double logoSizeY;
     private Pane pane;
-     public  Buttons startBtn;
-    public Buttons optionBtn;
-    public Buttons exitBtn;
+     private Buttons startBtn;
+    private Buttons optionBtn;
+    private Buttons exitBtn;
 
-    private final double gamestartButtonsFit = 2*TILE_SIZE;
+    private  double commonYButtons ;
+
+    private final double gameStartButtonsFit = 2*TILE_SIZE;
 
     public ImageView getLogo() {
         return logo;
@@ -37,11 +84,11 @@ public class MainMenu {
     }
 
     public double getMenuSizeX() {
-        return menuSizeX;
+        return panelSizeX;
     }
 
-    public void setMenuSizeX(double menuSizeX) {
-        this.menuSizeX = menuSizeX;
+    public void setMenuSizeX(double panelSizeX) {
+        this.panelSizeX = panelSizeX;
     }
 
     public double getMenuSizeY() {
@@ -112,8 +159,8 @@ public class MainMenu {
     }
 
 
-    public void setMenuSizeX(int menuSizeX) {
-        this.menuSizeX = menuSizeX;
+    public void setMenuSizeX(int panelSizeX) {
+        this.panelSizeX = panelSizeX;
     }
 
 
@@ -136,12 +183,12 @@ public class MainMenu {
     }
 
     public MainMenu(int height, int width,
-                    double menuSizeX, double menuSizeY, double yMargin, double logoSizeX,
+                    double panelSizeX, double menuSizeY, double yMargin, double logoSizeX,
                     double logoSizeY, Pane pane) {
 
         this.height = height;
         this.width = width;
-        this.menuSizeX = menuSizeX;
+        this.panelSizeX = panelSizeX;
         this.menuSizeY = menuSizeY;
         this.yMargin = yMargin;
         this.logoSizeX = logoSizeX;
@@ -149,50 +196,29 @@ public class MainMenu {
         this.pane = pane;
         drawMainMenuPanel();
         drawMainMenuLogo();
+        drawButtons();
     }
 
     public void drawMainMenuPanel() {
         mainPanel = new ImageView(
                 new Image(getClass().getResource(
                         "/images/mainMenuPanel.png").toExternalForm()));
-        mainPanel.setX(width / 2.0 - menuSizeX / 2.0);
+        mainPanel.setX(width / 2.0 - panelSizeX / 2.0);
         mainPanel.setY(height / 1.5 - menuSizeY / 2.0);
-        mainPanel.setFitWidth(menuSizeX);
+        commonYButtons = mainPanel.getY() + menuSizeY/3.0;
+        mainPanel.setFitWidth(panelSizeX);
         mainPanel.setFitHeight(menuSizeY);
 
-        HBox hb = new HBox(70);
 
 
-        startBtn = new Buttons("/images/playBtn.png", menuSizeX / 6);
-        // startBtn.setX(mainPanel.getX() + (1/5.0) * menuSizeX - gamestartButtonsFit/10);
-        //  startBtn.setY(gamestartButtonsFit*5.8);
 
 
-        optionBtn = new Buttons("/images/options.png", menuSizeX / 6);
-        // startBtn.setX(mainPanel.getX() + (1/5.0) * menuSizeX - gamestartButtonsFit/2);
-        //startBtn.setY(gamestartButtonsFit*5.6);
+
+        pane.getChildren().addAll(mainPanel);
 
 
-        exitBtn = new Buttons("/images/exitBtn.png", menuSizeX / 6);
-        //startBtn.setX(mainPanel.getX() + (1/5.0) * menuSizeX - gamestartButtonsFit/2);
-        //startBtn.setY(gamestartButtonsFit*5.8);
-        hb.setPrefSize(menuSizeX, menuSizeY);
-        hb.getChildren().addAll(startBtn, optionBtn, exitBtn);
-        hb.setLayoutX(mainPanel.getX() + (1 / 5.0) * menuSizeX - gamestartButtonsFit / 2);
-        hb.setLayoutY(gamestartButtonsFit * 6);
-
-        pane.getChildren().addAll(mainPanel, hb/*,optionBtn,exitBtn*/);
-
-        mainPanel.setOnMouseClicked(event -> {
-           // PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
-            //delay.setOnFinished(removeUIsEvent -> {
-                pane.getChildren().removeAll(exitBtn, optionBtn, startBtn);
 
 
-            });
-
-
-      //  });
     }
     public void drawMainMenuLogo() {
         logo = new ImageView(
@@ -205,6 +231,26 @@ public class MainMenu {
         logo.setFitHeight(logoSizeY);
         pane.getChildren().add(logo);
     }
+
+    public void drawButtons(){
+        startBtn = new Buttons("/images/playBtn.png", panelSizeX / 6, pane);
+        startBtn.setX(mainPanel.getX() + panelSizeX * 1/5.0 - gameStartButtonsFit/ 2.0);
+        startBtn.setY(commonYButtons);
+
+
+        optionBtn = new Buttons("/images/optionsBtn.png", panelSizeX / 6, pane);
+        optionBtn.setX(mainPanel.getX() + panelSizeX * 1/2.1 - gameStartButtonsFit/2.0);
+
+        optionBtn.setY(commonYButtons);
+
+
+        exitBtn = new Buttons("/images/exitBtn.png", panelSizeX / 6, pane);
+        exitBtn.setX(mainPanel.getX() + panelSizeX * 3/4.0  - gameStartButtonsFit/ 2.0);
+        exitBtn.setY(commonYButtons);
+
+    }
+
+
 
 
 

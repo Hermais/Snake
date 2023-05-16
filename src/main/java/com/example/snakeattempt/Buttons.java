@@ -3,6 +3,7 @@ package com.example.snakeattempt;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 
 public class Buttons extends ImageView {
@@ -13,6 +14,18 @@ public class Buttons extends ImageView {
     private Image btnImage;
 
     private double fitXY;
+    private Pane pane;
+
+    public Pane getPane() {
+        return pane;
+    }
+
+    public void setPane(Pane pane) {
+        this.pane = pane;
+        pane.getChildren().add(this);
+    }
+
+
 
     public double getFitXY() {
         return fitXY;
@@ -49,6 +62,43 @@ public class Buttons extends ImageView {
         mouseEffects();
     }
 
+    Buttons(Image btnImage, double fitXY, Pane pane) {
+        if(this.btnImage != null)
+            setImage(this.btnImage);
+
+        else
+            throw new RuntimeException();
+
+        setImage(btnImage);
+
+
+        this.fitXY = fitXY;
+
+        setFittings();
+
+        mouseEffects();
+
+        pane.getChildren().add(this);
+
+    }
+
+    Buttons(String imageDirectory, double fitXY, Pane pane){
+        this.imageDirectory = imageDirectory;
+
+        btnImage = new Image(getClass().getResource(imageDirectory).toExternalForm());
+
+        setImage(btnImage);
+
+        this.fitXY = fitXY;
+
+        setFittings();
+
+        mouseEffects();
+
+        pane.getChildren().add(this);
+
+    }
+
     Buttons(Image btnImage, double fitXY) {
         if(this.btnImage != null)
             setImage(this.btnImage);
@@ -65,6 +115,7 @@ public class Buttons extends ImageView {
 
         mouseEffects();
 
+
     }
 
     Buttons(String imageDirectory, double fitXY){
@@ -79,6 +130,8 @@ public class Buttons extends ImageView {
         setFittings();
 
         mouseEffects();
+
+
     }
 
     public void setFittings(){
@@ -104,6 +157,10 @@ public class Buttons extends ImageView {
 
 
 
+    }
+
+    public void removeBtnFromCurrentPane(Pane pane){
+        pane.getChildren().remove(this);
     }
 
 

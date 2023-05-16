@@ -25,12 +25,12 @@ import java.util.Objects;
 import static com.example.snakeattempt.SnakeEngine.*;
 
 public class GameOver {
-    private Pane pane;
 
     private ImageView gameOverText;
     private final double gameOverButtonsFit = 3*TILE_SIZE;
-
-    GameOver(Pane pane){
+    Buttons exitBtn;
+    Buttons replayBtn;
+    GameOver(){
         timeline.pause();
 
 
@@ -74,9 +74,13 @@ public class GameOver {
         // GAME OVER BUTTONS
         double gameOverButtonsY = gameOverPanel.getY() + gameOverPanelSizeY*0.5 - 0.5* gameOverButtonsFit;
 
-        Buttons exitBtn = new Buttons("/images/exitBtn.png", gameOverButtonsFit);
+        exitBtn = new Buttons("/images/exitBtn.png", gameOverButtonsFit);
         exitBtn.setX(gameOverPanel.getX() + (1/5.0) * gameOverPanelSizeX - gameOverButtonsFit / 2.0);
         exitBtn.setY(gameOverButtonsY);
+
+        replayBtn = new Buttons("/images/replayBtn.png", gameOverButtonsFit);
+        replayBtn.setX(gameOverPanel.getX() + (4/5.0) * gameOverPanelSizeX - gameOverButtonsFit/2.0);
+        replayBtn.setY(gameOverButtonsY);
 
 
         exitBtn.setOnMouseClicked(exitEvent -> {
@@ -91,9 +95,6 @@ public class GameOver {
         });
 
 
-        Buttons replayBtn = new Buttons("/images/replayBtn.png", gameOverButtonsFit);
-        replayBtn.setX(gameOverPanel.getX() + (4/5.0) * gameOverPanelSizeX - gameOverButtonsFit/2.0);
-        replayBtn.setY(gameOverButtonsY);
 
 
 
@@ -123,11 +124,14 @@ public class GameOver {
 
 
 
-        PANE_2.getChildren().addAll(gameOverPanel, exitBtn, replayBtn);
+        PANE_2.getChildren().add(gameOverPanel);
+        replayBtn.setPane(PANE_2);
+        exitBtn.setPane(PANE_2);
 
 
 
     }
+
 
     public void wobbleAnimation(Buttons btn){
         double originalFitWidth = btn.getFitWidth();
@@ -154,7 +158,6 @@ public class GameOver {
         wobbleAnimation.play();
 
     }
-
 //    public void fadeOutOrInNode(boolean fadeOut, Node fadingNode, final int cycleOfFade){
 //
 //        Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
