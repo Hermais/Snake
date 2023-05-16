@@ -10,9 +10,6 @@ import java.util.Random;
 
 
 public class PoisonManager {
-    // Why no setters and getters? This game's constants are needed everywhere and shared between all classes.
-    // This is a gradient of use:
-    // PANE, POISON[], fitSize, squareDivisionNum and poisonType - Very High
 
     private final String[] poisonImages = {
             "/images/poison1G.png",

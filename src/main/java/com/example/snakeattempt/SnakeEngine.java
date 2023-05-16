@@ -143,7 +143,6 @@ public class SnakeEngine extends Application {
                 PANE.setEffect(new GaussianBlur(blurValue--));
                 mainMenu.getMainPanel().setOpacity(((double) (blurValue) / temp));
                 mainMenu.getLogo().setOpacity(((double) (blurValue) / temp));
-
             }));
 
             fadingTimeline.setCycleCount(temp);
@@ -153,11 +152,6 @@ public class SnakeEngine extends Application {
                 delay.setOnFinished(delayEvent -> {
                     PANE_2.getChildren().remove(mainMenu.getMainPanel());
                     PANE_2.getChildren().remove(mainMenu.getLogo());
-
-
-
-
-
                 });
                 delay.play();
             });
@@ -367,7 +361,7 @@ public class SnakeEngine extends Application {
 
 
         }
-        ///////////////Snake eat itself \\\\\\\\\\\\\
+        ///////////////
         int count=0;
         for (int i=1;i<=snakeBodyPartsCount;i++){
         if (bodyParts[0].getX() == bodyParts[i].getX() && bodyParts[0].getY()  == bodyParts[i].getY()) {
