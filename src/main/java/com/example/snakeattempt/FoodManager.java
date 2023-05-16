@@ -5,14 +5,16 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-
+//import javafx.scene
 import java.util.Random;
 
-
+//import javafx.scene.;
 public class FoodManager {
+
     // Why no setters and getters? This game's constants are needed everywhere and shared between all classes.
     // This is a gradient of use:
     // PANE, FOOD[], TILE_SIZE, TILE_COUNT and foodType - Very High
+  //private AudioClip clip=null;
     private final String[] foodImages = {
             "/images/appleG.png",
             "/images/bananaG.png",
@@ -123,5 +125,9 @@ public class FoodManager {
 
     }
 
+     /*  private  AudioClip clip () {
+        String src=getClass().getResource("eat1.mp3").toString();
+    clip=new AudioClip(src);
 
+    }*/
 }

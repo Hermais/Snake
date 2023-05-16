@@ -2,8 +2,10 @@ package com.example.snakeattempt;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
+import static com.example.snakeattempt.SnakeEngine.TILE_SIZE;
 
 
 public class MainMenu {
@@ -20,6 +22,11 @@ public class MainMenu {
     private double logoSizeX;
     private double logoSizeY;
     private Pane pane;
+     public  Buttons startBtn;
+    public Buttons optionBtn;
+    public Buttons exitBtn;
+
+    private final double gamestartButtonsFit = 2*TILE_SIZE;
 
     public ImageView getLogo() {
         return logo;
@@ -74,17 +81,14 @@ public class MainMenu {
     }
 
 
-
     public void setLogoSizeY(int logoSizeY) {
         this.logoSizeY = logoSizeY;
     }
 
 
-
     public ImageView getMainPanel() {
         return mainPanel;
     }
-
 
 
     public void setMainPanel(ImageView mainPanel) {
@@ -108,11 +112,9 @@ public class MainMenu {
     }
 
 
-
     public void setMenuSizeX(int menuSizeX) {
         this.menuSizeX = menuSizeX;
     }
-
 
 
     public void setMenuSizeY(int menuSizeY) {
@@ -126,6 +128,8 @@ public class MainMenu {
     public void setPane(Pane pane) {
         this.pane = pane;
     }
+
+
 
     public MainMenu() {
 
@@ -147,7 +151,7 @@ public class MainMenu {
         drawMainMenuLogo();
     }
 
-    public void drawMainMenuPanel(){
+    public void drawMainMenuPanel() {
         mainPanel = new ImageView(
                 new Image(getClass().getResource(
                         "/images/mainMenuPanel.png").toExternalForm()));
@@ -155,20 +159,55 @@ public class MainMenu {
         mainPanel.setY(height / 1.5 - menuSizeY / 2.0);
         mainPanel.setFitWidth(menuSizeX);
         mainPanel.setFitHeight(menuSizeY);
-        pane.getChildren().add(mainPanel);
 
+        HBox hb = new HBox(70);
+
+
+        startBtn = new Buttons("/images/playBtn.png", menuSizeX / 6);
+        // startBtn.setX(mainPanel.getX() + (1/5.0) * menuSizeX - gamestartButtonsFit/10);
+        //  startBtn.setY(gamestartButtonsFit*5.8);
+
+
+        optionBtn = new Buttons("/images/options.png", menuSizeX / 6);
+        // startBtn.setX(mainPanel.getX() + (1/5.0) * menuSizeX - gamestartButtonsFit/2);
+        //startBtn.setY(gamestartButtonsFit*5.6);
+
+
+        exitBtn = new Buttons("/images/exitBtn.png", menuSizeX / 6);
+        //startBtn.setX(mainPanel.getX() + (1/5.0) * menuSizeX - gamestartButtonsFit/2);
+        //startBtn.setY(gamestartButtonsFit*5.8);
+        hb.setPrefSize(menuSizeX, menuSizeY);
+        hb.getChildren().addAll(startBtn, optionBtn, exitBtn);
+        hb.setLayoutX(mainPanel.getX() + (1 / 5.0) * menuSizeX - gamestartButtonsFit / 2);
+        hb.setLayoutY(gamestartButtonsFit * 6);
+
+        pane.getChildren().addAll(mainPanel, hb/*,optionBtn,exitBtn*/);
+
+        mainPanel.setOnMouseClicked(event -> {
+           // PauseTransition delay = new PauseTransition(Duration.seconds(0.5));
+            //delay.setOnFinished(removeUIsEvent -> {
+                pane.getChildren().removeAll(exitBtn, optionBtn, startBtn);
+
+
+            });
+
+
+      //  });
     }
-
-    public void drawMainMenuLogo(){
+    public void drawMainMenuLogo() {
         logo = new ImageView(
                 new Image(getClass().getResource(
                         "/images/Logo.png").toExternalForm()));
         logo.setX(width / 2.0 - logoSizeX / 2.0);
-        logo.setY( logoSizeY/2.0 + yMargin*1.5 );
+        logo.setY(logoSizeY / 2.0 + yMargin * 1.5);
         logo.setY(0);
         logo.setFitWidth(logoSizeX);
         logo.setFitHeight(logoSizeY);
         pane.getChildren().add(logo);
     }
+
+
+
+
 
 }
