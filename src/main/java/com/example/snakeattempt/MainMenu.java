@@ -23,6 +23,7 @@ public class MainMenu {
     private Pane pane;
     private Buttons startBtn;
     private Buttons optionBtn;
+    private Buttons infoBtn;
     private Buttons exitBtn;
 
     private  double commonYButtons ;
@@ -238,9 +239,13 @@ public class MainMenu {
         startBtn.setY(commonYButtons);
 
 
-        optionBtn = new Buttons("/images/optionsBtn.png", panelSizeX / 6, pane);
+        optionBtn = new Buttons("/images/optionsBtn.png", panelSizeX / 6);
         optionBtn.setX(mainPanel.getX() + panelSizeX * 1/2.1 - gameStartButtonsFit/2.0);
         optionBtn.setY(commonYButtons);
+
+        infoBtn = new Buttons("/images/infoBtn.png", panelSizeX / 6, pane);
+        infoBtn.setX(mainPanel.getX() + panelSizeX * 1/2.1 - gameStartButtonsFit/2.0);
+        infoBtn.setY(commonYButtons);
 
 
         exitBtn = new Buttons("/images/exitBtn.png", panelSizeX / 6, pane);
