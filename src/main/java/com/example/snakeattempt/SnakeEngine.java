@@ -34,34 +34,6 @@ public class SnakeEngine extends Application {
     public static final int POISON_COUNT = 3;
     public static final ImageView[] FOOD = new ImageView[FOOD_COUNT];
     public static final ImageView[] POISON = new ImageView[POISON_COUNT];
-    public static final String[] imagesDirectories = {"",
-            "",
-            "",
-            "",
-            "",
-            "",
-            "",
-
-            "/images/snakeHead.png",
-            "",
-            "",
-
-            "/images/poison1.png",
-            "/images/poison2.png",
-            "/images/poison3.png",
-
-            "/images/appleG.png",
-            "/images/bananaG.png",
-            "/images/peachG.png",
-            "/images/grapesG.png",
-            "/images/mushroomG.png",
-
-            "",
-            "",
-            "",
-
-            "images/snakeBodySegments.png"
-    };
 
     public static final String[] SOUND_DIRECTORIES = {
             "/sounds/eat1.mp3",
@@ -89,10 +61,6 @@ public class SnakeEngine extends Application {
     public static int snakeBodyPartsCount = 3;
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
-//    public static ImageView mainMenuPanel;
-//    public static ImageView mainMenuLogo;
-//    public static ImageView gameOverPanel;
-//    public static ImageView restart;
 
     public static final double menuSizeX = TILE_SIZE * 16;
     public static final double menuSizeY = TILE_SIZE * 8;
@@ -100,7 +68,6 @@ public class SnakeEngine extends Application {
     public static final double logoSizeY = TILE_SIZE * 6;
 
     public static final double FADE_DURATION = 25;
-    public static final double menuBtnFitSize = 3 * TILE_SIZE;
     public static int blurValue = 20;
     public static Timeline timeline;
     public static Stage mainStage;
@@ -153,6 +120,7 @@ public class SnakeEngine extends Application {
                 mainMenu.getMainPanel().setOpacity(((double) (blurValue) / temp));
                 mainMenu.getLogo().setOpacity(((double) (blurValue) / temp));
                 mainMenu.getStartBtn().setOpacity(((double) (blurValue) / temp));
+                mainMenu.getInfoBtn().setOpacity(((double) (blurValue) / temp));
                 mainMenu.getOptionBtn().setOpacity(((double) (blurValue) / temp));
                 mainMenu.getExitBtn().setOpacity(((double) (blurValue) / temp));
             }));
@@ -168,6 +136,7 @@ public class SnakeEngine extends Application {
                     mainMenu.getStartBtn().removeBtnFromCurrentPane(PANE_2);
                     mainMenu.getExitBtn().removeBtnFromCurrentPane(PANE_2);
                     mainMenu.getOptionBtn().removeBtnFromCurrentPane(PANE_2);
+                    mainMenu.getInfoBtn().removeBtnFromCurrentPane(PANE_2);
 
 
 
@@ -359,7 +328,6 @@ public class SnakeEngine extends Application {
             Score = snakeBodyPartsCount - 3;
             System.out.println("/////////////score" + Score);
             foodType = randInt(FOOD_COUNT);
-            System.out.println(imagesDirectories[foodType]);
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
         }
 

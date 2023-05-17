@@ -30,6 +30,14 @@ public class MainMenu {
 
     private final double gameStartButtonsFit = 2*TILE_SIZE;
 
+    public Buttons getInfoBtn() {
+        return infoBtn;
+    }
+
+    public void setInfoBtn(Buttons infoBtn) {
+        this.infoBtn = infoBtn;
+    }
+
     public double getPanelSizeX() {
         return panelSizeX;
     }

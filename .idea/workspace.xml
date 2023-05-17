@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ee20099-bae5-42f5-9b95-d827e8ea227a" name="Changes" comment="modification">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/MainMenu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/snakeattempt/MainMenu.java" afterDir="false" />
-    </list>
+    <list default="true" id="0ee20099-bae5-42f5-9b95-d827e8ea227a" name="Changes" comment="modification" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,7 +56,7 @@
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.44942528",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.editor",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
     "show.migrate.to.gradle.popup": "false"
   }
 }]]></component>
