@@ -91,17 +91,14 @@ public class SnakeEngine extends Application {
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
 //    public static ImageView mainMenuPanel;
 //    public static ImageView mainMenuLogo;
-    public static ImageView gameOverPanel;
-    public static ImageView restart;
+//    public static ImageView gameOverPanel;
+//    public static ImageView restart;
 
     public static final double menuSizeX = TILE_SIZE * 16;
     public static final double menuSizeY = TILE_SIZE * 8;
     public static final double logoSizeX = TILE_SIZE * 16;
     public static final double logoSizeY = TILE_SIZE * 6;
-    public static final double gameOverSizeX = TILE_SIZE * 16;
-    public static final double gameOverSizeY = TILE_SIZE * 3;
-    public static final double gameOverPanelSizeX = TILE_SIZE * 15;
-    public static final double gameOverPanelSizeY = TILE_SIZE * 5;
+
     public static final double FADE_DURATION = 25;
     public static final double menuBtnFitSize = 3 * TILE_SIZE;
     public static int blurValue = 20;
@@ -140,6 +137,7 @@ public class SnakeEngine extends Application {
         mainMenu.getStartBtn().setOnMouseClicked(event -> {
             int temp = blurValue;
             Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
+                mainMenu.getStartBtn().wobbleAnimation();
                 PANE.setEffect(new GaussianBlur(blurValue--));
                 mainMenu.getMainPanel().setOpacity(((double) (blurValue) / temp));
                 mainMenu.getLogo().setOpacity(((double) (blurValue) / temp));

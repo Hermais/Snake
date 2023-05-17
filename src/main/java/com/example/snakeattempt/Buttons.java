@@ -1,9 +1,13 @@
 package com.example.snakeattempt;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 
 public class Buttons extends ImageView {
@@ -161,6 +165,32 @@ public class Buttons extends ImageView {
 
     public void removeBtnFromCurrentPane(Pane pane){
         pane.getChildren().remove(this);
+    }
+
+    public void wobbleAnimation(){
+        double originalFitWidth = this.getFitWidth();
+        double originalFitHeight = this.getFitHeight();
+        double wobbleSize = 10;
+
+        // Create a timeline for the wobbling animation
+        Timeline wobbleAnimation = new Timeline();
+
+        // Add keyframes to the animation
+        wobbleAnimation.getKeyFrames().addAll(
+                new KeyFrame(Duration.seconds(0), new KeyValue(this.fitWidthProperty(), originalFitWidth)),
+                new KeyFrame(Duration.seconds(0), new KeyValue(this.fitHeightProperty(), originalFitHeight)),
+                new KeyFrame(Duration.seconds(0.05), new KeyValue(this.fitWidthProperty(), originalFitWidth + wobbleSize)),
+                new KeyFrame(Duration.seconds(0.05), new KeyValue(this.fitHeightProperty(), originalFitHeight + wobbleSize)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(this.fitWidthProperty(), originalFitWidth)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(this.fitHeightProperty(), originalFitHeight)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(this.fitWidthProperty(), originalFitWidth - wobbleSize)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(this.fitHeightProperty(), originalFitHeight - wobbleSize)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(this.fitWidthProperty(), originalFitWidth)),
+                new KeyFrame(Duration.seconds(0.1), new KeyValue(this.fitHeightProperty(), originalFitHeight))
+        );
+
+        wobbleAnimation.play();
+
     }
 
 

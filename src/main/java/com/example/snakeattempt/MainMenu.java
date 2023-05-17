@@ -2,10 +2,8 @@ package com.example.snakeattempt;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
-import static com.example.snakeattempt.SnakeEngine.GAME_SPEED;
 import static com.example.snakeattempt.SnakeEngine.TILE_SIZE;
 
 
@@ -240,7 +238,6 @@ public class MainMenu {
 
         optionBtn = new Buttons("/images/optionsBtn.png", panelSizeX / 6, pane);
         optionBtn.setX(mainPanel.getX() + panelSizeX * 1/2.1 - gameStartButtonsFit/2.0);
-
         optionBtn.setY(commonYButtons);
 
 
