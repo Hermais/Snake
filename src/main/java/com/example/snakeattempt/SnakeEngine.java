@@ -133,6 +133,17 @@ public class SnakeEngine extends Application {
         mainStage.show();
 
 
+        mainMenu.getExitBtn().setOnMouseClicked(exit -> {
+            mainMenu.getExitBtn().wobbleAnimation();
+            PauseTransition delay = new PauseTransition(Duration.seconds(0.3));
+
+
+            delay.setOnFinished(finished -> System.exit(0));
+
+            delay.play();
+        });
+
+
 
         mainMenu.getStartBtn().setOnMouseClicked(event -> {
             int temp = blurValue;
@@ -165,6 +176,8 @@ public class SnakeEngine extends Application {
             });
 
             fadingTimeline.play();
+
+
 
 
 

@@ -16,6 +16,19 @@ public class MainMenu {
     private double panelSizeX;
     private double menuSizeY;
 
+    private double yMargin;
+
+    private double logoSizeX;
+    private double logoSizeY;
+    private Pane pane;
+    private Buttons startBtn;
+    private Buttons optionBtn;
+    private Buttons exitBtn;
+
+    private  double commonYButtons ;
+
+    private final double gameStartButtonsFit = 2*TILE_SIZE;
+
     public double getPanelSizeX() {
         return panelSizeX;
     }
@@ -60,18 +73,7 @@ public class MainMenu {
         return gameStartButtonsFit;
     }
 
-    private double yMargin;
 
-    private double logoSizeX;
-    private double logoSizeY;
-    private Pane pane;
-     private Buttons startBtn;
-    private Buttons optionBtn;
-    private Buttons exitBtn;
-
-    private  double commonYButtons ;
-
-    private final double gameStartButtonsFit = 2*TILE_SIZE;
 
     public ImageView getLogo() {
         return logo;
@@ -97,11 +99,11 @@ public class MainMenu {
         this.menuSizeY = menuSizeY;
     }
 
-    public double getyMargin() {
+    public double getYMargin() {
         return yMargin;
     }
 
-    public void setyMargin(double yMargin) {
+    public void setYMargin(double yMargin) {
         this.yMargin = yMargin;
     }
 
