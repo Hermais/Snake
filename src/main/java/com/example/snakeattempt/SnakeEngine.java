@@ -371,19 +371,35 @@ public class SnakeEngine extends Application {
         }
 
         //Peter: Poison Detection
+        // -1 EXCEPTION!!!!
         if (bodyParts[0].getX() == POISON[poisonType].getX() && bodyParts[0].getY() - TILE_SIZE == POISON[poisonType].getY()){
             System.out.println("Poison is consumed.");
             POISON[poisonType].setImage(null);
-            for(int i=0; i<3; i++){
-                bodyParts[snakeBodyPartsCount - i].setImage(null);
+
+            if(snakeBodyPartsCount > 4){
+                for(int i=0; i<3; i++){
+                    bodyParts[snakeBodyPartsCount - i].setImage(null);
+                }
+                snakeBodyPartsCount -= 3;
+
             }
-            snakeBodyPartsCount -= 3;
+
+            else{
+                for(int i=0; i<1; i++){
+                    bodyParts[snakeBodyPartsCount - i].setImage(null);
+                }
+                snakeBodyPartsCount -= 1;
+            }
+
             // Snake dies if it's only a head.
             Score--;
             score.setText("Score = " + Score);
-
-            if(snakeBodyPartsCount < 1)
+            // ??
+            if(snakeBodyPartsCount < 1){
                 new GameOver();
+
+
+            }
 
             poisonType = randInt(POISON_COUNT);
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
