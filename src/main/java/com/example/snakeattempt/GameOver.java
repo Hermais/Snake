@@ -24,6 +24,7 @@ public class GameOver {
 
 
         drawGameOverPanel();
+        soundsManager.playPanelShowSound();
     }
 
     public void blurPANE(){

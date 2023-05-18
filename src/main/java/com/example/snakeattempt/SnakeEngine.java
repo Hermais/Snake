@@ -35,12 +35,7 @@ public class SnakeEngine extends Application {
     public static final ImageView[] FOOD = new ImageView[FOOD_COUNT];
     public static final ImageView[] POISON = new ImageView[POISON_COUNT];
 
-    public static final String[] SOUND_DIRECTORIES = {
-            "/sounds/eat1.mp3",
-            "/sounds/eat2.mp3",
-            "/sounds/eat3.mp3"
 
-    };
     public static final Duration SOUND_DURATION = Duration.seconds(1); // Adjust the duration as needed
 
 
@@ -76,11 +71,11 @@ public class SnakeEngine extends Application {
             menuSizeY, PANEL_REALSTATE, logoSizeX, logoSizeY, PANE_2);
 
     public static Snake snake = new Snake(initialSnakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
-    public SoundsManager soundsManager = new SoundsManager();
+    public static SoundsManager soundsManager = new SoundsManager();
 
     Buttons muteBtn = new Buttons("/images/soundsBtn.png", PANEL_REALSTATE/1.4);
     public boolean isMute = false;
-
+    public final double pauseTransitionDelay = 0.3;
 
 
 
@@ -126,7 +121,7 @@ public class SnakeEngine extends Application {
 
         mainMenu.getExitBtn().setOnMouseClicked(exit -> {
             mainMenu.getExitBtn().wobbleAnimation();
-            PauseTransition delay = new PauseTransition(Duration.seconds(0.3));
+            PauseTransition delay = new PauseTransition(Duration.seconds(pauseTransitionDelay));
 
 
             delay.setOnFinished(finished -> System.exit(0));
@@ -139,20 +134,25 @@ public class SnakeEngine extends Application {
         mainMenu.getStartBtn().setOnMouseClicked(event -> {
             int temp = blurValue;
             Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
-                mainMenu.getStartBtn().wobbleAnimation();
-                PANE.setEffect(new GaussianBlur(blurValue--));
-                mainMenu.getMainPanel().setOpacity(((double) (blurValue) / temp));
-                mainMenu.getLogo().setOpacity(((double) (blurValue) / temp));
-                mainMenu.getStartBtn().setOpacity(((double) (blurValue) / temp));
-                mainMenu.getInfoBtn().setOpacity(((double) (blurValue) / temp));
-                mainMenu.getOptionBtn().setOpacity(((double) (blurValue) / temp));
-                mainMenu.getExitBtn().setOpacity(((double) (blurValue) / temp));
+                PauseTransition delay = new PauseTransition(Duration.seconds(pauseTransitionDelay/2));
+                delay.setOnFinished(finis -> {
+                    mainMenu.getStartBtn().wobbleAnimation();
+                    PANE.setEffect(new GaussianBlur(blurValue--));
+                    mainMenu.getMainPanel().setOpacity(((double) (blurValue) / temp));
+                    mainMenu.getLogo().setOpacity(((double) (blurValue) / temp));
+                    mainMenu.getStartBtn().setOpacity(((double) (blurValue) / temp));
+                    mainMenu.getInfoBtn().setOpacity(((double) (blurValue) / temp));
+                    mainMenu.getOptionBtn().setOpacity(((double) (blurValue) / temp));
+                    mainMenu.getExitBtn().setOpacity(((double) (blurValue) / temp));
+                } );
+                delay.play();
+
             }));
 
             fadingTimeline.setCycleCount(temp);
 
             fadingTimeline.setOnFinished(finishEvent -> {
-                PauseTransition delay = new PauseTransition(Duration.seconds(0.3)); // Adjust the delay duration as needed
+                PauseTransition delay = new PauseTransition(Duration.seconds(pauseTransitionDelay)); // Adjust the delay duration as needed
                 delay.setOnFinished(delayEvent -> {
 
 
@@ -210,7 +210,6 @@ public class SnakeEngine extends Application {
     public void initStart() {
         mainScene = new Scene(PANE_2, HEIGHT, WIDTH);
 
-
         new DrawPanelBackground(PANE, HEIGHT, WIDTH, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
         foodType = randInt(FOOD_COUNT);
         poisonType = randInt(POISON_COUNT);
@@ -222,6 +221,7 @@ public class SnakeEngine extends Application {
         muteBtn.setX(WIDTH - muteBtn.getFitXY() - TILE_SIZE/1.5);
         muteBtn.setY(PANEL_REALSTATE/12.0);
         muteBtn.setPane(PANE_2);
+
 
 
     }

@@ -19,6 +19,7 @@ public class Buttons extends ImageView {
 
     private double fitXY;
     private Pane pane;
+    private final SoundsManager soundsManager = new SoundsManager();
 
     public Pane getPane() {
         return pane;
@@ -145,6 +146,7 @@ public class Buttons extends ImageView {
 
     public void mouseEffects(){
         setOnMouseEntered(inEvent -> {
+            soundsManager.playHoverSound();
             setFitWidth(getFitWidth() + swellSize);
             setFitHeight(getFitHeight() + swellSize);
             setEffect(new Glow(0.5));
@@ -172,6 +174,7 @@ public class Buttons extends ImageView {
         double originalFitHeight = this.getFitHeight();
         double wobbleSize = 10;
 
+        soundsManager.playClickSound();
         // Create a timeline for the wobbling animation
         Timeline wobbleAnimation = new Timeline();
 

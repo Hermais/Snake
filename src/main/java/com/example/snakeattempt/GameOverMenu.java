@@ -149,6 +149,7 @@ public class GameOverMenu {
         gameOverPanel.setFitHeight(gameOverPanelSizeY);
         gameOverButtonsY = gameOverPanel.getY() + gameOverPanel.getY()*0.5 - 0.5* gameOverButtonsFit;
 
+
         pane.getChildren().add(gameOverPanel);
     }
 
