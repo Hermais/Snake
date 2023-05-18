@@ -26,6 +26,7 @@ public class MainMenu {
     private Buttons infoBtn;
     private Buttons exitBtn;
 
+
     private  double commonYButtons ;
 
     private final double gameStartButtonsFit = 2*TILE_SIZE;
@@ -259,6 +260,7 @@ public class MainMenu {
         exitBtn = new Buttons("/images/exitBtn.png", panelSizeX / 6, pane);
         exitBtn.setX(mainPanel.getX() + panelSizeX * 3/4.0  - gameStartButtonsFit/ 2.0);
         exitBtn.setY(commonYButtons);
+
 
     }
 

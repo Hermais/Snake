@@ -10,6 +10,7 @@ public class GameOver {
 
 
     private final GameOverMenu gameOverMenu;
+
     GameOver(){
 
         timeline.pause();
@@ -24,6 +25,7 @@ public class GameOver {
     }
 
     public void blurPANE(){
+
         PANE.setEffect(new GaussianBlur(10));
     }
 

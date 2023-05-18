@@ -11,8 +11,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.Random;
+import javafx.scene.media.*;
 
 // OBJECTIVE: Clean the code by making multiple classes.
 
@@ -75,8 +75,10 @@ public class SnakeEngine extends Application {
             menuSizeY, PANEL_REALSTATE, logoSizeX, logoSizeY, PANE_2);
 
     public Snake snake = new Snake(snakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
+    public SoundsManager soundsManager = new SoundsManager();
 
-
+    Buttons muteBtn = new Buttons("/images/soundsBtn.png", PANEL_REALSTATE/1.4);
+    public boolean isMute = false;
 
 
 
@@ -99,6 +101,27 @@ public class SnakeEngine extends Application {
         mainStage.getIcons().add(new Image(getClass().getResource("/images/stageIcon.png").toExternalForm()));
         mainStage.show();
 
+
+        soundsManager.playMainMusic();
+
+
+
+        muteBtn.setOnMouseClicked(eventMute -> {
+            muteBtn.wobbleAnimation();
+
+            muteBtn.setImage(new Image(
+                    getClass().getResource(
+                            !isMute ? "/images/soundsMuteBtn.png":"/images/soundsBtn.png").toExternalForm()));
+
+            if(isMute)
+                soundsManager.playMainMusic();
+
+            if(!isMute)
+                soundsManager.stopMainMusic();
+
+            isMute = !isMute;
+
+        });
 
         mainMenu.getExitBtn().setOnMouseClicked(exit -> {
             mainMenu.getExitBtn().wobbleAnimation();
@@ -131,6 +154,7 @@ public class SnakeEngine extends Application {
                 PauseTransition delay = new PauseTransition(Duration.seconds(0.3)); // Adjust the delay duration as needed
                 delay.setOnFinished(delayEvent -> {
 
+
                     PANE_2.getChildren().removeAll(mainMenu.getMainPanel(),mainMenu.getLogo());
 
                     mainMenu.getStartBtn().removeBtnFromCurrentPane(PANE_2);
@@ -145,6 +169,8 @@ public class SnakeEngine extends Application {
             });
 
             fadingTimeline.play();
+
+
 
 
 
@@ -192,6 +218,10 @@ public class SnakeEngine extends Application {
 
 
         PANE.setEffect(new GaussianBlur(blurValue));
+        muteBtn.setX(WIDTH - muteBtn.getFitXY() - TILE_SIZE/1.5);
+        muteBtn.setY(PANEL_REALSTATE/12.0);
+        muteBtn.setPane(PANE_2);
+
 
     }
 
@@ -393,10 +423,6 @@ public class SnakeEngine extends Application {
             bodyParts[i].setRotate(-90);
         }
     }
-
-
-
-
 
 
 
