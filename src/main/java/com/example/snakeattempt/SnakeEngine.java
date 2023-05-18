@@ -59,6 +59,7 @@ public class SnakeEngine extends Application {
     public static int foodType;
     public static int poisonType;
     public static int snakeBodyPartsCount = 3;
+    public static int initialSnakeBodyPartsCount = 3;
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
 
@@ -74,7 +75,7 @@ public class SnakeEngine extends Application {
     public MainMenu mainMenu = new MainMenu( HEIGHT, WIDTH, menuSizeX,
             menuSizeY, PANEL_REALSTATE, logoSizeX, logoSizeY, PANE_2);
 
-    public Snake snake = new Snake(snakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
+    public static Snake snake = new Snake(initialSnakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
     public SoundsManager soundsManager = new SoundsManager();
 
     Buttons muteBtn = new Buttons("/images/soundsBtn.png", PANEL_REALSTATE/1.4);
@@ -179,7 +180,7 @@ public class SnakeEngine extends Application {
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
-            snake.putSnake(PANE);
+            snake.putSnake(PANE, initialSnakeBodyPartsCount);
 
             // Set up key press event handling
             mainScene.setOnKeyPressed(keyEvent -> {

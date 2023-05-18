@@ -2,6 +2,8 @@ package com.example.snakeattempt;
 
 import javafx.animation.*;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import static com.example.snakeattempt.SnakeEngine.*;
@@ -68,8 +70,16 @@ public class GameOver {
             delay.setOnFinished(removeUIsEvent ->{
                 PANE_2.getChildren().removeAll(gameOverMenu.getGameOverText(), gameOverMenu.getGameOverPanel(), gameOverMenu.getExitBtn(), gameOverMenu.getReplayBtn());
                 PANE.setEffect(new GaussianBlur(0));
-                // Entry Point of the game.
-                // timeline.play();
+
+                snake.removeSnake(PANE, bodyParts, snakeBodyPartsCount);
+                snake.putSnake(PANE, initialSnakeBodyPartsCount);
+                snakeBodyPartsCount = initialSnakeBodyPartsCount;
+                currentDirection = UP;
+
+
+
+
+                timeline.play();
             });
             delay.play();
 
