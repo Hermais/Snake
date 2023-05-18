@@ -64,7 +64,8 @@ public class GameOver {
         gameOverMenu.getReplayBtn().setOnMouseClicked(replayEvent -> {
             gameOverMenu.getReplayBtn().wobbleAnimation();
 
-
+            Score = 0;
+            score.setText("Score = "+Score);
 
 
             PauseTransition delay = new PauseTransition(Duration.seconds(0.5));

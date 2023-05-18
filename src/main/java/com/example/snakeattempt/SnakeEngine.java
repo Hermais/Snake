@@ -9,8 +9,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.util.Arrays;
 import java.util.Random;
 import javafx.scene.media.*;
 
@@ -77,13 +81,17 @@ public class SnakeEngine extends Application {
     public boolean isMute = false;
     public final double pauseTransitionDelay = 0.3;
 
+    public static Text score = new Text();
 
 
 
 
 
 
-    public int Score = 0;
+
+
+
+    public static int Score = 0;
     // Notes: Overlapping method does not work.
 
     @Override
@@ -222,6 +230,8 @@ public class SnakeEngine extends Application {
         muteBtn.setY(PANEL_REALSTATE/12.0);
         muteBtn.setPane(PANE_2);
 
+        score();
+
 
 
     }
@@ -333,11 +343,7 @@ public class SnakeEngine extends Application {
             }
         }
 
-        System.out.println("snakeX: " + initialSnakeHeadX);
-        System.out.println("snakeY: " + initialSnakeHeadY);
-        System.out.println();
-        System.out.println("foodX: " + FOOD[foodType].getX());
-        System.out.println("foodY: " + FOOD[foodType].getY());
+
 
         // Food detection
         if (bodyParts[0].getX() == FOOD[foodType].getX() && bodyParts[0].getY() - TILE_SIZE == FOOD[foodType].getY()) {
@@ -357,7 +363,9 @@ public class SnakeEngine extends Application {
             bodyParts[snakeBodyPartsCount].setX(-WIDTH);
             PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
             Score = snakeBodyPartsCount - 3;
-            System.out.println("/////////////score" + Score);
+            //System.out.println("/////////////score" + Score);
+            score.setText("Score = " + Score);
+
             foodType = randInt(FOOD_COUNT);
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
         }
@@ -371,6 +379,8 @@ public class SnakeEngine extends Application {
             }
             snakeBodyPartsCount -= 3;
             // Snake dies if it's only a head.
+            Score--;
+            score.setText("Score = " + Score);
 
             if(snakeBodyPartsCount < 1)
                 new GameOver();
@@ -423,6 +433,15 @@ public class SnakeEngine extends Application {
             bodyParts[i].setX(bodyParts[i].getX() - snakeSpeedTilesPerIncrement);
             bodyParts[i].setRotate(-90);
         }
+    }
+
+    public void score(){
+        score.setX(5 * TILE_SIZE);
+        score.setY(TILE_SIZE);
+        score.setText("Score = " + Score);
+        score.setFont(Font.font("Permanent Marker"));
+
+        PANE.getChildren().add(score);
     }
 
 
