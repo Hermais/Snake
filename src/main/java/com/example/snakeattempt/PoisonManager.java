@@ -98,10 +98,27 @@ public class PoisonManager {
         // fitting POISON
         POISON[poisonType].setFitHeight(fitSize);
         POISON[poisonType].setFitWidth(fitSize);
+
         POISON[poisonType].setX(new Random(System.currentTimeMillis()).nextInt(1, squareDivisionNum - 1) * fitSize);
         POISON[poisonType].setY(
                 (new Random(System.currentTimeMillis()).nextInt(upperYMargin / fitSize, squareDivisionNum - 2) * fitSize)
         );
+        if(POISON[poisonType].getX()==new Snake().getSnakeSegSizeXY()){
+            POISON[poisonType]=null;
+
+            POISON[poisonType] = new ImageView(poisonImage);
+
+            // fitting POISON
+            POISON[poisonType].setFitHeight(fitSize);
+            POISON[poisonType].setFitWidth(fitSize);
+
+            POISON[poisonType].setX(new Random(System.currentTimeMillis()).nextInt(1, squareDivisionNum - 1) * fitSize);
+            POISON[poisonType].setY(
+                    (new Random(System.currentTimeMillis()).nextInt(upperYMargin / fitSize, squareDivisionNum - 2) * fitSize)
+            );
+
+
+        }
 
         pane.getChildren().add(POISON[poisonType]);
 

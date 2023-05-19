@@ -109,7 +109,6 @@ public class SnakeEngine extends Application {
         soundsManager.playMainMusic();
 
 
-
         muteBtn.setOnMouseClicked(eventMute -> {
             muteBtn.wobbleAnimation();
 
@@ -188,7 +187,8 @@ public class SnakeEngine extends Application {
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
-            snake.putSnake(PANE, initialSnakeBodyPartsCount);
+            snake.putSnake(PANE,initialSnakeBodyPartsCount);
+
 
             // Set up key press event handling
             mainScene.setOnKeyPressed(keyEvent -> {
@@ -212,6 +212,7 @@ public class SnakeEngine extends Application {
             timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> runSnake()));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
+
         });
     }
 
@@ -352,6 +353,11 @@ public class SnakeEngine extends Application {
             // playEatSound(); to be implemented.
             FOOD[foodType].setImage(null);
 
+            for(int i=0;i<2;i++) {
+                soundsManager.playEatSound(i);
+            }
+
+
             // Anton:
             // Add snake body segment
             snakeBodyPartsCount++;
@@ -375,6 +381,8 @@ public class SnakeEngine extends Application {
         if (bodyParts[0].getX() == POISON[poisonType].getX() && bodyParts[0].getY() - TILE_SIZE == POISON[poisonType].getY()){
             System.out.println("Poison is consumed.");
             POISON[poisonType].setImage(null);
+
+            soundsManager.playPoisonSound();
 
             if(snakeBodyPartsCount > 4){
                 for(int i=0; i<3; i++){
@@ -420,6 +428,8 @@ public class SnakeEngine extends Application {
             snakeBodyPartsCount-=count;
         }
         }
+
+
 
 
         PANE.requestFocus();

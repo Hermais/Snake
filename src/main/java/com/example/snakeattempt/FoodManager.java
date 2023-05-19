@@ -8,6 +8,9 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
+import static com.example.snakeattempt.SnakeEngine.TILE_SIZE;
+import static com.example.snakeattempt.SnakeEngine.bodyParts;
+
 
 public class FoodManager {
     // Why no setters and getters? This game's constants are needed everywhere and shared between all classes.
@@ -21,8 +24,8 @@ public class FoodManager {
             "/images/mushroomG.png"};
 
     private Pane pane;
-    private int foodType;
-    private ImageView[] FOOD;
+    private static int foodType;
+    private static ImageView[] FOOD;
     private int fitSize;
     private int upperYMargin;
     private int squareDivisionNum;
@@ -75,7 +78,7 @@ public class FoodManager {
         this.squareDivisionNum = squareDivisionNum;
     }
 
-    FoodManager(){
+    FoodManager() {
 
 
     }
@@ -92,7 +95,7 @@ public class FoodManager {
 
     }
 
-    public void prepFoodImg(int foodType){
+    public void prepFoodImg(int foodType) {
         //FOOD Image
         Image foodImage = new Image(getClass().getResource(foodImages[foodType]
         ).toExternalForm());
@@ -108,10 +111,9 @@ public class FoodManager {
         pane.getChildren().add(FOOD[foodType]);
 
 
-
     }
 
-    public void animateFood(){
+    public void animateFood() {
         // Just an animation
         TranslateTransition translateTransition = new TranslateTransition();
         translateTransition.setNode(FOOD[foodType]);
@@ -122,6 +124,7 @@ public class FoodManager {
         translateTransition.play();
 
     }
+
 
 
 }

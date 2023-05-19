@@ -3,23 +3,28 @@ package com.example.snakeattempt;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+import static com.example.snakeattempt.SnakeEngine.*;
+
 public class SoundsManager {
 
-    private static final int MAX_FILES = 7;
+    private static final int MAX_FILES = 9;
     private static final String[] SOUND_DIRECTORIES = {
-            "/sounds/Music.mp3",
+            "/sounds/Menu Music2.mp3",
             "/sounds/hoverSound.mp3",
             "/sounds/clickSound.mp3",
             "/sounds/panelShowing.mp3",
             "/sounds/eat1.mp3",
             "/sounds/eat2.mp3",
-            "/sounds/eat3.mp3"
+            "/sounds/eat3.mp3",
+            "/sounds/game over.wav",
+            "/sounds/poison2.mp3"
     };
 
     private final Media[] media = new Media[MAX_FILES];
     private final MediaPlayer music;
     private final MediaPlayer[] buttonSound = new MediaPlayer[2];
-    private final MediaPlayer[] eatingSounds = new MediaPlayer[3];
+    private static final MediaPlayer[] eatingSounds = new MediaPlayer[3];
+    private  static final MediaPlayer[] poisonSound=new MediaPlayer[1];
     private final MediaPlayer panelSound;
 
     SoundsManager() {
@@ -36,13 +41,14 @@ public class SoundsManager {
         buttonSound[1] = new MediaPlayer(media[2]);
 
         // prepare panelSound
-        panelSound = new MediaPlayer(media[3]);
+        panelSound = new MediaPlayer(media[7]);
         panelSound.setCycleCount(1);
 
         // prepare eating sounds
         eatingSounds[0] = new MediaPlayer(media[4]);
         eatingSounds[1] = new MediaPlayer(media[5]);
         eatingSounds[2] = new MediaPlayer(media[6]);
+        poisonSound[0]=new MediaPlayer(media[8]);
     }
 
     public void playMainMusic() {
@@ -65,12 +71,15 @@ public class SoundsManager {
         stopAndPlay(panelSound);
     }
 
-    public void playEatSound(int i) {
+    public  void playEatSound(int i) {
         stopAndPlay(eatingSounds[i]);
     }
+    public  void playPoisonSound (){stopAndPlay(poisonSound[0]);}
+    private  void stopAndPlay(MediaPlayer mediaPlayer) {
 
-    private void stopAndPlay(MediaPlayer mediaPlayer) {
-        mediaPlayer.stop();
+         mediaPlayer.stop();
         mediaPlayer.play();
     }
+
+
 }
