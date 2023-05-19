@@ -384,8 +384,8 @@ public class SnakeEngine extends Application {
 
             soundsManager.playPoisonSound();
 
-            if(snakeBodyPartsCount > 4){
-                for(int i=0; i<3; i++){
+           if(snakeBodyPartsCount > 3){
+              for(int i=0; i<3; i++){
                     bodyParts[snakeBodyPartsCount - i].setImage(null);
                 }
                 snakeBodyPartsCount -= 3;
@@ -393,11 +393,13 @@ public class SnakeEngine extends Application {
             }
 
             else{
-                for(int i=0; i<1; i++){
-                    bodyParts[snakeBodyPartsCount - i].setImage(null);
-                }
-                snakeBodyPartsCount -= 1;
+//                for(int i=0; i<1; i++){
+//                    bodyParts[snakeBodyPartsCount - i].setImage(null);
+//                }
+//                snakeBodyPartsCount -= 1;
+               new GameOver();
             }
+
 
             // Snake dies if it's only a head.
             Score--;
