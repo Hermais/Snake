@@ -82,6 +82,9 @@ public class SnakeEngine extends Application {
     public final double pauseTransitionDelay = 0.3;
 
     public static Text score = new Text();
+    public static int poisonCounter = 0;
+    public static int invertedCounter = 0;
+
 
 
 
@@ -193,18 +196,35 @@ public class SnakeEngine extends Application {
             // Set up key press event handling
             mainScene.setOnKeyPressed(keyEvent -> {
                 KeyCode keyCode = keyEvent.getCode();
-                if (keyCode == KeyCode.UP || keyCode == KeyCode.W) {
-                    if (currentDirection != DOWN)
-                        currentDirection = UP;
-                } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S) {
-                    if (currentDirection != UP)
-                        currentDirection = DOWN;
-                } else if (keyCode == KeyCode.RIGHT || keyCode == KeyCode.D) {
-                    if (currentDirection != LEFT)
-                        currentDirection = RIGHT;
-                } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
-                    if (currentDirection != RIGHT)
-                        currentDirection = LEFT;
+                if(invertedCounter < 1) {
+                    if (keyCode == KeyCode.UP || keyCode == KeyCode.W) {
+                        if (currentDirection != DOWN)
+                            currentDirection = UP;
+                    } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S) {
+                        if (currentDirection != UP)
+                            currentDirection = DOWN;
+                    } else if (keyCode == KeyCode.RIGHT || keyCode == KeyCode.D) {
+                        if (currentDirection != LEFT)
+                            currentDirection = RIGHT;
+                    } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
+                        if (currentDirection != RIGHT)
+                            currentDirection = LEFT;
+                    }
+                }
+                else {
+                    if (keyCode == KeyCode.UP || keyCode == KeyCode.W) {
+                        if (currentDirection != UP)
+                            currentDirection = DOWN;
+                    } else if (keyCode == KeyCode.DOWN || keyCode == KeyCode.S) {
+                        if (currentDirection != DOWN)
+                            currentDirection = UP;
+                    } else if (keyCode == KeyCode.RIGHT || keyCode == KeyCode.D) {
+                        if (currentDirection != RIGHT)
+                            currentDirection = LEFT;
+                    } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
+                        if (currentDirection != LEFT)
+                            currentDirection = RIGHT;
+                    }
                 }
             });
 
@@ -268,53 +288,53 @@ public class SnakeEngine extends Application {
     public void runSnake() {
 
 
-        // Anton:
-        // Update snake direction
-        switch (currentDirection) {
-            case UP -> {
+            // Anton:
+            // Update snake direction
+            switch (currentDirection) {
+                case UP -> {
 
-                for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    moveY(true, i);
-                    if (i != 0) {
-                        bodyParts[i].setX(bodyParts[i - 1].getX());
-                        bodyParts[i].setY(bodyParts[i - 1].getY());
+                    for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                        moveY(true, i);
+                        if (i != 0) {
+                            bodyParts[i].setX(bodyParts[i - 1].getX());
+                            bodyParts[i].setY(bodyParts[i - 1].getY());
+                        }
+
+                    }
+                }
+                case DOWN -> {
+                    for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                        moveY(false, i);
+                        if (i != 0) {
+                            bodyParts[i].setX(bodyParts[i - 1].getX());
+                            bodyParts[i].setY(bodyParts[i - 1].getY());
+                        }
+                    }
+                }
+                case RIGHT -> {
+                    for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                        moveX(true, i);
+                        if (i != 0) {
+                            bodyParts[i].setX(bodyParts[i - 1].getX());
+                            bodyParts[i].setY(bodyParts[i - 1].getY());
+                        }
+
+                    }
+                }
+                case LEFT -> {
+                    for (int i = snakeBodyPartsCount; i >= 0; i--) {
+                        moveX(false, i);
+                        if (i != 0) {
+                            bodyParts[i].setX(bodyParts[i - 1].getX());
+                            bodyParts[i].setY(bodyParts[i - 1].getY());
+                        }
+
                     }
 
                 }
-            }
-            case DOWN -> {
-                for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    moveY(false, i);
-                    if (i != 0) {
-                        bodyParts[i].setX(bodyParts[i - 1].getX());
-                        bodyParts[i].setY(bodyParts[i - 1].getY());
-                    }
-                }
-            }
-            case RIGHT -> {
-                for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    moveX(true, i);
-                    if (i != 0) {
-                        bodyParts[i].setX(bodyParts[i - 1].getX());
-                        bodyParts[i].setY(bodyParts[i - 1].getY());
-                    }
+                default -> {
 
                 }
-            }
-            case LEFT -> {
-                for (int i = snakeBodyPartsCount; i >= 0; i--) {
-                    moveX(false, i);
-                    if (i != 0) {
-                        bodyParts[i].setX(bodyParts[i - 1].getX());
-                        bodyParts[i].setY(bodyParts[i - 1].getY());
-                    }
-
-                }
-
-            }
-            default -> {
-
-            }
         }
 
 
@@ -361,6 +381,9 @@ public class SnakeEngine extends Application {
             // Anton:
             // Add snake body segment
             snakeBodyPartsCount++;
+            //to invert back to normal
+            if(invertedCounter>0){invertedCounter--;}
+
             bodyParts[snakeBodyPartsCount] = new ImageView(
                     new Image(getClass().getResource(
                             "/images/snakeBodySegments.png").toExternalForm()));
@@ -393,10 +416,6 @@ public class SnakeEngine extends Application {
             }
 
             else{
-//                for(int i=0; i<1; i++){
-//                    bodyParts[snakeBodyPartsCount - i].setImage(null);
-//                }
-//                snakeBodyPartsCount -= 1;
                new GameOver();
             }
 
@@ -410,6 +429,12 @@ public class SnakeEngine extends Application {
 
 
             }
+            if(poisonType == 0){
+                poisonCounter++;
+            }
+            if(poisonType == 1){
+                invertedCounter += 2;
+            }
 
             poisonType = randInt(POISON_COUNT);
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
@@ -417,6 +442,9 @@ public class SnakeEngine extends Application {
 
 
         }
+
+        //indicating if the snake is poisonous
+        //if(poisonCounter>2){score.setText("P,Score = " + Score);}
         ///////////////
         int count=0;
         for (int i=1;i<=snakeBodyPartsCount;i++){
