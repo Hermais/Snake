@@ -462,10 +462,11 @@ public class SnakeEngine extends Application {
     }
 
     public void score(){
-        score.setX(5 * TILE_SIZE);
-        score.setY(TILE_SIZE);
+        score.setX(WIDTH/2.0 - TILE_SIZE*3);
+        score.setY(TILE_SIZE*1.5);
         score.setText("Score = " + Score);
-        score.setFont(Font.font("Permanent Marker"));
+        score.setFont(Font.font("Bauhaus 93", TILE_SIZE*2));
+
 
         PANE.getChildren().add(score);
     }
