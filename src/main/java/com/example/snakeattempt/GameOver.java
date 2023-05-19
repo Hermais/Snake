@@ -16,6 +16,7 @@ public class GameOver {
     GameOver(){
 
         timeline.pause();
+        soundsManager.stopMainMusic();
 
 
         blurPANE();
@@ -84,6 +85,8 @@ public class GameOver {
                 timeline.play();
             });
             delay.play();
+            soundsManager.playMainMusic();
+            invertedCounter = 0;
 
 
 
