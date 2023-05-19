@@ -52,7 +52,6 @@ public class Snake {
 
     public Snake(int snakeInitBodySegments, ImageView[] snake, double snakeSegSizeXY, double initHeadX, double initHeadY) {
         Snake = snake;
-        temp = snakeSegSizeXY;
         this.snakeInitBodySegments = snakeInitBodySegments;
         this.snakeSegSizeXY = snakeSegSizeXY;
         this.initHeadX = initHeadX;
@@ -62,6 +61,9 @@ public class Snake {
     }
 
     public ImageView[] putSnake(Pane pane, int initialSnakeBodyPartsCount){
+        temp = snakeSegSizeXY;
+
+
             for(int i = 0; i <= snakeInitBodySegments; i++) {
                 Snake[i] = new ImageView(new Image(getClass().getResource(
                         i == 0 ? "/images/snakeHeadG.png" : "/images/snakeBodySegments.png").toExternalForm())
@@ -81,7 +83,7 @@ public class Snake {
         }
 
         public void removeSnake(Pane pane, ImageView[] removerVar, int snakeBodyPartsCount){
-            for(int i = 0; i <= snakeInitBodySegments; i++) {
+            for(int i = 0; i <= snakeBodyPartsCount; i++) {
 
                 pane.getChildren().remove(removerVar[i]);
 
