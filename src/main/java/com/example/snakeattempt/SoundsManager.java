@@ -58,6 +58,12 @@ public class SoundsManager {
     public void stopMainMusic() {
         music.stop();
     }
+    public void playMusic(boolean play){
+        if(play)
+            playMainMusic();
+        else
+            stopMainMusic();
+    }
 
     public void playHoverSound() {
         stopAndPlay(buttonSound[0]);

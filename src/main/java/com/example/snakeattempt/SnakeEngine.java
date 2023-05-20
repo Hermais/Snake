@@ -8,6 +8,7 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -118,6 +119,19 @@ public class SnakeEngine extends Application {
         soundsManager.playMainMusic();
 
 
+
+
+        mainMenu.getInfoBtn().setOnMouseClicked(infoEvent -> {
+            mainMenu.getInfoBtn().wobbleAnimation();
+            PauseTransition delay = new PauseTransition(Duration.seconds(pauseTransitionDelay));
+            delay.setOnFinished(delayEvent -> {
+                new Info(PANE_2, TILE_SIZE, HEIGHT, WIDTH, TILE_COUNT);
+
+
+            });
+            delay.play();
+        });
+
         muteBtn.setOnMouseClicked(eventMute -> {
             muteBtn.wobbleAnimation();
 
@@ -215,6 +229,10 @@ public class SnakeEngine extends Application {
                     } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
                         if (currentDirection != RIGHT)
                             currentDirection = LEFT;
+                    }else if(keyCode == KeyCode.M){
+                        isMute = !isMute;
+                        soundsManager.playMusic(!isMute);
+
                     }
                 }
                 else {
@@ -230,6 +248,10 @@ public class SnakeEngine extends Application {
                     } else if (keyCode == KeyCode.LEFT || keyCode == KeyCode.A) {
                         if (currentDirection != LEFT)
                             currentDirection = RIGHT;
+                    }else if(keyCode == KeyCode.M){
+                        isMute = !isMute;
+                        soundsManager.playMusic(!isMute);
+
                     }
                 }
             });
