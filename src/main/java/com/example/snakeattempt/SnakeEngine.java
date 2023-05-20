@@ -379,28 +379,34 @@ public class SnakeEngine extends Application {
             FOOD[foodType].setImage(null);
 
                 soundsManager.playEatSound(randInt(2));
-
-
-            // Anton:
-            // Add snake body segment
-            snakeBodyPartsCount++;
             //to invert back to normal
             if(invertedCounter>0){invertedCounter--;}
 
-            if(poisoned == false) {
-                bodyParts[snakeBodyPartsCount] = new ImageView(
-                        new Image(getClass().getResource(
-                                "/images/snakeBodySegments.png").toExternalForm()));
-            }else{
-                bodyParts[snakeBodyPartsCount] = new ImageView(
-                        new Image(getClass().getResource(
-                                "/images/snakeBodySegmentsGreen.png").toExternalForm()));
+            // Anton:
+            // Add snake body segment
+            for(int i=0;i<2;i++) {
+                snakeBodyPartsCount++;
+
+
+                if (poisoned == false) {
+                    bodyParts[snakeBodyPartsCount] = new ImageView(
+                            new Image(getClass().getResource(
+                                    "/images/snakeBodySegments.png").toExternalForm()));
+                } else {
+                    bodyParts[snakeBodyPartsCount] = new ImageView(
+                            new Image(getClass().getResource(
+                                    "/images/snakeBodySegmentsGreen.png").toExternalForm()));
+                }
+
+
+                bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
+                bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
+                bodyParts[snakeBodyPartsCount].setX(-WIDTH);
+                PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
+                if(poisonous == false){break;}
             }
 
-            bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
-            bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
-            bodyParts[snakeBodyPartsCount].setX(-WIDTH);
-            PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
+
             Score = snakeBodyPartsCount - initialSnakeBodyPartsCount;
             //System.out.println("/////////////score" + Score);
             score.setText("Score = " + Score);
@@ -417,13 +423,40 @@ public class SnakeEngine extends Application {
 
             soundsManager.playPoisonSound();
 
-           if(snakeBodyPartsCount > 3){
+           if(snakeBodyPartsCount > 3 && poisonous == false){
               for(int i=0; i<3; i++){
                     bodyParts[snakeBodyPartsCount - i].setImage(null);
                 }
                 snakeBodyPartsCount -= 3;
 
             }
+           else if(poisonous == true && poisonType !=2){
+               for(int i=0; i<3; i++){
+                   bodyParts[snakeBodyPartsCount - i].setImage(null);
+               }
+               snakeBodyPartsCount -= 3;
+
+           }
+           else if(poisonous == true && poisonType ==2){
+               snakeBodyPartsCount++;
+
+
+               if(poisoned == false) {
+                   bodyParts[snakeBodyPartsCount] = new ImageView(
+                           new Image(getClass().getResource(
+                                   "/images/snakeBodySegments.png").toExternalForm()));
+               }else{
+                   bodyParts[snakeBodyPartsCount] = new ImageView(
+                           new Image(getClass().getResource(
+                                   "/images/snakeBodySegmentsGreen.png").toExternalForm()));
+               }
+
+
+               bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
+               bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
+               bodyParts[snakeBodyPartsCount].setX(-WIDTH);
+               PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
+           }
 
             else{
                // Snake dies if it's only a head.
@@ -451,6 +484,7 @@ public class SnakeEngine extends Application {
             if(poisoned == true && poisonous == false){
                 snake.removeSnake(PANE, bodyParts,snakeBodyPartsCount);
                 snake.putSnake(PANE, snakeBodyPartsCount-3);
+                snakeBodyPartsCount = initialSnakeBodyPartsCount;
                 poisonous = true;
             }
             if(poisonType == 1){
@@ -459,6 +493,7 @@ public class SnakeEngine extends Application {
 
             poisonType = randInt(POISON_COUNT);
             //poisonType =0;
+            //if(poisonous == true){poisonType = 2;}
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
 
