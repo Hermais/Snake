@@ -458,7 +458,7 @@ public class SnakeEngine extends Application {
             }
 
             poisonType = randInt(POISON_COUNT);
-            poisonType =0;
+            //poisonType =0;
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
 
