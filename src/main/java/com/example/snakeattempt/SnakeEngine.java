@@ -3,6 +3,7 @@ package com.example.snakeattempt;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -83,6 +84,9 @@ public class SnakeEngine extends Application {
 
     public static Text score = new Text();
     public static int poisonCounter = 0;
+    public static boolean poisoned = false;
+    public static boolean poisonous = false;
+
     public static int invertedCounter = 0;
 
 
@@ -384,9 +388,16 @@ public class SnakeEngine extends Application {
             //to invert back to normal
             if(invertedCounter>0){invertedCounter--;}
 
-            bodyParts[snakeBodyPartsCount] = new ImageView(
-                    new Image(getClass().getResource(
-                            "/images/snakeBodySegments.png").toExternalForm()));
+            if(poisoned == false) {
+                bodyParts[snakeBodyPartsCount] = new ImageView(
+                        new Image(getClass().getResource(
+                                "/images/snakeBodySegments.png").toExternalForm()));
+            }else{
+                bodyParts[snakeBodyPartsCount] = new ImageView(
+                        new Image(getClass().getResource(
+                                "/images/snakeBodySegmentsGreen.png").toExternalForm()));
+            }
+
             bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
             bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
             bodyParts[snakeBodyPartsCount].setX(-WIDTH);
@@ -416,35 +427,46 @@ public class SnakeEngine extends Application {
             }
 
             else{
+               // Snake dies if it's only a head.
                new GameOver();
             }
 
 
-            // Snake dies if it's only a head.
+
             Score--;
             score.setText("Score = " + Score);
-            // ??
+
             if(snakeBodyPartsCount < 1){
                 new GameOver();
-
-
             }
+
             if(poisonType == 0){
                 poisonCounter++;
+            }
+
+            if(poisonCounter > 2 && poisoned==false && poisonous == false){
+                //change the snake body segments color
+                poisoned = true;
+            }
+
+            if(poisoned == true && poisonous == false){
+                snake.removeSnake(PANE, bodyParts,snakeBodyPartsCount);
+                snake.putSnake(PANE, snakeBodyPartsCount-3);
+                poisonous = true;
             }
             if(poisonType == 1){
                 invertedCounter += 2;
             }
 
             poisonType = randInt(POISON_COUNT);
+            poisonType =0;
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
 
 
         }
 
-        //indicating if the snake is poisonous
-        //if(poisonCounter>2){score.setText("P,Score = " + Score);}
+
         ///////////////
         int count=0;
         for (int i=1;i<=snakeBodyPartsCount;i++){

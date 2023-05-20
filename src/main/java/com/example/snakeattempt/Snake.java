@@ -6,6 +6,8 @@ import javafx.scene.layout.Pane;
 
 import java.util.Arrays;
 
+import static com.example.snakeattempt.SnakeEngine.poisoned;
+
 
 public class Snake {
 
@@ -60,21 +62,30 @@ public class Snake {
 
     }
 
+
     public ImageView[] putSnake(Pane pane, int initialSnakeBodyPartsCount){
         temp = snakeSegSizeXY;
 
 
             for(int i = 0; i <= snakeInitBodySegments; i++) {
-                Snake[i] = new ImageView(new Image(getClass().getResource(
-                        i == 0 ? "/images/snakeHeadG.png" : "/images/snakeBodySegments.png").toExternalForm())
-                );
-                Snake[i].setFitHeight(snakeSegSizeXY);
-                Snake[i].setFitWidth(snakeSegSizeXY);
-                Snake[i].setX(initHeadX);
-                Snake[i].setY(initHeadX + temp);
+                if (poisoned==false) {
+                    Snake[i] = new ImageView(new Image(getClass().getResource(
+                            i == 0 ? "/images/snakeHeadG.png" : "/images/snakeBodySegments.png").toExternalForm())
+                    );
+                }
+                else if(poisoned ==true){
+                    Snake[i] = new ImageView(new Image(getClass().getResource(
+                            i == 0 ? "/images/snakeHeadGreenG.png" : "/images/snakeBodySegmentsGreen.png").toExternalForm())
+                    );
+                }
+                    Snake[i].setFitHeight(snakeSegSizeXY);
+                    Snake[i].setFitWidth(snakeSegSizeXY);
+                    Snake[i].setX(initHeadX);
+                    Snake[i].setY(initHeadX + temp);
 
-                temp += snakeSegSizeXY;
-                pane.getChildren().add(Snake[i]);
+                    temp += snakeSegSizeXY;
+                    pane.getChildren().add(Snake[i]);
+
 
             }
 
