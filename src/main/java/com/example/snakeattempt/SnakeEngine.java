@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -552,7 +553,7 @@ public class SnakeEngine extends Application {
         score.setY(TILE_SIZE*1.5);
         score.setText("Score = " + Score);
         score.setFont(Font.font("Bauhaus 93", TILE_SIZE*2));
-
+        score.setFill(Color.web("7C5B2A"));
 
         PANE.getChildren().add(score);
     }
