@@ -20,7 +20,6 @@ public class Snake {
         private double initHeadX;
         private double initHeadY;
 
-        public boolean putSnake;
 
     public double getSnakeSegSizeXY() {
         return snakeSegSizeXY;

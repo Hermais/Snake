@@ -219,15 +219,7 @@ public class MainMenu {
         mainPanel.setFitWidth(panelSizeX);
         mainPanel.setFitHeight(menuSizeY);
 
-
-
-
-
-
         pane.getChildren().addAll(mainPanel);
-
-
-
 
     }
     public void drawMainMenuLogo() {

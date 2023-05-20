@@ -44,21 +44,20 @@ public class SnakeEngine extends Application {
 
 
     public static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    public static final int GAME_SPEED = 120;// Actually lower values give higher speeds.
+    public static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
     public static final int borderForSnake = TILE_SIZE;
     public static final int UP = 0;
     public static final int DOWN = 1;
     public static final int RIGHT = 2;
     public static final int LEFT = 3;
 
-    // public static ImageView snakeHead;
     public static int currentDirection = UP;
     public static final double initialSnakeHeadX = TILE_SIZE * (TILE_COUNT / 2.0);
     public static final double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2.0);
     public static int foodType;
     public static int poisonType;
-    public static int snakeBodyPartsCount = 3;
-    public static int initialSnakeBodyPartsCount = 3;
+    public static final int initialSnakeBodyPartsCount = 1;
+    public static int snakeBodyPartsCount = initialSnakeBodyPartsCount;
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];
 
@@ -71,6 +70,8 @@ public class SnakeEngine extends Application {
     public static int blurValue = 20;
     public static Timeline timeline;
     public static Stage mainStage;
+
+
     public MainMenu mainMenu = new MainMenu( HEIGHT, WIDTH, menuSizeX,
             menuSizeY, PANEL_REALSTATE, logoSizeX, logoSizeY, PANE_2);
 
@@ -357,9 +358,9 @@ public class SnakeEngine extends Application {
                 FOOD[foodType].setImage(null);
                 foodType = randInt(FOOD_COUNT);
                 new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
-                System.out.println("Overlapping detected!");
+                // System.out.println("Overlapping detected!");
             } else {
-                System.out.println("No overlapping.");
+                // System.out.println("No overlapping.");
                 break;
             }
         }
@@ -369,13 +370,11 @@ public class SnakeEngine extends Application {
         // Food detection
         if (bodyParts[0].getX() == FOOD[foodType].getX() && bodyParts[0].getY() - TILE_SIZE == FOOD[foodType].getY()) {
             // Collision with FOOD detected
-            System.out.println("Food is eaten.");
+            // System.out.println("Food is eaten.");
             // playEatSound(); to be implemented.
             FOOD[foodType].setImage(null);
 
-            for(int i=0;i<2;i++) {
-                soundsManager.playEatSound(i);
-            }
+                soundsManager.playEatSound(randInt(2));
 
 
             // Anton:
@@ -391,7 +390,7 @@ public class SnakeEngine extends Application {
             bodyParts[snakeBodyPartsCount].setFitWidth(TILE_SIZE);
             bodyParts[snakeBodyPartsCount].setX(-WIDTH);
             PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
-            Score = snakeBodyPartsCount - 3;
+            Score = snakeBodyPartsCount - initialSnakeBodyPartsCount;
             //System.out.println("/////////////score" + Score);
             score.setText("Score = " + Score);
 
@@ -492,7 +491,7 @@ public class SnakeEngine extends Application {
     }
 
     public void score(){
-        score.setX(WIDTH/2.0 - TILE_SIZE*3);
+        score.setX(WIDTH/8.0 - TILE_SIZE);
         score.setY(TILE_SIZE*1.5);
         score.setText("Score = " + Score);
         score.setFont(Font.font("Bauhaus 93", TILE_SIZE*2));
