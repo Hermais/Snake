@@ -87,7 +87,8 @@ public class GameOver {
                 timeline.play();
             });
             delay.play();
-            // soundsManager.playMainMusic();
+            if(!isMute)
+                soundsManager.playMainMusic();
             invertedCounter = 0;
 
 

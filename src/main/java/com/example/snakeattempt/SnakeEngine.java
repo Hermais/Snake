@@ -80,7 +80,7 @@ public class SnakeEngine extends Application {
     public static SoundsManager soundsManager = new SoundsManager();
 
     Buttons muteBtn = new Buttons("/images/soundsBtn.png", PANEL_REALSTATE/1.4);
-    public boolean isMute = false;
+    public static boolean isMute = false;
     public final double pauseTransitionDelay = 0.3;
 
     public static Text score = new Text();
