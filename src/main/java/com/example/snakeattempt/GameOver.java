@@ -16,6 +16,7 @@ public class GameOver {
     GameOver(){
 
         timeline.pause();
+
         soundsManager.stopMainMusic();
 
 
@@ -76,6 +77,7 @@ public class GameOver {
 
                 snake.removeSnake(PANE, bodyParts, snakeBodyPartsCount);
                 snake.putSnake(PANE, initialSnakeBodyPartsCount);
+
                 snakeBodyPartsCount = initialSnakeBodyPartsCount;
                 currentDirection = UP;
 
@@ -85,7 +87,7 @@ public class GameOver {
                 timeline.play();
             });
             delay.play();
-            soundsManager.playMainMusic();
+            // soundsManager.playMainMusic();
             invertedCounter = 0;
 
 

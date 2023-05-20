@@ -3,11 +3,9 @@ package com.example.snakeattempt;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import static com.example.snakeattempt.SnakeEngine.*;
 
 public class SoundsManager {
 
-    private static final int MAX_FILES = 9;
     private static final String[] SOUND_DIRECTORIES = {
             "/sounds/Menu Music2.mp3",
             "/sounds/hoverSound.mp3",
@@ -19,6 +17,8 @@ public class SoundsManager {
             "/sounds/game over.wav",
             "/sounds/poison2.mp3"
     };
+    private static final int MAX_FILES = SOUND_DIRECTORIES.length;
+
 
     private final Media[] media = new Media[MAX_FILES];
     private final MediaPlayer music;
@@ -77,7 +77,7 @@ public class SoundsManager {
     public  void playPoisonSound (){stopAndPlay(poisonSound[0]);}
     private  void stopAndPlay(MediaPlayer mediaPlayer) {
 
-         mediaPlayer.stop();
+        mediaPlayer.stop();
         mediaPlayer.play();
     }
 
