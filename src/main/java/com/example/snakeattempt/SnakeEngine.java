@@ -57,7 +57,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
     public static final double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2.0);
     public static int foodType;
     public static int poisonType;
-    public static final int initialSnakeBodyPartsCount = 1;
+    public static final int initialSnakeBodyPartsCount = 3;
     public static int snakeBodyPartsCount = initialSnakeBodyPartsCount;
     public static final ImageView[] bodyParts = new ImageView[TILE_COUNT * TILE_COUNT];
     public static final ImageView[] fence = new ImageView[TILE_COUNT];

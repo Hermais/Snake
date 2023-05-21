@@ -1,5 +1,4 @@
 package com.example.snakeattempt;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -13,6 +12,7 @@ public class RuntimeOfSnake {
     }
 
     public static void runSnake() {
+
 
 
         // Anton:
@@ -129,7 +129,8 @@ public class RuntimeOfSnake {
             }
 
 
-            Score = snakeBodyPartsCount - initialSnakeBodyPartsCount;
+            //Score = snakeBodyPartsCount - initialSnakeBodyPartsCount;
+            Score++;
             //System.out.println("/////////////score" + Score);
             score.setText("Score = " + Score);
 
@@ -160,18 +161,11 @@ public class RuntimeOfSnake {
 
             }
             else if(poisonous && poisonType ==2){
+                Score++;
+
                 snakeBodyPartsCount++;
-
-
-                if(!poisoned) {
-                    bodyParts[snakeBodyPartsCount] = new ImageView(
-                            new Image(RuntimeOfSnake.class.getResource(
-                                    "/images/snakeBodySegments.png").toExternalForm()));
-                }else{
-                    bodyParts[snakeBodyPartsCount] = new ImageView(
-                            new Image(RuntimeOfSnake.class.getResource(
-                                    "/images/snakeBodySegmentsGreen.png").toExternalForm()));
-                }
+                bodyParts[snakeBodyPartsCount] = new ImageView(
+                        new Image(RuntimeOfSnake.class.getResource("/images/snakeBodySegmentsGreen.png").toExternalForm()));
 
 
                 bodyParts[snakeBodyPartsCount].setFitHeight(TILE_SIZE);
@@ -187,8 +181,8 @@ public class RuntimeOfSnake {
 
 
 
-            Score--;
-            score.setText("Score = " + Score);
+            //Score--;
+            //score.setText("Score = " + Score);
 
             if(snakeBodyPartsCount < 1){
                 new GameOver();
