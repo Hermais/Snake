@@ -241,15 +241,18 @@ public class RuntimeOfSnake {
             if(poisoned && !poisonous){
                 snake.removeSnake(PANE, bodyParts,snakeBodyPartsCount);
                 snake.putSnake(PANE, snakeBodyPartsCount-3);
+                currentDirection = UP;
                 snakeBodyPartsCount = initialSnakeBodyPartsCount;
                 poisonous = true;
+                Score += 9;
+                score.setText("Score = " + Score);
             }
             if(poisonType == 1){
                 invertedCounter += 2;
             }
 
             poisonType = randInt(POISON_COUNT);
-            //poisonType =0;
+            poisonType =0;
             //if(poisonous == true){poisonType =2;}
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
