@@ -66,6 +66,11 @@ public class GameOver {
         gameOverMenu.getReplayBtn().setOnMouseClicked(replayEvent -> {
             gameOverMenu.getReplayBtn().wobbleAnimation();
 
+            //resetting poisonous state
+            poisonCounter = 0;
+            poisoned=false;
+            poisonous = false;
+
             Score = 0;
             score.setText("Score = "+Score);
 
