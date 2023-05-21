@@ -3,18 +3,18 @@
   <ID>JAVA</ID>
   <OriginalElement>D:/Java/Snake</OriginalElement>
   <nodes>
-    <node x="2150.0" y="-14.0">com.example.snakeattempt.FoodManager</node>
+    <node x="212.46428571428578" y="2544.0">com.example.snakeattempt.SnakeEngine</node>
     <node x="435.36607142857144" y="-14.0">com.example.snakeattempt.SoundsManager</node>
-    <node x="1007.0" y="1347.0">com.example.snakeattempt.GameOverMenu</node>
+    <node x="714.0" y="1427.5">com.example.snakeattempt.Info</node>
+    <node x="2560.0" y="-14.0">com.example.snakeattempt.DrawFences</node>
+    <node x="263.00000000000006" y="1117.0">com.example.snakeattempt.MainMenu</node>
+    <node x="1729.0" y="-14.0">com.example.snakeattempt.PoisonManager</node>
     <node x="1021.0" y="3176.5">com.example.snakeattempt.GameOver</node>
     <node x="1326.0" y="-14.0">com.example.snakeattempt.DrawPanelBackground</node>
-    <node x="-113.0" y="1600.0">com.example.snakeattempt.Snake</node>
-    <node x="2560.0" y="-14.0">com.example.snakeattempt.DrawFences</node>
-    <node x="212.46428571428578" y="2544.0">com.example.snakeattempt.SnakeEngine</node>
-    <node x="1729.0" y="-14.0">com.example.snakeattempt.PoisonManager</node>
+    <node x="1007.0" y="1347.0">com.example.snakeattempt.GameOverMenu</node>
     <node x="628.5" y="493.0">com.example.snakeattempt.Buttons</node>
-    <node x="714.0" y="1427.5">com.example.snakeattempt.Info</node>
-    <node x="263.00000000000006" y="1117.0">com.example.snakeattempt.MainMenu</node>
+    <node x="2150.0" y="-14.0">com.example.snakeattempt.FoodManager</node>
+    <node x="-113.0" y="1600.0">com.example.snakeattempt.Snake</node>
   </nodes>
   <notes />
   <edges>
@@ -34,10 +34,6 @@
       <point x="-117.96428571428578" y="-699.0" />
       <point x="170.0" y="204.5" />
     </edge>
-    <edge source="com.example.snakeattempt.GameOver" target="com.example.snakeattempt.GameOverMenu" relationship="TO_ONE">
-      <point x="0.0" y="-66.5" />
-      <point x="0.0" y="457.5" />
-    </edge>
     <edge source="com.example.snakeattempt.SnakeEngine" target="com.example.snakeattempt.SoundsManager" relationship="TO_ONE">
       <point x="-140.00028571428578" y="0.0" />
       <point x="-130.5" y="3243.0" />
@@ -46,6 +42,10 @@
       <point x="569.0" y="467.0" />
       <point x="556.866" y="467.0" />
       <point x="-7.142857145936432E-5" y="227.5" />
+    </edge>
+    <edge source="com.example.snakeattempt.GameOver" target="com.example.snakeattempt.GameOverMenu" relationship="TO_ONE">
+      <point x="0.0" y="-66.5" />
+      <point x="0.0" y="457.5" />
     </edge>
     <edge source="com.example.snakeattempt.SnakeEngine" target="com.example.snakeattempt.Buttons" relationship="TO_ONE">
       <point x="139.99971428571422" y="0.0" />
@@ -79,7 +79,7 @@
       <point x="148.5" y="0.0" />
     </edge>
   </edges>
-  <settings layout="Hierarchic" zoom="0.8251105755627516" showDependencies="true" x="1683.2431042232556" y="1585.795565395349" />
+  <settings layout="Hierarchic" zoom="0.2703722334004025" showDependencies="true" x="932.343255813953" y="912.1110887441863" />
   <SelectedNodes>
     <node>com.example.snakeattempt.DrawPanelBackground</node>
   </SelectedNodes>

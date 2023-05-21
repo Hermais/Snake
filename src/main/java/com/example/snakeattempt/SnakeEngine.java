@@ -22,7 +22,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
     public static final int HEIGHT = 800;
     public static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    public static final int TILE_COUNT = 16; // 16 But 20 is recommended.
+    public static final int TILE_COUNT = 20; // 16 But 20 is recommended.
     public static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     public static final int PANEL_REALSTATE = TILE_SIZE * 2;
 
@@ -79,6 +79,10 @@ public class SnakeEngine extends Application implements ButtonsActions{
     public static Snake snake = new Snake(initialSnakeBodyPartsCount, bodyParts, TILE_SIZE, initialSnakeHeadX, initialSnakeHeadY);
     public static SoundsManager soundsManager = new SoundsManager();
     public static Info info = new Info(PANE_2, TILE_SIZE, HEIGHT, WIDTH, TILE_COUNT);
+    public static PoisonManager poisonManager = new PoisonManager();
+    public static FoodManager foodManager = new FoodManager();
+    public static DrawFences drawFences = new DrawFences();
+    public static DrawPanelBackground drawPanelBackground = new DrawPanelBackground();
 
 
     Buttons muteBtn = new Buttons("/images/soundsBtn.png", PANEL_REALSTATE / 1.4);
