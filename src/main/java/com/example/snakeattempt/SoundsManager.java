@@ -7,7 +7,7 @@ import javafx.scene.media.MediaPlayer;
 public class SoundsManager {
 
     private static final String[] SOUND_DIRECTORIES = {
-            "/sounds/MenuMusic2.mp3",
+            "/sounds/Menu Music2.mp3",
             "/sounds/hoverSound.mp3",
             "/sounds/clickSound.mp3",
             "/sounds/panelShowing.mp3",
