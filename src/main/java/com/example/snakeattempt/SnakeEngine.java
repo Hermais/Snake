@@ -22,7 +22,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
     public static final int HEIGHT = 800;
     public static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    public static final int TILE_COUNT = 16; // 16 But 20 is recommended.
+    public static final int TILE_COUNT = 20; // 16 But 20 is recommended.
     public static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     public static final int PANEL_REALSTATE = TILE_SIZE * 2;
 
