@@ -131,7 +131,10 @@ public class RuntimeOfSnake {
 
 
             //Score = snakeBodyPartsCount - initialSnakeBodyPartsCount;
-            Score++;
+            if(!poisonous)
+                Score++;
+            else
+                Score += 2;
             //System.out.println("/////////////score" + Score);
             score.setText("Score = " + Score);
 
@@ -154,7 +157,7 @@ public class RuntimeOfSnake {
                 snakeBodyPartsCount -= 3;
 
             }
-            else if(poisonous && poisonType !=2){
+            else if(snakeBodyPartsCount > 3 && poisonous && poisonType !=2){
                 for(int i=0; i<3; i++){
                     bodyParts[snakeBodyPartsCount - i].setImage(null);
                 }
@@ -162,7 +165,7 @@ public class RuntimeOfSnake {
 
             }
             else if(poisonous && poisonType ==2){
-                Score++;
+                Score+=4;
 
                 snakeBodyPartsCount++;
                 bodyParts[snakeBodyPartsCount] = new ImageView(
@@ -174,16 +177,18 @@ public class RuntimeOfSnake {
                 bodyParts[snakeBodyPartsCount].setX(-WIDTH);
                 PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
             }
-
             else{
-                // Snake dies if it's only a head.
                 new GameOver();
             }
 
 
 
-            //Score--;
-            //score.setText("Score = " + Score);
+
+
+
+
+            Score-=3;
+            score.setText("Score = " + Score);
 
             if(snakeBodyPartsCount < 1){
                 new GameOver();
@@ -210,7 +215,7 @@ public class RuntimeOfSnake {
 
             poisonType = randInt(POISON_COUNT);
             //poisonType =0;
-            //if(poisonous == true){poisonType = 2;}
+            //if(poisonous == true){poisonType =2;}
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
 
@@ -229,6 +234,8 @@ public class RuntimeOfSnake {
                     count++;
                 }
                 snakeBodyPartsCount-=count;
+                Score -= count;
+                score.setText("Score = " + Score);
             }
         }
 
