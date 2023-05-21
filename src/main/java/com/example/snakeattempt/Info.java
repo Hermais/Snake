@@ -139,7 +139,6 @@ public class Info {
         nextBtn.setY(infoPanel.getY() + infoPanel.getFitHeight() * 0.8);
 
         nextBtn.setOnMouseClicked(event -> {
-            System.out.println("On NEXT: "+currentPage);
             if (currentPage < 3) {
                 PauseTransition delay = new PauseTransition(Duration.seconds(delayD));
                 if (prevBtn.getPane() == null || !prevBtn.getPane().getChildren().contains(prevBtn))
@@ -187,7 +186,6 @@ public class Info {
         prevBtn.setY(infoPanel.getY() + infoPanel.getFitHeight() * 0.8);
 
         prevBtn.setOnMouseClicked(event -> {
-            System.out.println("On PREV: "+currentPage);
             if (currentPage > 1) {
                 PauseTransition delay = new PauseTransition(Duration.seconds(delayD));
                 if (nextBtn.getPane() == null || !nextBtn.getPane().getChildren().contains(nextBtn))
