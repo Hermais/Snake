@@ -7,7 +7,7 @@ import javafx.scene.media.MediaPlayer;
 public class SoundsManager {
 
     private static final String[] SOUND_DIRECTORIES = {
-            "/sounds/Menu Music2.mp3",
+            "/sounds/MenuMusic2.mp3",
             "/sounds/hoverSound.mp3",
             "/sounds/clickSound.mp3",
             "/sounds/panelShowing.mp3",
@@ -15,7 +15,7 @@ public class SoundsManager {
             "/sounds/eat2.mp3",
             "/sounds/eat3.mp3",
             "/sounds/game over.wav",
-            "/sounds/poison2.mp3"
+            "/sounds/poison2.mp3",
     };
     private static final int MAX_FILES = SOUND_DIRECTORIES.length;
 
@@ -28,6 +28,7 @@ public class SoundsManager {
     private final MediaPlayer panelSound;
 
     SoundsManager() {
+
         for (int i = 0; i < MAX_FILES; i++) {
             media[i] = new Media(getClass().getResource(SOUND_DIRECTORIES[i]).toExternalForm());
         }

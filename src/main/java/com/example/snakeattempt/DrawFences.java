@@ -1,8 +1,14 @@
 package com.example.snakeattempt;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+
+import static com.example.snakeattempt.SnakeEngine.*;
 
 
 public class DrawFences {
@@ -117,6 +123,7 @@ public class DrawFences {
                 }
 
 
+
             }
 
         }
@@ -153,4 +160,6 @@ public class DrawFences {
 
         }
     }
+
+
 }

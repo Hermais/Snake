@@ -2,17 +2,18 @@ package com.example.snakeattempt;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static com.example.snakeattempt.SnakeEngine.*;
 
 public class RuntimeOfSnake {
+
     RuntimeOfSnake(){
 
     }
 
     public static void runSnake() {
-
 
 
         // Anton:
@@ -74,23 +75,50 @@ public class RuntimeOfSnake {
             new GameOver();
 
 
+
+
+
+
+
+
         // Ahmed Salem:
         // Check if food item overlaps poison item.
         // To debug this, set TILES_COUNT to 10, and play for sometime to test whether food will be on
         // poison or not.
         // Anton:
+
         while (true) {
+
             if (FOOD[foodType].getX() == POISON[poisonType].getX() &&
                     FOOD[foodType].getY() == POISON[poisonType].getY()) {
                 FOOD[foodType].setImage(null);
                 foodType = randInt(FOOD_COUNT);
                 new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
+
                 // System.out.println("Overlapping detected!");
+
             } else {
                 // System.out.println("No overlapping.");
                 break;
             }
         }
+        for(int i=1;i<snakeBodyPartsCount+1;i++){
+            if(FOOD[foodType].getX()==bodyParts[i].getX()&&
+                    FOOD[foodType].getY()==bodyParts[i].getY()-TILE_SIZE){
+                FOOD[foodType].setImage(null);
+                foodType = randInt(FOOD_COUNT);
+                new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
+            }
+        }
+        for(int i=1;i<snakeBodyPartsCount+1;i++){
+            if(POISON[poisonType].getX()==bodyParts[i].getX()&&
+                    POISON[poisonType].getY()==bodyParts[i].getY()-TILE_SIZE){
+                POISON[poisonType].setImage(null);
+                poisonType = randInt(POISON_COUNT);
+                new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
+            }
+        }
+
 
 
 
@@ -138,6 +166,12 @@ public class RuntimeOfSnake {
             foodType = randInt(FOOD_COUNT);
             new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
         }
+
+
+
+
+
+
 
         //Peter: Poison Detection
         // -1 EXCEPTION!!!!
