@@ -86,10 +86,14 @@ public class Info {
         this.squareDivisionCount = squareDivisionCount;
 
 
+
+    }
+    public void drawAll(){
         drawInfoPanel();
         drawInfoBtn();
         drawNextBtn();
         drawPrevBtn();
+
     }
 
     public void drawInfoPanel() {

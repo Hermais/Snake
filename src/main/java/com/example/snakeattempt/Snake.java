@@ -62,7 +62,7 @@ public class Snake {
     }
 
 
-    public ImageView[] putSnake(Pane pane, int initialSnakeBodyPartsCount){
+    public void putSnake(Pane pane, int initialSnakeBodyPartsCount){
         temp = snakeSegSizeXY;
 
 
@@ -88,7 +88,6 @@ public class Snake {
 
             }
 
-            return Arrays.copyOf(Snake, Snake.length);
 
         }
 
