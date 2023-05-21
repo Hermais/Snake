@@ -102,22 +102,7 @@ public class RuntimeOfSnake {
                 break;
             }
         }
-        for(int i=1;i<snakeBodyPartsCount+1;i++){
-            if(FOOD[foodType].getX()==bodyParts[i].getX()&&
-                    FOOD[foodType].getY()==bodyParts[i].getY()-TILE_SIZE){
-                FOOD[foodType].setImage(null);
-                foodType = randInt(FOOD_COUNT);
-                new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
-            }
-        }
-        for(int i=1;i<snakeBodyPartsCount+1;i++){
-            if(POISON[poisonType].getX()==bodyParts[i].getX()&&
-                    POISON[poisonType].getY()==bodyParts[i].getY()-TILE_SIZE){
-                POISON[poisonType].setImage(null);
-                poisonType = randInt(POISON_COUNT);
-                new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
-            }
-        }
+       ء
 
 
 
