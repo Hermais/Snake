@@ -22,7 +22,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
     public static final int HEIGHT = 800;
     public static final int WIDTH = HEIGHT;// Height MUST EQUAL Width.
 
-    public static final int TILE_COUNT =10; // 16 But 20 is recommended.
+    public static final int TILE_COUNT = 16; // 16 But 20 is recommended.
     public static final int TILE_SIZE = HEIGHT / TILE_COUNT;
     public static final int PANEL_REALSTATE = TILE_SIZE * 2;
 
@@ -53,8 +53,8 @@ public class SnakeEngine extends Application implements ButtonsActions{
     public static final int LEFT = 3;
 
     public static int currentDirection = UP;
-    public static final double initialSnakeHeadX = TILE_SIZE * (TILE_COUNT/2);
-    public static final double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT/2);
+    public static final double initialSnakeHeadX = TILE_SIZE * (TILE_COUNT / 2.0);
+    public static final double initialSnakeHeadY = TILE_SIZE * (TILE_COUNT / 2.0);
     public static int foodType;
     public static int poisonType;
     public static final int initialSnakeBodyPartsCount = 3;
