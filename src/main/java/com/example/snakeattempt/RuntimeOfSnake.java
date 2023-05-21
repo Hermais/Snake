@@ -178,6 +178,7 @@ public class RuntimeOfSnake {
                 PANE.getChildren().add(bodyParts[snakeBodyPartsCount]);
             }
             else{
+                //the snake if it is only a head and one body part
                 new GameOver();
             }
 
