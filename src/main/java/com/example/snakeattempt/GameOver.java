@@ -16,7 +16,7 @@ public class GameOver {
     GameOver(){
 
         timeline.pause();
-
+        isOver = true;
         soundsManager.stopMainMusic();
 
 
@@ -65,7 +65,7 @@ public class GameOver {
         // REPLAY@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
         gameOverMenu.getReplayBtn().setOnMouseClicked(replayEvent -> {
             gameOverMenu.getReplayBtn().wobbleAnimation();
-
+            isOver = false;
             //resetting poisonous state
             poisonCounter = 0;
             poisoned=false;

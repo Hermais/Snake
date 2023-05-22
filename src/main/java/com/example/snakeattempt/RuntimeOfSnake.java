@@ -102,9 +102,10 @@ public class RuntimeOfSnake {
                 break;
             }
         }
+
         for(int i=1;i<snakeBodyPartsCount+1;i++){
             if(FOOD[foodType].getX()==bodyParts[i].getX()&&
-                    FOOD[foodType].getY()==bodyParts[i].getY()-TILE_SIZE){
+            FOOD[foodType].getY()==bodyParts[i].getY()-TILE_SIZE){
                 FOOD[foodType].setImage(null);
                 foodType = randInt(FOOD_COUNT);
                 new FoodManager(PANE, foodType, FOOD, TILE_SIZE, PANEL_REALSTATE, TILE_COUNT);
@@ -254,6 +255,7 @@ public class RuntimeOfSnake {
             poisonType = randInt(POISON_COUNT);
             poisonType =0;
             //if(poisonous == true){poisonType =2;}
+            poisonType = randInt(POISON_COUNT);
             new PoisonManager(POISON, poisonType, TILE_SIZE, TILE_COUNT, PANEL_REALSTATE, PANE);
 
 
@@ -266,7 +268,7 @@ public class RuntimeOfSnake {
         for (int i=1;i<=snakeBodyPartsCount;i++){
             if (bodyParts[0].getX() == bodyParts[i].getX() && bodyParts[0].getY()  == bodyParts[i].getY()) {
                 System.out.println("Snake eat itself");
-
+                new GameOver();
                 for (; i <=snakeBodyPartsCount; i++) {
                     bodyParts[i].setImage(null);
                     count++;
@@ -288,7 +290,7 @@ public class RuntimeOfSnake {
         return new Random(System.currentTimeMillis()).nextInt(0, max);
     }
 
-
+//scan X-axis////////////////
     public static void moveY(boolean up, int i) {
         if (up) {
             bodyParts[i].setY(bodyParts[i].getY() - snakeSpeedTilesPerIncrement);
@@ -299,7 +301,7 @@ public class RuntimeOfSnake {
         }
 
     }
-
+////sacn Y-axis
     public static void moveX(boolean right, int i) {
         if (right) {
             bodyParts[i].setX(bodyParts[i].getX() + snakeSpeedTilesPerIncrement);

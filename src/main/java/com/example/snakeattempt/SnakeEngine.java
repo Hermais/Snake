@@ -45,7 +45,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
 
 
     public static final double snakeSpeedTilesPerIncrement = TILE_SIZE;
-    public static final int GAME_SPEED = 128;// Actually lower values give higher speeds.
+    public static int GAME_SPEED = 256;// Actually lower values give higher speeds.
     public static final int borderForSnake = TILE_SIZE;
     public static final int UP = 0;
     public static final int DOWN = 1;
@@ -86,6 +86,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
 
 
     Buttons muteBtn = new Buttons("/images/soundsBtn.png", PANEL_REALSTATE / 1.4);
+
     public static boolean isMute = false;
     public final double pauseTransitionDelay = 0.3;
 
@@ -95,9 +96,14 @@ public class SnakeEngine extends Application implements ButtonsActions{
     public static boolean poisonous = false;
 
     public static int invertedCounter = 0;
+    public static KeyFrame keyFrame ;
+    public static boolean isOver = false ;
 
 
     public static int Score = 0;
+
+    Buttons increaseSpeed = new Buttons("/images/nextBtn.png", TILE_SIZE);
+    Buttons decreaseSpeed = new Buttons("/images/prevBtn.png", TILE_SIZE);
     // Notes: Overlapping method does not work.
 
     @Override
@@ -133,6 +139,14 @@ public class SnakeEngine extends Application implements ButtonsActions{
         muteBtn.setX(WIDTH - muteBtn.getFitXY() - TILE_SIZE / 1.5);
         muteBtn.setY(PANEL_REALSTATE / 12.0);
         muteBtn.setPane(PANE_2);
+
+        increaseSpeed.setX(muteBtn.getX() - TILE_SIZE*2);
+        increaseSpeed.setY(muteBtn.getY());
+        increaseSpeed.setPane(PANE_2);
+
+        decreaseSpeed.setX(increaseSpeed.getX() - TILE_SIZE*2);
+        decreaseSpeed.setY(muteBtn.getY());
+        decreaseSpeed.setPane(PANE_2);
 
         score();
 
@@ -176,6 +190,36 @@ public class SnakeEngine extends Application implements ButtonsActions{
 
     @Override
     public void  buttonsActions(){
+        increaseSpeed.setOnMouseClicked(incEvent -> {
+            increaseSpeed.wobbleAnimation();
+
+            GAME_SPEED /= 1.2;
+            timeline.stop();
+            keyFrame = new KeyFrame(Duration.millis(GAME_SPEED), e -> RuntimeOfSnake.runSnake());
+            timeline = new Timeline(keyFrame);
+            timeline.setCycleCount(Animation.INDEFINITE);
+            if(!isOver)
+                timeline.play();
+
+
+
+        });
+
+        decreaseSpeed.setOnMouseClicked(incEvent -> {
+            decreaseSpeed.wobbleAnimation();
+
+            GAME_SPEED *= 1.2;
+            timeline.stop();
+            keyFrame = new KeyFrame(Duration.millis(GAME_SPEED), e -> RuntimeOfSnake.runSnake());
+            timeline = new Timeline(keyFrame);
+            timeline.setCycleCount(Animation.INDEFINITE);
+            if(!isOver)
+                timeline.play();
+
+
+
+        });
+
         mainMenu.getInfoBtn().setOnMouseClicked(infoEvent -> {
             mainMenu.getInfoBtn().wobbleAnimation();
             PauseTransition delay = new PauseTransition(Duration.seconds(pauseTransitionDelay));
@@ -200,6 +244,8 @@ public class SnakeEngine extends Application implements ButtonsActions{
 
         });
 
+
+
         mainMenu.getExitBtn().setOnMouseClicked(exit -> {
             mainMenu.getExitBtn().wobbleAnimation();
             PauseTransition delay = new PauseTransition(Duration.seconds(pauseTransitionDelay));
@@ -212,6 +258,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
 
 
         mainMenu.getStartBtn().setOnMouseClicked(event -> {
+            keyFrame = new KeyFrame(Duration.millis(GAME_SPEED), e -> RuntimeOfSnake.runSnake());
             int temp = blurValue;
             Timeline fadingTimeline = new Timeline(new KeyFrame(Duration.millis(FADE_DURATION), e -> {
                 PauseTransition delay = new PauseTransition(Duration.seconds(pauseTransitionDelay / 2));
@@ -260,7 +307,7 @@ public class SnakeEngine extends Application implements ButtonsActions{
             SnakeMovementsControl.movementChecker();
 
 
-            timeline = new Timeline(new KeyFrame(Duration.millis(GAME_SPEED), e -> RuntimeOfSnake.runSnake()));
+            timeline = new Timeline(keyFrame);
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
 
